@@ -7,11 +7,10 @@ void main(){
 
     f = fopen("saida.txt", "r");
     if(f == NULL)
-        printf("Não foi possivel abrir o arquivo!")
-    else{
-        fscanf("%i %s", &matricula, &nome);
-        printf("Aluno: %s \n Matricula: %i", nome, matricula);
-    }
+        printf("Não foi possivel abrir o arquivo!");
+    else
+        fscanf(f, "%i %s", &matricula, &nome);
+        printf("Aluno: %s \nMatricula: %i", nome, matricula);
 
     exit(0);
 }
