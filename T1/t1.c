@@ -3,6 +3,7 @@
 #include <string.h>
 
 void leAlunos(int* matriculas, char** nomes, int* n){
+
     FILE *alunosF, *notasF;
 
     int mat, i, linha;
@@ -34,13 +35,17 @@ void leAlunos(int* matriculas, char** nomes, int* n){
     }
     *n = linha;
     fclose(alunosF);
+
 }
 
 main(int argc, char** argv){
 
     int matriculas[50], n;
     float notas;
-    char nomes[50][50];
+    char nomes[50][50], *nome;
+
+    if(argc > 1)
+        printf("%s\n", nome);
 
     leAlunos(matriculas, nomes, &n);
 
