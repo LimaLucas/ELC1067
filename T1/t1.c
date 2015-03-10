@@ -2,31 +2,41 @@
 #include <stdlib.h>
 #include <string.h>
 
-void leAlunos(int* matricula, char** nome, int* n){
+void leAlunos(int* matriculas, char** nomes, int* n){
     FILE *alunosF, *notasF;
 
-    int mat, i;
+    int mat, i, linha;
     char c, nome[50];
 
     alunosF = fopen("alunos.txt", "r");
     notasF = fopen("notas.txt", "r");
 
+    linha = 0;
     while(feof(alunosF)!=0){
-        fscanf(alunosF, "%i", mat);
+        if(fscanf(alunosF, "%i", mat)==0)
+            break;
 
         i = 0;
         c = fgetc(alunosF);
+        while(c==' ')
+            c = fgetc(alunosF);
+
         while(c != '\n'){
             nome[i] = c;
             c = fgetc(alunosF);
             i++;
         }
-        nome[i] = '\0';
-    }
 
+        nome[i] = '\0';
+        matriculas[linha] = mat;
+        strcpy(nome[linha], nome);
+        linha++;
+    }
+    *n = linha;
+    fclose(alunosF);
 }
 
-void main(){
+main(int argc, char** argv){
 
     int matriculas[50], n;
     float notas;
