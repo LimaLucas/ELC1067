@@ -44,10 +44,12 @@ main(int argc, char** argv){
     float notas;
     char nomes[50][50], *nome;
 
-    if(argc > 1)
-        printf("%s\n", nome);
+    if(argc > 1){
+        strcpy(nome, argv[1]);
+        printf("%s \n", nome);
+    }
 
     leAlunos(matriculas, nomes, &n);
 
-    exit(0);
+    return 0;
 }
