@@ -1,91 +1,120 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#define TAM 50
 
-void leAlunos(int *matriculas, char nomes[][50], int *n){
+void strtoup(char *palavra){
+    int i, tam;
 
-    FILE *alunosF;
+    tam = strlen(palavra);
+
+    for(i=0; i<tam; i++)
+        toupper(palavra[i]);
+}
+
+void leAlunos(int *matAlunos, char nomes[][TAM], int *n){
+
+    FILE *arq;
 
     int mat, i, linha;
-    char c, nome[50];
+    char c, nome[TAM];
 
-    alunosF = fopen("alunos.txt", "r");
+    arq = fopen("alunos.txt", "r");
+    if(arq==NULL)
+        printf("Erro ao abrir o arquivo alunos.txt. Verifique se o arquivo está com o nome correto ou se ele existe.");
+    else{
+        linha = 0;
+        while(feof(arq)==0){
+            if(fscanf(arq, "%i", &mat)<=0)
+                break;
 
-    linha = 0;
-    while(feof(alunosF)!=0){
-        if(fscanf(alunosF, "%i", &mat)==0)
-            break;
+            i = 0;
+            c = fgetc(arq);
+            while(c==' ')
+                c = fgetc(arq);
 
-        i = 0;
-        c = fgetc(alunosF);
-        while(c==' ')
-            c = fgetc(alunosF);
+            while(c!='\n' && feof(arq)==0){
+                nome[i] = c;
+                i++;
+                c = fgetc(arq);
+            }
 
-        while(c != '\n'){
-            nome[i] = c;
-            c = fgetc(alunosF);
-            i++;
-        }
-
-        nome[i] = '\0';
-        matriculas[linha] = mat;
-        strcpy(nome[linha], nome);
-        linha++;
-    }
-    *n = linha;
-    fclose(alunosF);
-
-}
-
-void leNotas(int *matNotas, float *notas){
-    FILE *notasF;
-
-    int i, mat;
-    float a, b;
-    notasF = fopen("notas.txt", "r");
-
-    i = 0;
-    while(feof(notasF)!=0){
-        if(fscanf(notasF, "%i", &mat)==0)
-            break;
-
-        fscanf(notasF, "%i %f %f", &matNotas[i], &a, &b);
-        matNotas[i] = (a+b)/2;
-        i++;
-    }
-
-    fclose(notasF);
-}
-
-void buscaAluno(int *matriculas, int *matBusca, char nomes[][50], char *nomeBusca, int *n, int *m){
-
-    int i, linha;
-
-    linha = 0;
-    for(i=0; i<*n; i++){
-        if(strstr(nomes[i], nomeBusca) != NULL){
-            matBusca[linha] = matriculas[i];
+            nome[i] = '\0';
+            matAlunos[linha] = mat;
+            strcpy(nomes[linha], nome);
             linha++;
         }
     }
+    fclose(arq);
+}
 
-    *m = linha;
+void leNotas(int *matNotas, float *notas){
+    FILE *arq;
+
+    int i, mat;
+    float a, b;
+    arq = fopen("notas.txt", "r");
+
+    if(arq==NULL)
+        printf("Erro ao abrir o arquivo notas.txt. Verifique se o arquivo está com o nome correto ou se ele existe.");
+    else{
+        i = 0;
+        while(feof(arq)==0){
+            if(fscanf(arq, "%i %f %f\n", &mat, &a, &b)<0)
+                break;
+
+            matNotas[i] = mat;
+            notas[i] = (a+b)/2;
+            i++;
+        }
+    }
+    fclose(arq);
+}
+
+void imprimeMedia(int *matAlunos, int *matNotas, char nomes[][TAM], float *notas, char *nomeBusca){
+
+    int i, j, flag;
+    i = flag = 0;
+
+    strtoup(nomeBusca);
+
+    while(matAlunos[i]>0){
+        j = 0;
+        strtoup(nomes[i]);
+        if(strstr(nomes[i], nomeBusca)!=NULL){
+            flag++;
+            while(matAlunos[i] != matNotas[j])
+                j++;
+            if(flag==1)
+                printf("\n MEDIA ..... NOME\n");
+            printf(" %.2f ...... %s\n", notas[j], nomes[i]);
+        }
+        i++;
+    }
+    if(flag==0)
+        printf("Nenhum resultado encontrado");
+
 }
 
 main(int argc, char **argv){
 
-    int matriculas[50], matBusca[50], matNotas[50], n, m;
-    float notas[50];
-    char nomes[50][50], *nomeBusca;
+    int matAlunos[TAM], matNotas[TAM], n;
+    float notas[TAM];
+    char nomes[TAM][TAM], *nomeBusca;
+
+    nomeBusca = (char*) malloc(TAM*sizeof(char));
 
     if(argc > 1){
         strcpy(nomeBusca, argv[1]);
-        printf("%s \n", nomeBusca);
+        printf(" Resultado da busca feita por: %s \n", nomeBusca);
     }
 
-    leAlunos(matriculas, nomes, &n);
-    buscaAluno(matriculas, matBusca, nomes, nomeBusca, &n, &m);
+    leAlunos(matAlunos, nomes, &n);
+    leNotas(matNotas, notas);
+    imprimeMedia(matAlunos, matNotas, nomes, notas, nomeBusca);
 
+    free(nomeBusca);
 
     return 0;
 }
