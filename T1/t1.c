@@ -10,7 +10,7 @@ void strtoup(char *palavra){
     tam = strlen(palavra);
 
     for(i=0; i<tam; i++)
-        toupper(palavra[i]);
+        palavra[i] = toupper(palavra[i]);
 }
 
 void leAlunos(int *matAlunos, char nomes[][TAM], int *n){
@@ -75,25 +75,27 @@ void leNotas(int *matNotas, float *notas){
 void imprimeMedia(int *matAlunos, int *matNotas, char nomes[][TAM], float *notas, char *nomeBusca){
 
     int i, j, flag;
+    char mat[TAM];
     i = flag = 0;
 
     strtoup(nomeBusca);
 
     while(matAlunos[i]>0){
         j = 0;
-        strtoup(nomes[i]);
-        if(strstr(nomes[i], nomeBusca)!=NULL){
+        strcpy(mat, nomes[i]);
+        strtoup(mat);
+        if(strstr(mat, nomeBusca)!=NULL){
             flag++;
             while(matAlunos[i] != matNotas[j])
                 j++;
             if(flag==1)
                 printf("\n MEDIA ..... NOME\n");
-            printf(" %.2f ...... %s\n", notas[j], nomes[i]);
+            printf("  %.2f ..... %s\n", notas[j], nomes[i]);
         }
         i++;
     }
     if(flag==0)
-        printf("Nenhum resultado encontrado");
+        printf(" Nenhum resultado encontrado");
 
 }
 
