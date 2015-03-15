@@ -13,7 +13,7 @@ void strtoup(char *palavra){
         palavra[i] = toupper(palavra[i]);
 }
 
-void leAlunos(int *matAlunos, char nomes[][TAM], int *n){
+void leAlunos(int *matAlunos, char nomes[][TAM]){
 
     FILE *arq;
 
@@ -101,7 +101,7 @@ void imprimeMedia(int *matAlunos, int *matNotas, char nomes[][TAM], float *notas
 
 main(int argc, char **argv){
 
-    int matAlunos[TAM], matNotas[TAM], n;
+    int matAlunos[TAM], matNotas[TAM];
     float notas[TAM];
     char nomes[TAM][TAM], *nomeBusca;
 
@@ -112,7 +112,7 @@ main(int argc, char **argv){
         printf(" Resultado da busca feita por: %s \n", nomeBusca);
     }
 
-    leAlunos(matAlunos, nomes, &n);
+    leAlunos(matAlunos, nomes);
     leNotas(matNotas, notas);
     imprimeMedia(matAlunos, matNotas, nomes, notas, nomeBusca);
 
