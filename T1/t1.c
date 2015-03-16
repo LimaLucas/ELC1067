@@ -4,15 +4,6 @@
 #include <ctype.h>
 #define TAM 50
 
-void strtoup(char *palavra){
-    int i, tam;
-
-    tam = strlen(palavra);
-
-    for(i=0; i<tam; i++)
-        palavra[i] = toupper(palavra[i]);
-}
-
 void leAlunos(int *matAlunos, char nomes[][TAM]){
 
     FILE *arq;
@@ -26,7 +17,7 @@ void leAlunos(int *matAlunos, char nomes[][TAM]){
     else{
         linha = 0;
         while(feof(arq)==0){
-            if(fscanf(arq, "%i", &mat)<=0)
+            if(fscanf(arq, "%i", &mat) != 1)
                 break;
 
             i = 0;
@@ -46,6 +37,7 @@ void leAlunos(int *matAlunos, char nomes[][TAM]){
             linha++;
         }
     }
+    matAlunos[linha] = 0;
     fclose(arq);
 }
 
@@ -61,7 +53,7 @@ void leNotas(int *matNotas, float *notas){
     else{
         i = 0;
         while(feof(arq)==0){
-            if(fscanf(arq, "%i %f %f\n", &mat, &a, &b)<0)
+            if(fscanf(arq, "%i %f %f\n", &mat, &a, &b) != 3)
                 break;
 
             matNotas[i] = mat;
@@ -75,16 +67,15 @@ void leNotas(int *matNotas, float *notas){
 void imprimeMedia(int *matAlunos, int *matNotas, char nomes[][TAM], float *notas, char *nomeBusca){
 
     int i, j, flag;
-    char mat[TAM];
+    char temp[TAM];
     i = flag = 0;
 
-    strtoup(nomeBusca);
+    strupr(nomeBusca);
 
     while(matAlunos[i]>0){
         j = 0;
-        strcpy(mat, nomes[i]);
-        strtoup(mat);
-        if(strstr(mat, nomeBusca)!=NULL){
+        strcpy(temp, nomes[i]);
+        if(strstr(strupr(temp), nomeBusca)!=NULL){
             flag++;
             while(matAlunos[i] != matNotas[j])
                 j++;
