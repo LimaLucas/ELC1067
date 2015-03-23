@@ -2,7 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #define TAMCHAR 50
-#define TAM 26
+#define TAM 10
+
+void strtoupper(char *palavra){
+    int i, tam;
+
+    tam = strlen(palavra);
+
+    for(i=0; i<tam; i++)
+        palavra[i] = toupper(palavra[i]);
+}
 
 void leAlunos(int *matAlunos, char **nomes, int *n){
 
@@ -16,9 +25,8 @@ void leAlunos(int *matAlunos, char **nomes, int *n){
         printf("Erro ao abrir o arquivo alunos.txt. Verifique se o arquivo está com o nome correto ou se ele existe.");
     else{
         linha = 0;
-        while(feof(arq)==0){
 
-            nomes[linha] = (char*) malloc(TAMCHAR*sizeof(char));
+        while(feof(arq)==0){
 
             if(fscanf(arq, "%i", &mat) != 1)
                 break;
@@ -39,9 +47,12 @@ void leAlunos(int *matAlunos, char **nomes, int *n){
             strcpy(nomes[linha], nome);
             linha++;
 
-            if(linha >= 50){
-                matAlunos = (int*) realloc(matAlunos, TAM*sizeof(int));
-                nomes = (char**) realloc(nomes, TAM*sizeof(char*));
+            if(linha%TAM == 0){
+                matAlunos = (int*) realloc(matAlunos, linha*sizeof(int) + TAM*sizeof(int));
+//                nomes = (char**) realloc(nomes, linha*sizeof(int) + TAM*sizeof(int));
+//
+//                for(i=linha; i<linha+TAM; i++)
+//                    nomes[i] = (char*) malloc(TAMCHAR*sizeof(char));
             }
         }
     }
@@ -61,6 +72,7 @@ void leNotas(int *matNotas, float *notas){
         printf("Erro ao abrir o arquivo notas.txt. Verifique se o arquivo está com o nome correto ou se ele existe.");
     else{
         i = 0;
+
         while(feof(arq)==0){
             if(fscanf(arq, "%i %f %f\n", &mat, &a, &b) != 3)
                 break;
@@ -68,9 +80,10 @@ void leNotas(int *matNotas, float *notas){
             matNotas[i] = mat;
             notas[i] = (a+b)/2;
             i++;
-            if(i >= 50){
-                matNotas = (int*) realloc(matNotas, TAM*sizeof(int));
-                notas = (float*) realloc(notas, TAM*sizeof(float));
+
+            if(i%TAM == 0){
+                matNotas = (int*) realloc(matNotas, i*sizeof(int) + TAM*sizeof(int));
+                notas = (float*) realloc(notas, i*sizeof(float) + TAM*sizeof(float));
             }
         }
     }
@@ -83,12 +96,13 @@ void imprimeMedia(int *matAlunos, int *matNotas, char **nomes, float *notas, cha
     char temp[TAMCHAR];
     i = flag = 0;
 
-    strupr(nomeBusca);
+    strtoupper(nomeBusca);
 
     while(matAlunos[i]>0){
         j = 0;
         strcpy(temp, nomes[i]);
-        if(strstr(strupr(temp), nomeBusca)!=NULL){
+        strtoupper(temp);
+        if(strstr(temp, nomeBusca)!=NULL){
             flag++;
             while(matAlunos[i] != matNotas[j])
                 j++;
@@ -109,11 +123,15 @@ main(int argc, char **argv){
     float *notas;
     char **nomes, *nomeBusca;
 
-    nomeBusca = (char*) malloc(TAM*sizeof(char));
+    nomeBusca = (char*) malloc(TAMCHAR*sizeof(char));
+
     matAlunos = (int*) malloc(TAM*sizeof(int));
     matNotas = (int*) malloc(TAM*sizeof(int));
     notas = (float*) malloc(TAM*sizeof(float));
-    nomes = (char**) malloc(TAM*sizeof(char*));
+
+    nomes = (char**) malloc(TAMCHAR*sizeof(char*));
+    for(i=0; i<TAMCHAR; i++)
+        nomes[i] = (char*) malloc(TAMCHAR*sizeof(char));
 
     if(argc > 1){
         strcpy(nomeBusca, argv[1]);
@@ -128,6 +146,7 @@ main(int argc, char **argv){
     free(matAlunos);
     free(matNotas);
     free(notas);
+
     for(i=0; i<n; i++)
         free(nomes[i]);
     free(nomes);
