@@ -1,21 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define TAM 50
+#define TAMCHAR 50
+#define TAM 26
 
-void leAlunos(int *matAlunos, char **nomes, &n){
-
-    FILE *arq;
+void leAlunos(int *matAlunos, char **nomes, int *n){
 
     int mat, i, linha;
-    char c, nome[TAM];
+    char c, nome[TAMCHAR];
 
+    FILE *arq;
     arq = fopen("alunos.txt", "r");
+
     if(arq==NULL)
         printf("Erro ao abrir o arquivo alunos.txt. Verifique se o arquivo está com o nome correto ou se ele existe.");
     else{
         linha = 0;
         while(feof(arq)==0){
+
+            nomes[linha] = (char*) malloc(TAMCHAR*sizeof(char));
+
             if(fscanf(arq, "%i", &mat) != 1)
                 break;
 
@@ -32,12 +36,12 @@ void leAlunos(int *matAlunos, char **nomes, &n){
 
             nome[i] = '\0';
             matAlunos[linha] = mat;
-            nomes[linha] = (int*) malloc(TAM*sizeof(int));
             strcpy(nomes[linha], nome);
             linha++;
+
             if(linha >= 50){
                 matAlunos = (int*) realloc(matAlunos, TAM*sizeof(int));
-                nomes = (int**) realloc(nomes, TAM*sizeof(int*));
+                nomes = (char**) realloc(nomes, TAM*sizeof(char*));
             }
         }
     }
@@ -66,7 +70,7 @@ void leNotas(int *matNotas, float *notas){
             i++;
             if(i >= 50){
                 matNotas = (int*) realloc(matNotas, TAM*sizeof(int));
-                notas = (float**) realloc(notas, TAM*sizeof(float*));
+                notas = (float*) realloc(notas, TAM*sizeof(float));
             }
         }
     }
@@ -76,7 +80,7 @@ void leNotas(int *matNotas, float *notas){
 void imprimeMedia(int *matAlunos, int *matNotas, char **nomes, float *notas, char *nomeBusca){
 
     int i, j, flag;
-    char temp[TAM];
+    char temp[TAMCHAR];
     i = flag = 0;
 
     strupr(nomeBusca);
@@ -101,7 +105,7 @@ void imprimeMedia(int *matAlunos, int *matNotas, char **nomes, float *notas, cha
 
 main(int argc, char **argv){
 
-    int *matAlunos, *matNotas, n;
+    int *matAlunos, *matNotas, n, i;
     float *notas;
     char **nomes, *nomeBusca;
 
@@ -109,14 +113,14 @@ main(int argc, char **argv){
     matAlunos = (int*) malloc(TAM*sizeof(int));
     matNotas = (int*) malloc(TAM*sizeof(int));
     notas = (float*) malloc(TAM*sizeof(float));
-    nomes = (int**) malloc(TAM*sizeof(int*));
+    nomes = (char**) malloc(TAM*sizeof(char*));
 
     if(argc > 1){
         strcpy(nomeBusca, argv[1]);
         printf(" Resultado da busca feita por: %s \n", nomeBusca);
     }
 
-    leAlunos(matAlunos, nomes);
+    leAlunos(matAlunos, nomes, &n);
     leNotas(matNotas, notas);
     imprimeMedia(matAlunos, matNotas, nomes, notas, nomeBusca);
 
@@ -124,7 +128,7 @@ main(int argc, char **argv){
     free(matAlunos);
     free(matNotas);
     free(notas);
-    for(int i=0; i<n; i++)
+    for(i=0; i<n; i++)
         free(nomes[i]);
     free(nomes);
 
