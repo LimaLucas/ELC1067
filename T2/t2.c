@@ -124,9 +124,9 @@ main(int argc, char **argv){
 
     int *matAlunos, *matNotas, n, i;
     float *notas;
-    char **nomes, *nomeBusca;
+    char **nomes, nomeBusca[TAM];
 
-    nomeBusca = (char*) malloc(TAM*sizeof(char));
+    //nomeBusca = (char*) malloc(TAM*sizeof(char));
 
     matAlunos = (int*) malloc(QTD*sizeof(int));
     matNotas = (int*) malloc(QTD*sizeof(int));
@@ -134,12 +134,11 @@ main(int argc, char **argv){
     nomes = (char**) malloc(TAM*sizeof(char*));
 
     if(argc > 1){
-        nomeBusca = argv[1];
+        //nomeBusca = argv[1];
+	strcpy(nomeBusca, argv[1]);
         printf(" Resultado da busca feita por: %s \n", nomeBusca);
-
     }else{
         printf(" Nenhum nome passado para realizar a busca. Abaixo lista completa.\n");
-
         strcpy(nomeBusca, " ");
     }
 
@@ -147,7 +146,7 @@ main(int argc, char **argv){
     leNotas(matNotas, notas);
     imprimeMedia(matAlunos, matNotas, nomes, notas, nomeBusca);
 
-    free(nomeBusca);
+    //free(nomeBusca);
     free(matAlunos);
     free(matNotas);
     free(notas);
