@@ -53,6 +53,7 @@ void leAlunos(int *matAlunos, char **nomes, int *n){
 
 //            if(linha%QTD == 0){
 //                matAlunos = (int*) realloc(matAlunos, linha*sizeof(int) + QTD*sizeof(int));
+//                nomes = (char**) realloc(nomes, linha*sizeof(int) + QTD*sizeof(int));
 //            }
         }
     }
@@ -133,16 +134,18 @@ main(int argc, char **argv){
     nomes = (char**) malloc(TAM*sizeof(char*));
 
     if(argc > 1){
-        strcpy(nomeBusca, argv[1]);
+        nomeBusca = argv[1];
         printf(" Resultado da busca feita por: %s \n", nomeBusca);
 
-        leAlunos(matAlunos, nomes, &n);
-        leNotas(matNotas, notas);
-        imprimeMedia(matAlunos, matNotas, nomes, notas, nomeBusca);
-
     }else{
-        printf(" Nenhum nome passado para realizar a busca.");
+        printf(" Nenhum nome passado para realizar a busca. Abaixo lista completa.\n");
+
+        strcpy(nomeBusca, " ");
     }
+
+    leAlunos(matAlunos, nomes, &n);
+    leNotas(matNotas, notas);
+    imprimeMedia(matAlunos, matNotas, nomes, notas, nomeBusca);
 
     free(nomeBusca);
     free(matAlunos);
