@@ -1,8 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define TAMCHAR 50
-#define TAM 10
+#define TAM 50
+#define QTD 10
+
+void printVetor(int *vetor, int tam){
+    int i;
+
+    for(i=0; i<tam; i++)
+        printf("%2i: %i\n", i, vetor[i]);
+}
 
 void strtoupper(char *palavra){
     int i, tam;
@@ -16,7 +23,7 @@ void strtoupper(char *palavra){
 void leAlunos(int *matAlunos, char **nomes, int *n){
 
     int mat, i, linha;
-    char c, nome[TAMCHAR];
+    char c, nome[TAM];
 
     FILE *arq;
     arq = fopen("alunos.txt", "r");
@@ -47,12 +54,12 @@ void leAlunos(int *matAlunos, char **nomes, int *n){
             strcpy(nomes[linha], nome);
             linha++;
 
-            if(linha%TAM == 0){
-                matAlunos = (int*) realloc(matAlunos, linha*sizeof(int) + TAM*sizeof(int));
-//                nomes = (char**) realloc(nomes, linha*sizeof(int) + TAM*sizeof(int));
+            if(linha%QTD == 0){
+                matAlunos = (int*) realloc(matAlunos, linha*sizeof(int) + QTD*sizeof(int));
+//                nomes = (char**) realloc(nomes, linha*sizeof(int) + QTD*sizeof(int));
 //
-//                for(i=linha; i<linha+TAM; i++)
-//                    nomes[i] = (char*) malloc(TAMCHAR*sizeof(char));
+//                for(i=linha; i<linha+QTD; i++)
+//                    nomes[i] = (char*) malloc(TAM*sizeof(char));
             }
         }
     }
@@ -71,21 +78,21 @@ void leNotas(int *matNotas, float *notas){
     if(arq==NULL)
         printf("Erro ao abrir o arquivo notas.txt. Verifique se o arquivo está com o nome correto ou se ele existe.");
     else{
-        i = 0;
 
+        i = 0;
         while(feof(arq)==0){
             if(fscanf(arq, "%i %f %f\n", &mat, &a, &b) != 3)
                 break;
-
             matNotas[i] = mat;
             notas[i] = (a+b)/2;
             i++;
 
-            if(i%TAM == 0){
-                matNotas = (int*) realloc(matNotas, i*sizeof(int) + TAM*sizeof(int));
-                notas = (float*) realloc(notas, i*sizeof(float) + TAM*sizeof(float));
+            if(i%QTD==0){
+                matNotas = (int*) realloc(matNotas, i*sizeof(int) + QTD*sizeof(int));
+                notas = (float*) realloc(notas, i*sizeof(float) + QTD*sizeof(float));
             }
         }
+        matNotas[i] = 0;
     }
     fclose(arq);
 }
@@ -93,18 +100,20 @@ void leNotas(int *matNotas, float *notas){
 void imprimeMedia(int *matAlunos, int *matNotas, char **nomes, float *notas, char *nomeBusca){
 
     int i, j, flag;
-    char temp[TAMCHAR];
+    char temp[TAM];
     i = flag = 0;
 
     strtoupper(nomeBusca);
 
     while(matAlunos[i]>0){
         j = 0;
+
         strcpy(temp, nomes[i]);
         strtoupper(temp);
+
         if(strstr(temp, nomeBusca)!=NULL){
             flag++;
-            while(matAlunos[i] != matNotas[j])
+            while(matAlunos[i]!=matNotas[j] && matNotas[j]>0)
                 j++;
             if(flag==1)
                 printf("\n MEDIA ..... NOME\n");
@@ -123,24 +132,27 @@ main(int argc, char **argv){
     float *notas;
     char **nomes, *nomeBusca;
 
-    nomeBusca = (char*) malloc(TAMCHAR*sizeof(char));
+    nomeBusca = (char*) malloc(TAM*sizeof(char));
 
-    matAlunos = (int*) malloc(TAM*sizeof(int));
-    matNotas = (int*) malloc(TAM*sizeof(int));
-    notas = (float*) malloc(TAM*sizeof(float));
+    matAlunos = (int*) malloc(QTD*sizeof(int));
+    matNotas = (int*) malloc(QTD*sizeof(int));
+    notas = (float*) malloc(QTD*sizeof(float));
 
-    nomes = (char**) malloc(TAMCHAR*sizeof(char*));
-    for(i=0; i<TAMCHAR; i++)
-        nomes[i] = (char*) malloc(TAMCHAR*sizeof(char));
+    nomes = (char**) malloc(TAM*sizeof(char*));
+    for(i=0; i<TAM; i++)
+        nomes[i] = (char*) malloc(TAM*sizeof(char));
 
     if(argc > 1){
         strcpy(nomeBusca, argv[1]);
         printf(" Resultado da busca feita por: %s \n", nomeBusca);
-    }
 
-    leAlunos(matAlunos, nomes, &n);
-    leNotas(matNotas, notas);
-    imprimeMedia(matAlunos, matNotas, nomes, notas, nomeBusca);
+        leAlunos(matAlunos, nomes, &n);
+        printVetor(matAlunos, n);
+        leNotas(matNotas, notas);
+        imprimeMedia(matAlunos, matNotas, nomes, notas, nomeBusca);
+    }else{
+        printf(" Nenhum nome passado para realizar a busca.");
+    }
 
     free(nomeBusca);
     free(matAlunos);
