@@ -1,15 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #define TAM 50
-#define QTD 10
-
-void printVetor(int *vetor, int tam){
-    int i;
-
-    for(i=0; i<tam; i++)
-        printf("%2i: %i\n", i, vetor[i]);
-}
+#define QTD 50
 
 void strtoupper(char *palavra){
     int i, tam;
@@ -51,16 +45,15 @@ void leAlunos(int *matAlunos, char **nomes, int *n){
 
             nome[i] = '\0';
             matAlunos[linha] = mat;
+
+            nomes[linha] = (char*) malloc((strlen(nome)+1)*sizeof(char));
             strcpy(nomes[linha], nome);
+
             linha++;
 
-            if(linha%QTD == 0){
-                matAlunos = (int*) realloc(matAlunos, linha*sizeof(int) + QTD*sizeof(int));
-//                nomes = (char**) realloc(nomes, linha*sizeof(int) + QTD*sizeof(int));
-//
-//                for(i=linha; i<linha+QTD; i++)
-//                    nomes[i] = (char*) malloc(TAM*sizeof(char));
-            }
+//            if(linha%QTD == 0){
+//                matAlunos = (int*) realloc(matAlunos, linha*sizeof(int) + QTD*sizeof(int));
+//            }
         }
     }
     *n = linha;
@@ -87,10 +80,10 @@ void leNotas(int *matNotas, float *notas){
             notas[i] = (a+b)/2;
             i++;
 
-            if(i%QTD==0){
-                matNotas = (int*) realloc(matNotas, i*sizeof(int) + QTD*sizeof(int));
-                notas = (float*) realloc(notas, i*sizeof(float) + QTD*sizeof(float));
-            }
+//            if(i%QTD==0){
+//                matNotas = (int*) realloc(matNotas, i*sizeof(int) + QTD*sizeof(int));
+//                notas = (float*) realloc(notas, i*sizeof(float) + QTD*sizeof(float));
+//            }
         }
         matNotas[i] = 0;
     }
@@ -137,19 +130,16 @@ main(int argc, char **argv){
     matAlunos = (int*) malloc(QTD*sizeof(int));
     matNotas = (int*) malloc(QTD*sizeof(int));
     notas = (float*) malloc(QTD*sizeof(float));
-
     nomes = (char**) malloc(TAM*sizeof(char*));
-    for(i=0; i<TAM; i++)
-        nomes[i] = (char*) malloc(TAM*sizeof(char));
 
     if(argc > 1){
         strcpy(nomeBusca, argv[1]);
         printf(" Resultado da busca feita por: %s \n", nomeBusca);
 
         leAlunos(matAlunos, nomes, &n);
-        printVetor(matAlunos, n);
         leNotas(matNotas, notas);
         imprimeMedia(matAlunos, matNotas, nomes, notas, nomeBusca);
+
     }else{
         printf(" Nenhum nome passado para realizar a busca.");
     }
