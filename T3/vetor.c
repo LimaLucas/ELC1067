@@ -34,17 +34,16 @@
 #include "carta.h"
 #include "memo.h"
 
-#define TAM 50
+#define TAM 10
 
 struct vetor {
 	carta* baralho;   /* baralho - vetor de cartas */
 	int n;		/* número de cartas */
-	bool removido; /* verifica se houver remoção de uma carta */
 };
 
 vetor_t* vetor_cria(void)
 {
-	struct vetor *vet = (struct vetor*)memo_aloca(sizeof(struct vetor));
+	vetor_t *vet = (vetor_t*) memo_aloca(sizeof(vetor_t));
 	vet->n = 0;
 	int i;
 
@@ -71,14 +70,18 @@ void vetor_insere_carta(vetor_t *vet, int indice, carta c)
 {
 	int i, novoTam;
 
-	if(vet->n%TAM == 0 && !vet->removido){
+	if(vet->n%TAM == 0 && vet->n != 0){
         novoTam = vet->n*sizeof(vetor_t*) + TAM*sizeof(vetor_t*);
         vet->baralho = (vetor_t*) memo_realoca(vet->baralho, novoTam);
 
         for(i=vet->n; i<novoTam; i++)
             vet->baralho[i] = NULL;
+	}
 
-        vet->removido = false;
+	i = vet->n;
+	while(i>indice){
+        vet->baralho[i] = vet->baralho[i-1];
+        i--;
 	}
 
 	vet->baralho[indice] = c;
@@ -93,12 +96,11 @@ carta vetor_remove_carta(vetor_t *vet, int indice)
     if(retorna == NULL)
         return NULL;
 
-    vet->removido = true;
     for(indice; vet->baralho[indice]!=NULL; indice++)
-        vet->baralho[indice] = vet->baralho[indice-1];
+        vet->baralho[indice] = vet->baralho[indice+1];
 
 	vet->n--;
-	return NULL;
+	return retorna;
 }
 
 carta vetor_acessa_carta(vetor_t *vet, int indice)

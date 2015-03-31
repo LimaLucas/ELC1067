@@ -19,7 +19,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1427393780 source:c:\users\lucaslima\documents\git\elc1067\t3\principal.c
+1427812344 source:c:\users\lucaslima\documents\git\elc1067\t3\principal.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
@@ -28,11 +28,11 @@
 	"carta.h"
 	"memo.h"
 
-1427378829 c:\users\lucaslima\documents\git\elc1067\t3\vetor.h
+1427812348 c:\users\lucaslima\documents\git\elc1067\t3\vetor.h
 	<stdbool.h>
 	"carta.h"
 
-1427393585 source:c:\users\lucaslima\documents\git\elc1067\t3\vetor.c
+1427812876 source:c:\users\lucaslima\documents\git\elc1067\t3\vetor.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
