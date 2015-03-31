@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1427378829 source:c:\users\lucaslima\documents\git\elc1067\t3\carta.c
+	<stdio.h>
+	<stdlib.h>
+	"carta.h"
+	"memo.h"
+
+1427378829 c:\users\lucaslima\documents\git\elc1067\t3\carta.h
+	<stdlib.h>
+	<stdbool.h>
+
+1427378829 c:\users\lucaslima\documents\git\elc1067\t3\memo.h
+
+1385316878 source:c:\users\lucaslima\documents\git\elc1067\t3\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1427378829 source:c:\users\lucaslima\documents\git\elc1067\t3\memo.c
+	<stdio.h>
+	<stdlib.h>
+
+1427393780 source:c:\users\lucaslima\documents\git\elc1067\t3\principal.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<stdbool.h>
+	"vetor.h"
+	"carta.h"
+	"memo.h"
+
+1427378829 c:\users\lucaslima\documents\git\elc1067\t3\vetor.h
+	<stdbool.h>
+	"carta.h"
+
+1427393585 source:c:\users\lucaslima\documents\git\elc1067\t3\vetor.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"vetor.h"
+	"carta.h"
+	"memo.h"
+

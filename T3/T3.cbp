@@ -31,9 +31,21 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
+		<Unit filename="carta.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="carta.h" />
+		<Unit filename="memo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="memo.h" />
+		<Unit filename="principal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vetor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vetor.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

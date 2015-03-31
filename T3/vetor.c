@@ -34,14 +34,12 @@
 #include "carta.h"
 #include "memo.h"
 
-#define TAM 50;
+#define TAM 50
 
 struct vetor {
-	/* TODO aqui */
-	/* defina os campos da TAD vetor aqui */
-
 	carta* baralho;   /* baralho - vetor de cartas */
 	int n;		/* número de cartas */
+	bool removido; /* verifica se houver remoção de uma carta */
 };
 
 vetor_t* vetor_cria(void)
@@ -73,7 +71,17 @@ int vetor_numelem(vetor_t *vet)
 
 void vetor_insere_carta(vetor_t *vet, int indice, carta c)
 {
-	/* TODO aqui */
+	int i, novoTam;
+
+	if(vet->n%TAM == 0 && !vet->removido){
+        novoTam = vet->n*sizeof(vetor_t*) + TAM*sizeof(vetor_t*);
+        vet->baralho = (vetor_t*) memo_realoca(vet->baralho, novoTam);
+
+        for(i=vet->n; i<novoTam; i++)
+            vet->baralho[i] = NULL;
+	}
+
+	vet->baralho[indice] = c;
 	vet->n++;
 }
 
