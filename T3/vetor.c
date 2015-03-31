@@ -71,9 +71,10 @@ void vetor_insere_carta(vetor_t *vet, int indice, carta c)
 	int i, novoTam;
 
 	if(vet->n%TAM == 0 && vet->n != 0){
-        novoTam = vet->n*sizeof(vetor_t*) + TAM*sizeof(vetor_t*);
-        vet->baralho = (vetor_t*) memo_realoca(vet->baralho, novoTam);
+        novoTam = (vet->n+TAM)*sizeof(carta);
+        vet->baralho = (carta*) memo_realoca(vet->baralho, novoTam);
 
+        novoTam = vet->n + TAM;
         for(i=vet->n; i<novoTam; i++)
             vet->baralho[i] = NULL;
 	}
@@ -96,10 +97,11 @@ carta vetor_remove_carta(vetor_t *vet, int indice)
     if(retorna == NULL)
         return NULL;
 
-    for(indice; vet->baralho[indice]!=NULL; indice++)
+    for(indice; indice<vet->n; indice++)
         vet->baralho[indice] = vet->baralho[indice+1];
 
 	vet->n--;
+	vet->baralho[vet->n]= NULL;
 	return retorna;
 }
 
