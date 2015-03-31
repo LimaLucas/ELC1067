@@ -49,4 +49,4 @@ REGRAS
 - Respeite o formato no repositório Git.
 - Caso o repositório Git não tenha histórico, nota será próxima do zero.
 - Atrasos tem desconto, a critério do professor.
-- Plágio implica em nota zero.
+- Plágio implica em nota zero. 
