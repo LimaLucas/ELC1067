@@ -30,10 +30,49 @@
 
 #include "memo.h"
 #include "jogo.h"
+#include "vetor.h"
+#include "fila.h"
+#include "carta.h"
+#include "pilha.h"
+#include "tela.h"
 
-int 
-main(int argc, char **argv)
-{
+void inicia_jogo(jogo solit){
+
+	vetor* cartas = vetor_cria(), vetor_t fora_ordem = vetor_cria();
+	int i, j;
+
+	srand(time(NULL));
+
+	for(i=0; i<4; i++)
+		for(j=1; j<14; j++)
+			vetor_insere_carta(cartas, (i*13)+j-1; carta_cria(i,j));
+
+	for(i=0; i<vetor_numelem(cartas); i++){
+		j = ((int)rand())%vetor_numelem(cartas);
+		cart c = vetor_remove_carta(cartas, j);
+		vetor_insere_carta(fora_ordem, i, c);
+	}
+
+	for(i=0; i<7; i++){
+		carta c;
+
+		for(j=0; j<=i; j++){
+			c = vetor_remove_cartà(fora_ordem, 0);
+			pilha_insere_carta(jogo_pilha(solit, i), c);
+		}
+		carta_abre(c);
+	}
+
+	for(i=0; i<vetor_numelem(fora_ordem); i++){
+		carta c = vetor_remove_carta(fora_ordem, 0);
+		pilha_insere_carta(jogo_monte(solit), c);
+	}
+
+	vetor_destroi(cartas);
+	vetor_destroi(fora_ordem);
+}
+
+int main(int argc, char **argv){
 	jogo		solit;
 	solit = jogo_cria();
 
