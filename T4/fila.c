@@ -26,6 +26,13 @@
  * SOFTWARE.
  */
 
+/*
+ * Créditos do código acima, com alterações realizadas pelo aluno Lucas Lima
+ * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
+ * Laboratório de Programação II
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -85,4 +92,9 @@ carta fila_remove_carta(fila f)
 bool fila_valida(fila f)
 {
 	return ((f != NULL) && (f->vet != NULL));
+}
+
+/* retorna o topo da fila */
+int fila_topo(fila f){
+	return f->topo;
 }

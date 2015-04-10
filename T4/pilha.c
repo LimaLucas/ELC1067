@@ -26,6 +26,12 @@
  * SOFTWARE.
  */
 
+ /*
+ * Créditos do código acima, com alterações realizadas pelo aluno Lucas Lima
+ * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
+ * Laboratório de Programação II
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -67,4 +73,8 @@ carta pilha_remove_carta(pilha p)
 bool pilha_valida(pilha p)
 {
 	return ((p != NULL) && (p->topo != NULL));
+}
+
+int pilha_topo(pilha p){
+	return fila_topo(p->topo);
 }

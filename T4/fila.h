@@ -28,6 +28,13 @@
  * SOFTWARE.
  */
 
+/*
+ * Créditos do código acima, com alterações realizadas pelo aluno Lucas Lima
+ * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
+ * Laboratório de Programação II
+ */
+
+
 #include <stdbool.h>
 #include "carta.h"
 
@@ -53,5 +60,8 @@ carta fila_remove_carta(fila f);
 
 /* retorna true se f for uma fila válida */
 bool fila_valida(fila f);
+
+/* retorna o topo da fila*/
+int fila_topo(fila f);
 
 #endif

@@ -113,6 +113,8 @@ void tela_escreve(tela t, char *str)
 static int limita_larg(tela t, int larg)
 {
     int x, y, e;
+
+    x = y = e = 0;
     
     assert(tela_valida(t));
     getyx(stdscr, y, x);

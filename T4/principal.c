@@ -25,8 +25,16 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+/*
+ * Créditos do código acima, com alterações realizadas pelo aluno Lucas Lima
+ * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
+ * Laboratório de Programação II
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <ctype.h>
 
 #include "memo.h"
 #include "jogo.h"
@@ -36,20 +44,24 @@
 #include "pilha.h"
 #include "tela.h"
 
+#define QTD 52
+#define PILHAS 28
+
 void inicia_jogo(jogo solit){
 
-	vetor* cartas = vetor_cria(), vetor_t fora_ordem = vetor_cria();
+	vetor_t* cartas = vetor_cria();
+	vetor_t*  fora_ordem = vetor_cria();
 	int i, j;
 
 	srand(time(NULL));
 
 	for(i=0; i<4; i++)
 		for(j=1; j<14; j++)
-			vetor_insere_carta(cartas, (i*13)+j-1; carta_cria(i,j));
+			vetor_insere_carta(cartas, (i*13)+j-1, carta_cria(j, i));
 
-	for(i=0; i<vetor_numelem(cartas); i++){
+	for(i=0; i<QTD; i++){
 		j = ((int)rand())%vetor_numelem(cartas);
-		cart c = vetor_remove_carta(cartas, j);
+		carta c = vetor_remove_carta(cartas, j);
 		vetor_insere_carta(fora_ordem, i, c);
 	}
 
@@ -57,13 +69,13 @@ void inicia_jogo(jogo solit){
 		carta c;
 
 		for(j=0; j<=i; j++){
-			c = vetor_remove_cartà(fora_ordem, 0);
+			c = vetor_remove_carta(fora_ordem, 0);
 			pilha_insere_carta(jogo_pilha(solit, i), c);
 		}
 		carta_abre(c);
 	}
 
-	for(i=0; i<vetor_numelem(fora_ordem); i++){
+	for(i=0; i<QTD-PILHAS; i++){
 		carta c = vetor_remove_carta(fora_ordem, 0);
 		pilha_insere_carta(jogo_monte(solit), c);
 	}
@@ -72,15 +84,31 @@ void inicia_jogo(jogo solit){
 	vetor_destroi(fora_ordem);
 }
 
+bool fim_jogo(jogo solit){
+	int i, qtde = 0;
+
+	for(i=0; i<4; i++)
+		if(pilha_topo(jogo_ases(solit, i)) == 13)
+			qtde++;
+
+	return (qtde == 4);
+}
+
 int main(int argc, char **argv){
 	jogo		solit;
 	solit = jogo_cria();
+	char cmd[3];
 
-	pilha_insere_carta(jogo_monte(solit), carta_cria(AS, OUROS));
-	pilha_insere_carta(jogo_monte(solit), carta_cria(REI, PAUS));
-	pilha_insere_carta(jogo_monte(solit), carta_cria(DAMA, COPAS));
-	pilha_insere_carta(jogo_monte(solit), carta_cria(2, PAUS));
-	pilha_insere_carta(jogo_monte(solit), carta_cria(10, ESPADAS));
+	inicia_jogo(solit);
+
+	jogo_desenha(solit);
+
+	do{
+		cmd[0] = tela_le(jogo_tela(solit));
+		cmd[1] = tela_le(jogo_tela(solit));
+		cmd[2] = tela_le(jogo_tela(solit));
+	}while(!fim_jogo(solit) && toupper(cmd[0]) != 'Q');
+
 
 	jogo_desenha(solit);
 	while (!pilha_vazia(jogo_monte(solit))) {
@@ -89,7 +117,7 @@ int main(int argc, char **argv){
 
 		c = pilha_remove_carta(jogo_monte(solit));
 		carta_abre(c);
-		pilha_insere_carta(jogo_pilha(solit, 3), c);
+		pilha_insere_carta(jogo_descartes(solit), c);
 
 		jogo_desenha(solit);
 	}
