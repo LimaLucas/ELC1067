@@ -57,7 +57,10 @@ pilha jogo_ases(jogo sol, int i);
 pilha jogo_pilha(jogo sol, int i);
 
 /* desenha a mesa do jogo */
-void jogo_desenha(jogo);
+void jogo_desenha(jogo sol);
+
+/* retorna string para preencher o menu */
+char* jogo_menu(jogo sol, int i);
 
 /* acrescente mais funções ao jogo, se necessário */
 #endif

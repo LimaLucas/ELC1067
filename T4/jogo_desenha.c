@@ -106,21 +106,47 @@ void jogo_desenha_pilha(jogo sol, posicao pos, pilha p)
     }
 }
 
+void jogo_desenha_menu(jogo sol, posicao pos, char *str){
+    tela_posiciona(jogo_tela(sol), pos);
+    tela_escreve(jogo_tela(sol), str);
+}
+
+void jogo_desenha_nome(jogo sol, posicao pos){
+    char *nome[] = {
+        "+-\\O/-+",
+        "|--|--|",
+        "|--|--|",
+        "+-/ \\-+",
+        NULL
+    };
+    tela_muda_cor(jogo_tela(sol), vermelho);
+    jogo_desenha_linhas(sol, pos, nome);
+}
+
 void jogo_desenha(jogo sol)
 {
     int i;
-    posicao posmonte = { 1, 5 };
-    posicao posdescartes = { 1, 15 };
-    posicao posases[] = { { 1, 30 }, { 1, 40 }, { 1, 50 }, { 1, 60 } };
-    posicao pospilha[] = { { 7,  5 }, { 7, 15 }, { 7, 25 }, { 7, 35 },
-                           { 7, 45 }, { 7, 55 }, { 7, 65 } };
+    posicao posmonte = { 7, 5 };
+    posicao posdescartes = { 7, 15 };
+    posicao posases[] = { { 7, 35 }, { 7, 45 }, { 7, 55 }, { 7, 65 } };
+    posicao pospilha[] = { { 13,  5 }, { 13, 15 }, { 13, 25 }, { 13, 35 },
+                           { 13, 45 }, { 13, 55 }, { 13, 65 } };
+    
+    posicao posMenuJogo[] = { { 1,  5 }, { 2,  5 }, { 3,  5 }, { 4,  5 }, { 5,  5 }, { 6,  5 } };
+    posicao posNomeJogo = { 7, 25 };
 
     assert(jogo_valido(sol));
     
     tela_limpa(jogo_tela(sol));
     
+    for (i = 0; i < 4; i++) {
+        jogo_desenha_menu(sol, posMenuJogo[i], jogo_menu(sol,i));
+    }
+    printw("\n");
+
     jogo_desenha_topo(sol, posmonte, jogo_monte(sol));
     jogo_desenha_topo(sol, posdescartes, jogo_descartes(sol));
+    jogo_desenha_nome(sol, posNomeJogo);
     for (i = 0; i < 4; i++) {
         jogo_desenha_topo(sol, posases[i], jogo_ases(sol, i));
     }

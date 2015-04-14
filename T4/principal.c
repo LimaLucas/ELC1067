@@ -121,7 +121,7 @@ void passa_descarte_ases(jogo solit, int indice){
 			pilha_insere_carta(jogo_ases(solit, indice), c);
 			jogo_desenha(solit);
 
-		}else tela_escreve_centralizado(jogo_tela(solit), "A pilha esta vazia e a carta não é um Ás!\n", 43);
+		}else tela_escreve_centralizado(jogo_tela(solit), "A pilha esta vazia e a carta não é um Ás!", 72);
 
 	}else{
 		comp = pilha_acessa_carta(jogo_ases(solit, indice));
@@ -132,7 +132,7 @@ void passa_descarte_ases(jogo solit, int indice){
 			pilha_insere_carta(jogo_ases(solit, indice), c);
 			jogo_desenha(solit);
 
-		}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não pode ser movida para este destino!\n", 50);
+		}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não pode ser movida para este destino!", 72);
 	}
 }
 
@@ -149,7 +149,7 @@ void passa_descarte_pilhas(jogo solit, char indiceC){
 			pilha_insere_carta(jogo_pilha(solit, indice), c);
 			jogo_desenha(solit);
 
-		}else tela_escreve_centralizado(jogo_tela(solit), "Apenas o Rei pode ser movido para um destino vazio!\n", 52);
+		}else tela_escreve_centralizado(jogo_tela(solit), "Apenas o Rei pode ser movido para um destino vazio!", 72);
 
 	}else{
 
@@ -165,7 +165,7 @@ void passa_descarte_pilhas(jogo solit, char indiceC){
 						pilha_insere_carta(jogo_pilha(solit, indice), c);
 						jogo_desenha(solit);
 
-					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!\n", 57);
+					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
 					break;
 
 				case COPAS: case OUROS:
@@ -175,11 +175,11 @@ void passa_descarte_pilhas(jogo solit, char indiceC){
 						pilha_insere_carta(jogo_pilha(solit, indice), c);
 						jogo_desenha(solit);
 
-					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!\n", 57);
+					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
 					break;
 			}
 
-		}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui o valor correto para este destino!\n", 55);
+		}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui o valor correto para este destino!", 72);
 	}
 }
 
@@ -202,7 +202,7 @@ void passa_carta_ases(jogo solit, int origem, int destino){
 			
 			jogo_desenha(solit);
 
-		}else tela_escreve_centralizado(jogo_tela(solit), "A pilha esta vazia e a carta não é um Ás!\n", 43);
+		}else tela_escreve_centralizado(jogo_tela(solit), "A pilha esta vazia e a carta não é um Ás!", 72);
 
 	}else{
 		comp = pilha_acessa_carta(jogo_ases(solit, destino));
@@ -219,7 +219,7 @@ void passa_carta_ases(jogo solit, int origem, int destino){
 
 			jogo_desenha(solit);
 
-		}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não pode ser movida para este destino!\n", 50);
+		}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não pode ser movida para este destino!", 72);
 	}
 }
 
@@ -233,7 +233,7 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 	//printw("\nOri: %i Des: %i Qtd: %i", origem, destino, qtde);
 
 	if(qtde < 1 || qtde > 13){
-		tela_escreve_centralizado(jogo_tela(solit), "Quantidade impossível de cartas!\n", 33);
+		tela_escreve_centralizado(jogo_tela(solit), "Quantidade impossível de cartas!", 72);
 		exit(0);
 	}
 
@@ -249,7 +249,7 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 			pilha_insere_carta(jogo_pilha(solit, origem), c);
 			verif--;
 		}
-		tela_escreve_centralizado(jogo_tela(solit), "Não existem cartas suficientes nesta pilha para esta quantidade!\n", 65);
+		tela_escreve_centralizado(jogo_tela(solit), "Não existem cartas suficientes nesta pilha para esta quantidade!", 72);
 	}else{
 		c = pilha_acessa_carta(temp);
 
@@ -277,7 +277,7 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 					pilha_insere_carta(jogo_pilha(solit, origem), c);
 					verif--;
 				}
-				tela_escreve_centralizado(jogo_tela(solit), "Apenas o Rei pode ser movido para um destino vazio!\n", 52);
+				tela_escreve_centralizado(jogo_tela(solit), "Apenas o Rei pode ser movido para um destino vazio!", 72);
 			}
 
 		}else{
@@ -309,7 +309,7 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 								pilha_insere_carta(jogo_pilha(solit, origem), c);
 								verif--;
 							}
-							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!\n", 57);
+							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
 						}
 						break;
 
@@ -335,12 +335,12 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 								pilha_insere_carta(jogo_pilha(solit, origem), c);
 								verif--;
 							}
-							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!\n", 57);
+							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
 						}
 						break;
 				}
 
-			}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui o valor correto para este destino!\n", 55);
+			}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui o valor correto para este destino!", 72);
 		}
 	}
 	pilha_destroi(temp);
@@ -370,6 +370,7 @@ int main(int argc, char **argv){
 		char cmd[3];
 
 		cmd[0] = tela_le(jogo_tela(solit));
+		jogo_desenha(solit);
 		if(cmd[0] == 27) break;		//ESC -> Sai do jogo;
 
 		switch(cmd[0]){
@@ -425,7 +426,7 @@ int main(int argc, char **argv){
 
 			/* Caso não encontre nenhum comando, exibe mensagem de ERRO; */
 			default:
-				tela_escreve_centralizado(jogo_tela(solit), "Comando inesistente!\n", 20);
+				tela_escreve_centralizado(jogo_tela(solit), "Comando inexistente!", 72);
 				break;
 		}
 

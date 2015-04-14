@@ -128,3 +128,13 @@ jogo_pilha(jogo sol, int i)
 	assert(i >= 0 && i < 7);
 	return sol->pilhas[i];
 }
+
+char* jogo_menu(jogo sol, int i){
+	switch(i){
+		case 0: return "                       >>>>> SOLITAIRE <<<<<                       ";
+		case 1: return " SPACE = Mover uma carta do monte para o descarte;                 ";
+		case 2: return " M + <PILHA> = Mover uma carta do descarte para uma das pilhas;    ";
+		case 3: return " <ORIGEM> + <DESTINO> + <QTDE CARTAS> = mover cartas entre pilhas; ";
+	}
+	return " ";
+}
