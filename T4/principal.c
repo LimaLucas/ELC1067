@@ -193,6 +193,12 @@ void passa_carta_ases(jogo solit, int origem, int destino){
 
 			c = pilha_remove_carta(jogo_pilha(solit, origem));
 			pilha_insere_carta(jogo_ases(solit, destino), c);
+
+			if(pilha_topo(jogo_pilha(solit, origem)) > 0){
+				c = pilha_acessa_carta(jogo_pilha(solit, origem));
+				carta_abre(c);
+			}
+			
 			jogo_desenha(solit);
 
 		}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
@@ -204,6 +210,12 @@ void passa_carta_ases(jogo solit, int origem, int destino){
 
 			c = pilha_remove_carta(jogo_pilha(solit, origem));
 			pilha_insere_carta(jogo_ases(solit, destino), c);
+
+			if(pilha_topo(jogo_pilha(solit, origem)) > 0){
+				c = pilha_acessa_carta(jogo_pilha(solit, origem));
+				carta_abre(c);
+			}
+
 			jogo_desenha(solit);
 
 		}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
