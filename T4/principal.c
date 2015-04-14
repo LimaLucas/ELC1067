@@ -95,9 +95,10 @@ bool fim_jogo(jogo solit){
 }
 
 int main(int argc, char **argv){
-	jogo		solit;
+	jogo solit;
 	solit = jogo_cria();
 	char cmd[3];
+	carta c;
 
 	inicia_jogo(solit);
 
@@ -105,23 +106,36 @@ int main(int argc, char **argv){
 
 	do{
 		cmd[0] = tela_le(jogo_tela(solit));
-		cmd[1] = tela_le(jogo_tela(solit));
-		cmd[2] = tela_le(jogo_tela(solit));
-	}while(!fim_jogo(solit) && toupper(cmd[0]) != 'Q');
+		if(cmd[0] == 27) break;		//ESC -> Sai do jogo;
+
+		//cmd[1] = tela_le(jogo_tela(solit));
+		//cmd[2] = tela_le(jogo_tela(solit));
+
+		switch(cmd[0]){
+			case ' ':		// ESPAÇO -> Abre carta do monte no descarte;
+				if(pilha_vazia(jogo_monte(solit))){
+					while(!pilha_vazia(jogo_descartes(solit))){
+						c = pilha_remove_carta(jogo_descartes(solit));
+						carta_fecha(c);
+						pilha_insere_carta(jogo_monte(solit), c);
+					}
+				}else{
+					c = pilha_remove_carta(jogo_monte(solit));
+					carta_abre(c);
+					pilha_insere_carta(jogo_descartes(solit), c);
+
+				}
+				jogo_desenha(solit);
+				break;
+			
+			default:
+				printw("Comando inválido!");
+				break;
+		}
 
 
-	jogo_desenha(solit);
-	while (!pilha_vazia(jogo_monte(solit))) {
-		carta		c;
-		tela_le(jogo_tela(solit));
+	}while(!fim_jogo(solit));
 
-		c = pilha_remove_carta(jogo_monte(solit));
-		carta_abre(c);
-		pilha_insere_carta(jogo_descartes(solit), c);
-
-		jogo_desenha(solit);
-	}
-	tela_le(jogo_tela(solit));
 	jogo_destroi(solit);
 
 	/* relatório de memória */
