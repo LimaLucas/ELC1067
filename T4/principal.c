@@ -183,14 +183,36 @@ void passa_descarte_pilhas(jogo solit, int indice){
 }
 
 /* Passa a ultima carta de uma das pilhas para uma das pilhas de ases */
-void passa_carta_ases(jogo solit, int indice){
+void passa_carta_ases(jogo solit, int origem, int destino){
 
-	
+	carta comp, c = pilha_acessa_carta(jogo_pilha(solit, origem));
+
+	if(pilha_vazia(jogo_ases(solit, destino))){
+		
+		if(carta_valor(c) == 1){
+
+			c = pilha_remove_carta(jogo_pilha(solit, origem));
+			pilha_insere_carta(jogo_ases(solit, destino), c);
+			jogo_desenha(solit);
+
+		}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
+
+	}else{
+		comp = pilha_acessa_carta(jogo_ases(solit, destino));
+
+		if(carta_naipe(c) == carta_naipe(comp) && carta_valor(c) == carta_valor(comp) +1){
+
+			c = pilha_remove_carta(jogo_pilha(solit, origem));
+			pilha_insere_carta(jogo_ases(solit, destino), c);
+			jogo_desenha(solit);
+
+		}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
+	}
 }
 
 /* Passa a ultima carta de uma pilha para outra */
 void passa_carta_pilhas(jogo solit, int indice){
-	
+
 }
 
 /* Verifica se o jogo chegou ao fim */
@@ -215,7 +237,6 @@ int main(int argc, char **argv){
 
 	do{
 		char cmd[3];
-		int i;
 
 		cmd[0] = tela_le(jogo_tela(solit));
 		if(cmd[0] == 27) break;		//ESC -> Sai do jogo;
@@ -244,8 +265,7 @@ int main(int argc, char **argv){
 						passa_descarte_ases(solit, 3);
 						break;
 					case '1': case '2': case '3': case '4': case '5': case '6': case '7':
-						i = atoi(&cmd[0])-1;
-						passa_descarte_pilhas(solit, i);
+						passa_descarte_pilhas(solit, atoi(&cmd[0])-1);
 				}
 				break;
 
@@ -255,20 +275,19 @@ int main(int argc, char **argv){
 
 				switch(cmd[1]){
 					case 'A': case 'a':
-						passa_carta_ases(solit, 0);
+						passa_carta_ases(solit, atoi(&cmd[0])-1,0);
 						break;
 					case 'S': case 's':
-						passa_carta_ases(solit, 1);
+						passa_carta_ases(solit, atoi(&cmd[0])-1, 1);
 						break;
 					case 'D': case 'd':
-						passa_carta_ases(solit, 2);
+						passa_carta_ases(solit, atoi(&cmd[0])-1, 2);
 						break;
 					case 'F': case 'f':
-						passa_carta_ases(solit, 3);
+						passa_carta_ases(solit, atoi(&cmd[0])-1, 3);
 						break;
 					case '1': case '2': case '3': case '4': case '5': case '6': case '7':
-						i = atoi(&cmd[0])-1;
-						passa_carta_pilhas(solit, i);
+						passa_carta_pilhas(solit, atoi(&cmd[0])-1);
 				}
 				break;
 
