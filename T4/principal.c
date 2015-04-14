@@ -137,7 +137,8 @@ void passa_descarte_ases(jogo solit, int indice){
 }
 
 /* Passa a primeira carte do descarte para um das pilhas */
-void passa_descarte_pilhas(jogo solit, int indice){
+void passa_descarte_pilhas(jogo solit, char indiceC){
+	int indice = atoi(&indiceC)-1;
 	carta comp, c = pilha_acessa_carta(jogo_descartes(solit));
 
 	if(pilha_vazia(jogo_pilha(solit, indice))){
@@ -395,7 +396,7 @@ int main(int argc, char **argv){
 						passa_descarte_ases(solit, 3);
 						break;
 					case '1': case '2': case '3': case '4': case '5': case '6': case '7':
-						passa_descarte_pilhas(solit, atoi(&cmd[0])-1);
+						passa_descarte_pilhas(solit, cmd[0]);
 				}
 				break;
 
