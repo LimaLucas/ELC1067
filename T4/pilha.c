@@ -27,7 +27,8 @@
  */
 
  /*
- * Créditos do código acima, com alterações realizadas pelo aluno Lucas Lima
+ * Créditos do código acima.
+ * Com alterações realizadas pelo aluno Lucas Lima
  * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
  * Laboratório de Programação II
  */
@@ -77,4 +78,8 @@ bool pilha_valida(pilha p)
 
 int pilha_topo(pilha p){
 	return fila_topo(p->topo);
+}
+
+carta pilha_acessa_carta(pilha p){
+	return fila_acessa_carta(p->topo);
 }

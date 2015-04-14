@@ -26,6 +26,13 @@
  * SOFTWARE.
  */
 
+/*
+ * Créditos do código acima.
+ * Com alterações realizadas pelo aluno Lucas Lima
+ * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
+ * Laboratório de Programação II
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>

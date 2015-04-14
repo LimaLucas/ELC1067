@@ -127,6 +127,7 @@ void jogo_desenha(jogo sol)
     for (i = 0; i < 7; i++) {
         jogo_desenha_pilha(sol, pospilha[i], jogo_pilha(sol, i));
     }
+    printw("\n");
     
     tela_atualiza(jogo_tela(sol));
 }

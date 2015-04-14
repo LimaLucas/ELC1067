@@ -29,7 +29,8 @@
  */
 
 /*
- * Créditos do código acima, com alterações realizadas pelo aluno Lucas Lima
+ * Créditos do código acima.
+ * Com alterações realizadas pelo aluno Lucas Lima
  * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
  * Laboratório de Programação II
  */
@@ -63,5 +64,8 @@ bool fila_valida(fila f);
 
 /* retorna o topo da fila*/
 int fila_topo(fila f);
+
+/* retorna a carta no topo da fila */
+carta fila_acessa_carta(fila f);
 
 #endif

@@ -27,7 +27,8 @@
  */
 
 /*
- * Créditos do código acima, com alterações realizadas pelo aluno Lucas Lima
+ * Créditos do código acima.
+ * Com alterações realizadas pelo aluno Lucas Lima
  * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
  * Laboratório de Programação II
  */
@@ -97,4 +98,10 @@ bool fila_valida(fila f)
 /* retorna o topo da fila */
 int fila_topo(fila f){
 	return f->topo;
+}
+
+/* retorna a carta no topo da fila */
+carta fila_acessa_carta(fila f){
+	assert((f != NULL) && (f->topo > 0));
+	return vetor_acessa_carta(f->vet, f->topo-1);;
 }

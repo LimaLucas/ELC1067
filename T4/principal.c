@@ -26,7 +26,8 @@
  */
 
 /*
- * Créditos do código acima, com alterações realizadas pelo aluno Lucas Lima
+ * Créditos do código acima.
+ * Com alterações realizadas pelo aluno Lucas Lima
  * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
  * Laboratório de Programação II
  */
@@ -84,6 +85,78 @@ void inicia_jogo(jogo solit){
 	vetor_destroi(fora_ordem);
 }
 
+void abre_carta_monte(jogo solit){
+	carta c;
+
+	if(pilha_vazia(jogo_monte(solit))){
+		while(!pilha_vazia(jogo_descartes(solit))){
+			c = pilha_remove_carta(jogo_descartes(solit));
+			carta_fecha(c);
+			pilha_insere_carta(jogo_monte(solit), c);
+		}
+	}else{
+		c = pilha_remove_carta(jogo_monte(solit));
+		carta_abre(c);
+		pilha_insere_carta(jogo_descartes(solit), c);
+
+	}
+	jogo_desenha(solit);
+}
+
+void passa_carta_ases(jogo solit, int indice){
+
+	carta comp, c = pilha_acessa_carta(jogo_descartes(solit));
+
+	if(pilha_vazia(jogo_ases(solit, indice))){
+		
+		if(carta_valor(c) == 1){
+
+			c = pilha_remove_carta(jogo_descartes(solit));
+			pilha_insere_carta(jogo_ases(solit, indice), c);
+			jogo_desenha(solit);
+
+		}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
+
+	}else{
+		comp = pilha_acessa_carta(jogo_ases(solit, indice));
+
+		if(carta_naipe(c) == carta_naipe(comp) && carta_valor(c) == carta_valor(comp) +1){
+
+			c = pilha_remove_carta(jogo_descartes(solit));
+			pilha_insere_carta(jogo_ases(solit, indice), c);
+			jogo_desenha(solit);
+
+		}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
+	}
+}
+
+void passa_carta_pilhas(jogo solit, int indice){
+	carta comp, c = pilha_acessa_carta(jogo_descartes(solit));
+
+	if(pilha_vazia(jogo_pilha(solit, indice))){
+		
+		if(carta_valor(c) == 13){
+
+			c = pilha_remove_carta(jogo_descartes(solit));
+			pilha_insere_carta(jogo_pilha(solit, indice), c);
+			jogo_desenha(solit);
+
+		}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
+
+	}else{
+
+		comp = pilha_acessa_carta(jogo_pilha(solit, indice));
+
+		if(carta_valor(c) +1 == carta_valor(comp)){
+
+			c = pilha_remove_carta(jogo_descartes(solit));
+			pilha_insere_carta(jogo_pilha(solit, indice), c);
+			jogo_desenha(solit);
+			
+		}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
+	}
+}
+
 bool fim_jogo(jogo solit){
 	int i, qtde = 0;
 
@@ -94,42 +167,51 @@ bool fim_jogo(jogo solit){
 	return (qtde == 4);
 }
 
+
+
 int main(int argc, char **argv){
 	jogo solit;
-	solit = jogo_cria();
-	char cmd[3];
-	carta c;
+	solit = jogo_cria();	
 
 	inicia_jogo(solit);
-
 	jogo_desenha(solit);
 
 	do{
+		char cmd[3];
+		int i;
+
 		cmd[0] = tela_le(jogo_tela(solit));
 		if(cmd[0] == 27) break;		//ESC -> Sai do jogo;
 
-		//cmd[1] = tela_le(jogo_tela(solit));
-		//cmd[2] = tela_le(jogo_tela(solit));
-
 		switch(cmd[0]){
-			case ' ':		// ESPAÇO -> Abre carta do monte no descarte;
-				if(pilha_vazia(jogo_monte(solit))){
-					while(!pilha_vazia(jogo_descartes(solit))){
-						c = pilha_remove_carta(jogo_descartes(solit));
-						carta_fecha(c);
-						pilha_insere_carta(jogo_monte(solit), c);
-					}
-				}else{
-					c = pilha_remove_carta(jogo_monte(solit));
-					carta_abre(c);
-					pilha_insere_carta(jogo_descartes(solit), c);
-
-				}
-				jogo_desenha(solit);
+			case ' ':				// ESPAÇO -> Abre carta do monte no descarte;
+				abre_carta_monte(solit);
 				break;
 			
+			case 'M': case 'm': 	// M -> Mover uma carta do descarte para uma pilha;
+				cmd[0] = tela_le(jogo_tela(solit));
+
+				switch(cmd[0]){
+					case 'A': case 'a':
+						passa_carta_ases(solit, 0);
+						break;
+					case 'S': case 's':
+						passa_carta_ases(solit, 1);
+						break;
+					case 'D': case 'd':
+						passa_carta_ases(solit, 2);
+						break;
+					case 'F': case 'f':
+						passa_carta_ases(solit, 3);
+						break;
+					case '1': case '2': case '3': case '4': case '5': case '6': case '7':
+						i = atoi(&cmd[0])-1;
+						passa_carta_pilhas(solit, i);
+				}
+				break;
+
 			default:
-				printw("Comando inválido!");
+				tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
 				break;
 		}
 
