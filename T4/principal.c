@@ -48,6 +48,7 @@
 #define QTD 52
 #define PILHAS 28
 
+/* Inicia o jogo */
 void inicia_jogo(jogo solit){
 
 	vetor_t* cartas = vetor_cria();
@@ -85,6 +86,10 @@ void inicia_jogo(jogo solit){
 	vetor_destroi(fora_ordem);
 }
 
+/* 
+ * Abre uma carta do monte para o descarte e 
+ * volta todas as cartas caso o monte esteja vazio 
+ */
 void abre_carta_monte(jogo solit){
 	carta c;
 
@@ -103,7 +108,8 @@ void abre_carta_monte(jogo solit){
 	jogo_desenha(solit);
 }
 
-void passa_carta_ases(jogo solit, int indice){
+/* Passa a primeira carta do descarte para uma pilha de ases */
+void passa_descarte_ases(jogo solit, int indice){
 
 	carta comp, c = pilha_acessa_carta(jogo_descartes(solit));
 
@@ -130,7 +136,8 @@ void passa_carta_ases(jogo solit, int indice){
 	}
 }
 
-void passa_carta_pilhas(jogo solit, int indice){
+/* Passa a primeira carte do descarte para um das pilhas */
+void passa_descarte_pilhas(jogo solit, int indice){
 	carta comp, c = pilha_acessa_carta(jogo_descartes(solit));
 
 	if(pilha_vazia(jogo_pilha(solit, indice))){
@@ -149,14 +156,44 @@ void passa_carta_pilhas(jogo solit, int indice){
 
 		if(carta_valor(c) +1 == carta_valor(comp)){
 
-			c = pilha_remove_carta(jogo_descartes(solit));
-			pilha_insere_carta(jogo_pilha(solit, indice), c);
-			jogo_desenha(solit);
-			
+			switch(carta_naipe(comp)){
+				case PAUS: case ESPADAS:
+					if(carta_naipe(c) == COPAS || carta_naipe(c) == OUROS){
+
+						c = pilha_remove_carta(jogo_descartes(solit));
+						pilha_insere_carta(jogo_pilha(solit, indice), c);
+						jogo_desenha(solit);
+
+					}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
+					break;
+
+				case COPAS: case OUROS:
+					if(carta_naipe(c) == PAUS || carta_naipe(c) == ESPADAS){
+
+						c = pilha_remove_carta(jogo_descartes(solit));
+						pilha_insere_carta(jogo_pilha(solit, indice), c);
+						jogo_desenha(solit);
+
+					}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
+					break;
+			}
+
 		}else tela_escreve_centralizado(jogo_tela(solit), "Comando inválido!\n", 18);
 	}
 }
 
+/* Passa a ultima carta de uma das pilhas para uma das pilhas de ases */
+void passa_carta_ases(jogo solit, int indice){
+
+	
+}
+
+/* Passa a ultima carta de uma pilha para outra */
+void passa_carta_pilhas(jogo solit, int indice){
+	
+}
+
+/* Verifica se o jogo chegou ao fim */
 bool fim_jogo(jogo solit){
 	int i, qtde = 0;
 
@@ -168,7 +205,7 @@ bool fim_jogo(jogo solit){
 }
 
 
-
+/* Função main */
 int main(int argc, char **argv){
 	jogo solit;
 	solit = jogo_cria();	
@@ -184,14 +221,39 @@ int main(int argc, char **argv){
 		if(cmd[0] == 27) break;		//ESC -> Sai do jogo;
 
 		switch(cmd[0]){
-			case ' ':				// ESPAÇO -> Abre carta do monte no descarte;
+			/* ESPAÇO -> Abre carta do monte no descarte; */
+			case ' ':	
 				abre_carta_monte(solit);
 				break;
 			
-			case 'M': case 'm': 	// M -> Mover uma carta do descarte para uma pilha;
+			/* M -> Mover uma carta do descarte para uma pilha; */
+			case 'M': case 'm':	
 				cmd[0] = tela_le(jogo_tela(solit));
 
 				switch(cmd[0]){
+					case 'A': case 'a':
+						passa_descarte_ases(solit, 0);
+						break;
+					case 'S': case 's':
+						passa_descarte_ases(solit, 1);
+						break;
+					case 'D': case 'd':
+						passa_descarte_ases(solit, 2);
+						break;
+					case 'F': case 'f':
+						passa_descarte_ases(solit, 3);
+						break;
+					case '1': case '2': case '3': case '4': case '5': case '6': case '7':
+						i = atoi(&cmd[0])-1;
+						passa_descarte_pilhas(solit, i);
+				}
+				break;
+
+			/* 1, 2, 3, 4, 5, 6, 7 -> Mover uma ou mais cartas de uma pilha para outra */
+			case '1': case '2':	case '3': case '4': case '5': case '6': case '7':
+				cmd[1] = tela_le(jogo_tela(solit));
+
+				switch(cmd[1]){
 					case 'A': case 'a':
 						passa_carta_ases(solit, 0);
 						break;
