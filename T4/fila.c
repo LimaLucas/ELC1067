@@ -102,6 +102,6 @@ int fila_topo(fila f){
 
 /* retorna a carta no topo da fila */
 carta fila_acessa_carta(fila f){
-	assert((f != NULL) && (f->topo >= 0));
+	assert((f != NULL) && (f->topo > 0));
 	return vetor_acessa_carta(f->vet, f->topo-1);;
 }
