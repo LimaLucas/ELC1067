@@ -62,6 +62,9 @@ void jogo_desenha(jogo sol);
 /* retorna string para preencher o menu */
 char* jogo_menu(jogo sol, int i);
 
+/* retorna string para preencher o indice das pilhas */
+char* jogo_indice_pilhas(jogo sol, int i);
+
 /* acrescente mais funções ao jogo, se necessário */
 #endif
 
