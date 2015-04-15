@@ -108,11 +108,13 @@ void jogo_desenha_pilha(jogo sol, posicao pos, pilha p)
 
 void jogo_desenha_indice_pilhas(jogo sol, posicao pos, char *str){
     tela_posiciona(jogo_tela(sol), pos);
+    tela_muda_cor(jogo_tela(sol), preto);
     tela_escreve(jogo_tela(sol), str);
 }
 
 void jogo_desenha_menu(jogo sol, posicao pos, char *str){
     tela_posiciona(jogo_tela(sol), pos);
+    tela_muda_cor(jogo_tela(sol), preto);
     tela_escreve(jogo_tela(sol), str);
 }
 
@@ -136,7 +138,8 @@ void jogo_desenha(jogo sol)
     posicao posases[] = { { 8, 35 }, { 8, 45 }, { 8, 55 }, { 8, 65 } };
     posicao pospilha[] = { { 15,  5 }, { 15, 15 }, { 15, 25 }, { 15, 35 }, { 15, 45 }, { 15, 55 }, { 15, 65 } };
 
-    posicao posIndice[] = { { 7, 35 }, { 7, 45 }, { 7, 55 }, { 7, 65 }, 
+    posicao posIndice[] = { { 7, 5 }, { 7, 15 },
+                            { 7, 35 }, { 7, 45 }, { 7, 55 }, { 7, 65 }, 
                             { 14, 5 }, { 14, 15 }, { 14, 25 }, { 14, 35 }, { 14, 45 }, { 14, 55 }, { 14, 65 } };
     
     posicao posMenuJogo[] = { { 1,  5 }, { 2,  5 }, { 3,  5 }, { 4,  5 }, { 5,  5 }, { 6,  5 } };
@@ -151,19 +154,22 @@ void jogo_desenha(jogo sol)
     }
     printw("\n");
 
+    jogo_desenha_indice_pilhas(sol, posIndice[0], jogo_indice_pilhas(sol, 0));
     jogo_desenha_topo(sol, posmonte, jogo_monte(sol));
+    
+    jogo_desenha_indice_pilhas(sol, posIndice[1], jogo_indice_pilhas(sol, 1));
     jogo_desenha_topo(sol, posdescartes, jogo_descartes(sol));
     //jogo_desenha_nome(sol, posNomeJogo);
 
     
-    for (i = 0; i < 4; i++) {
+    for (i = 2; i < 6; i++) {
         jogo_desenha_indice_pilhas(sol, posIndice[i], jogo_indice_pilhas(sol, i));
     }
     for (i = 0; i < 4; i++) {
         jogo_desenha_topo(sol, posases[i], jogo_ases(sol, i));
     }
 
-    for (i = 4; i < 11; i++){
+    for (i = 6; i < 13; i++){
         jogo_desenha_indice_pilhas(sol, posIndice[i], jogo_indice_pilhas(sol, i));
     }
     for (i = 0; i < 7; i++) {

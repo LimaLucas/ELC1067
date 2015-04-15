@@ -24,6 +24,13 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+ /*
+ * Créditos do código acima.
+ * Com alterações realizadas pelo aluno Lucas Lima
+ * de Oliveira para realização do trabalho T4, Solitaire, da matéria de 
+ * Laboratório de Programação II
+ */
+
 #include <assert.h>
 
 #include "jogo.h"
@@ -141,19 +148,22 @@ char* jogo_menu(jogo sol, int i){
 
 char* jogo_indice_pilhas(jogo sol, int i){
 	switch(i){
+		// Monte e descarte
+		case 0: return " SPACE ";
+		case 1: return "   M   ";
 		// Pilhas de As
-		case 0: return "   A   ";
-		case 1: return "   S   ";
-		case 2: return "   D   ";
-		case 3: return "   F   ";
+		case 2: return "   A   ";
+		case 3: return "   S   ";
+		case 4: return "   D   ";
+		case 5: return "   F   ";
 		// Pilhas
-		case 4: return "   1   ";
-		case 5: return "   2   ";
-		case 6: return "   3   ";
-		case 7: return "   4   ";
-		case 8: return "   5   ";
-		case 9: return "   6   ";
-		case 10: return "   7   ";
+		case 6: return "   1   ";
+		case 7: return "   2   ";
+		case 8: return "   3   ";
+		case 9: return "   4   ";
+		case 10: return "   5   ";
+		case 11: return "   6   ";
+		case 12: return "   7   ";
 	}
 	return " ";
 }

@@ -36,6 +36,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include <unistd.h>
 
 #include "memo.h"
 #include "jogo.h"
@@ -400,25 +401,26 @@ bool fim_jogo(jogo solit){
 	return (qtde == 4);
 }
 
-
 /* Função main */
 int main(int argc, char **argv){
 	jogo solit;
 	solit = jogo_cria();
+	char cmd[3];
+	bool win;
 
 	inicia_jogo(solit);
 	jogo_desenha(solit);
 
 	do{
-		char cmd[3];
 
 		cmd[0] = tela_le(jogo_tela(solit));
-		jogo_desenha(solit);
-		if(cmd[0] == 27) break;		//ESC -> Sai do jogo;
+		
+		/* ESC -> Sai do jogo; */
+		if(cmd[0] == 27) break;
 
 		switch(cmd[0]){
 			/* ESPAÇO -> Abre carta do monte no descarte; */
-			case ' ':	
+			case ' ': case 13:	
 				abre_carta_monte(solit);
 				break;
 			
@@ -517,16 +519,16 @@ int main(int argc, char **argv){
 				break;
 		}
 
+		break;
+
 	}while(!fim_jogo(solit));
 
-	if(fim_jogo(solit)){
-		tela_escreve_centralizado(jogo_tela(solit), "YOU WIN!", 72);
-		cmd[0] = tela_le(jogo_tela(solit));
-	}
+	if(fim_jogo(solit)) win = true;
 
 	jogo_destroi(solit);
 
 	/* relatório de memória */
 	memo_relatorio();
+
 	return 0;
 }
