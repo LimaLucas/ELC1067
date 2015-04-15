@@ -133,7 +133,7 @@ void jogo_desenha(jogo sol)
                            { 13, 45 }, { 13, 55 }, { 13, 65 } };
     
     posicao posMenuJogo[] = { { 1,  5 }, { 2,  5 }, { 3,  5 }, { 4,  5 }, { 5,  5 }, { 6,  5 } };
-    posicao posNomeJogo = { 7, 25 };
+    //posicao posNomeJogo = { 7, 25 };
 
     assert(jogo_valido(sol));
     
@@ -146,7 +146,7 @@ void jogo_desenha(jogo sol)
 
     jogo_desenha_topo(sol, posmonte, jogo_monte(sol));
     jogo_desenha_topo(sol, posdescartes, jogo_descartes(sol));
-    jogo_desenha_nome(sol, posNomeJogo);
+    //jogo_desenha_nome(sol, posNomeJogo);
     for (i = 0; i < 4; i++) {
         jogo_desenha_topo(sol, posases[i], jogo_ases(sol, i));
     }

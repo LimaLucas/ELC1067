@@ -109,27 +109,27 @@ void abre_carta_monte(jogo solit){
 }
 
 /* Passa a primeira carta do descarte para uma pilha de ases */
-void passa_descarte_ases(jogo solit, int indice){
+void passa_descarte_ases(jogo solit, int destino){
 
 	carta comp, c = pilha_acessa_carta(jogo_descartes(solit));
 
-	if(pilha_vazia(jogo_ases(solit, indice))){
+	if(pilha_vazia(jogo_ases(solit, destino))){
 		
 		if(carta_valor(c) == 1){
 
 			c = pilha_remove_carta(jogo_descartes(solit));
-			pilha_insere_carta(jogo_ases(solit, indice), c);
+			pilha_insere_carta(jogo_ases(solit, destino), c);
 			jogo_desenha(solit);
 
 		}else tela_escreve_centralizado(jogo_tela(solit), "A pilha esta vazia e a carta não é um Ás!", 72);
 
 	}else{
-		comp = pilha_acessa_carta(jogo_ases(solit, indice));
+		comp = pilha_acessa_carta(jogo_ases(solit, destino));
 
 		if(carta_naipe(c) == carta_naipe(comp) && carta_valor(c) == carta_valor(comp) +1){
 
 			c = pilha_remove_carta(jogo_descartes(solit));
-			pilha_insere_carta(jogo_ases(solit, indice), c);
+			pilha_insere_carta(jogo_ases(solit, destino), c);
 			jogo_desenha(solit);
 
 		}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não pode ser movida para este destino!", 72);
@@ -137,23 +137,23 @@ void passa_descarte_ases(jogo solit, int indice){
 }
 
 /* Passa a primeira carte do descarte para um das pilhas */
-void passa_descarte_pilhas(jogo solit, char indiceC){
-	int indice = atoi(&indiceC)-1;
+void passa_descarte_pilhas(jogo solit, char destinoC){
+	int destino = atoi(&destinoC)-1;
 	carta comp, c = pilha_acessa_carta(jogo_descartes(solit));
 
-	if(pilha_vazia(jogo_pilha(solit, indice))){
+	if(pilha_vazia(jogo_pilha(solit, destino))){
 		
 		if(carta_valor(c) == 13){
 
 			c = pilha_remove_carta(jogo_descartes(solit));
-			pilha_insere_carta(jogo_pilha(solit, indice), c);
+			pilha_insere_carta(jogo_pilha(solit, destino), c);
 			jogo_desenha(solit);
 
 		}else tela_escreve_centralizado(jogo_tela(solit), "Apenas o Rei pode ser movido para um destino vazio!", 72);
 
 	}else{
 
-		comp = pilha_acessa_carta(jogo_pilha(solit, indice));
+		comp = pilha_acessa_carta(jogo_pilha(solit, destino));
 
 		if(carta_valor(c) +1 == carta_valor(comp)){
 
@@ -162,7 +162,7 @@ void passa_descarte_pilhas(jogo solit, char indiceC){
 					if(carta_naipe(c) == COPAS || carta_naipe(c) == OUROS){
 
 						c = pilha_remove_carta(jogo_descartes(solit));
-						pilha_insere_carta(jogo_pilha(solit, indice), c);
+						pilha_insere_carta(jogo_pilha(solit, destino), c);
 						jogo_desenha(solit);
 
 					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
@@ -172,7 +172,7 @@ void passa_descarte_pilhas(jogo solit, char indiceC){
 					if(carta_naipe(c) == PAUS || carta_naipe(c) == ESPADAS){
 
 						c = pilha_remove_carta(jogo_descartes(solit));
-						pilha_insere_carta(jogo_pilha(solit, indice), c);
+						pilha_insere_carta(jogo_pilha(solit, destino), c);
 						jogo_desenha(solit);
 
 					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
@@ -202,7 +202,7 @@ void passa_carta_ases(jogo solit, int origem, int destino){
 			
 			jogo_desenha(solit);
 
-		}else tela_escreve_centralizado(jogo_tela(solit), "A pilha esta vazia e a carta não é um Ás!", 72);
+		}else tela_escreve_centralizado(jogo_tela(solit), "A pilha esta vazia e a carta não é um As!", 72);
 
 	}else{
 		comp = pilha_acessa_carta(jogo_ases(solit, destino));
@@ -230,12 +230,6 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 	carta comp, c = pilha_acessa_carta(jogo_pilha(solit, origem));
 	pilha temp = pilha_cria();
 
-	//printw("\nOri: %i Des: %i Qtd: %i", origem, destino, qtde);
-
-	if(qtde < 1 || qtde > 13){
-		tela_escreve_centralizado(jogo_tela(solit), "Quantidade impossível de cartas!", 72);
-		exit(0);
-	}
 
 	while(!pilha_vazia(jogo_pilha(solit, origem)) && carta_aberta(c) && verif<qtde){
 		c = pilha_remove_carta(jogo_pilha(solit, origem));
@@ -309,7 +303,7 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 								pilha_insere_carta(jogo_pilha(solit, origem), c);
 								verif--;
 							}
-							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
+							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino! ", 72);
 						}
 						break;
 
@@ -344,6 +338,53 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 		}
 	}
 	pilha_destroi(temp);
+}
+
+/* Passa a última carta de uma das pilhas de ases para uma pilha */
+void passa_ases_pilha(jogo solit, int origem, char destinoC){
+
+	int destino = atoi(&destinoC)-1;
+	carta comp, c;
+
+	if(!pilha_vazia(jogo_ases(solit, origem))){
+		c = pilha_acessa_carta(jogo_ases(solit, origem));
+
+		if(pilha_vazia(jogo_pilha(solit, destino))){
+			
+			if(carta_valor(c) == 13){
+
+				c = pilha_remove_carta(jogo_ases(solit, origem));
+				pilha_insere_carta(jogo_pilha(solit, destino), c);
+				jogo_desenha(solit);
+
+			}else tela_escreve_centralizado(jogo_tela(solit), "Apenas o Rei pode ser movido para um destino vazio!", 72);
+
+		}else{
+			comp = pilha_acessa_carta(jogo_pilha(solit, destino));
+
+			switch(carta_naipe(comp)){
+				case PAUS: case ESPADAS:
+					if(carta_naipe(c) == COPAS || carta_naipe(c) == OUROS){
+
+						c = pilha_remove_carta(jogo_ases(solit, origem));
+						pilha_insere_carta(jogo_pilha(solit, destino), c);
+						jogo_desenha(solit);
+
+					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
+					break;
+
+				case COPAS: case OUROS:
+					if(carta_naipe(c) == PAUS || carta_naipe(c) == ESPADAS){
+
+						c = pilha_remove_carta(jogo_ases(solit, origem));
+						pilha_insere_carta(jogo_pilha(solit, destino), c);
+						jogo_desenha(solit);
+
+					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
+					break;
+			}
+		}
+	}else tela_escreve_centralizado(jogo_tela(solit), "Esta pilha de ases está vazia!", 72);
 }
 
 /* Verifica se o jogo chegou ao fim */
@@ -398,6 +439,10 @@ int main(int argc, char **argv){
 						break;
 					case '1': case '2': case '3': case '4': case '5': case '6': case '7':
 						passa_descarte_pilhas(solit, cmd[0]);
+						break;
+					default:
+						tela_escreve_centralizado(jogo_tela(solit), "Pilha de destino inexistente!", 72);
+						break;
 				}
 				break;
 
@@ -407,7 +452,7 @@ int main(int argc, char **argv){
 
 				switch(cmd[1]){
 					case 'A': case 'a':
-						passa_carta_ases(solit, atoi(&cmd[0])-1,0);
+						passa_carta_ases(solit, atoi(&cmd[0])-1, 0);
 						break;
 					case 'S': case 's':
 						passa_carta_ases(solit, atoi(&cmd[0])-1, 1);
@@ -420,11 +465,46 @@ int main(int argc, char **argv){
 						break;
 					case '1': case '2': case '3': case '4': case '5': case '6': case '7':
 						cmd[2] = tela_le(jogo_tela(solit));
-						passa_carta_pilhas(solit, cmd[0], cmd[1], cmd[2]);
+
+						if(cmd[2]=='1' || cmd[2]=='2' || cmd[2]=='3' || cmd[2]=='4' || cmd[2]=='5' || cmd[2]=='6' || cmd[2]=='7' || cmd[2]=='8' || cmd[2]=='9'){
+							passa_carta_pilhas(solit, cmd[0], cmd[1], cmd[2]);
+						}else tela_escreve_centralizado(jogo_tela(solit), "Quantidade informada inválida!", 72);
+						
+						break;
+
+					default:
+						tela_escreve_centralizado(jogo_tela(solit), "Pilha de destino inexistente!", 72);
+						break;
 				}
 				break;
 
-			/* Caso não encontre nenhum comando, exibe mensagem de ERRO; */
+			/* A, a, S, s, D, d, F, f -> Mover uma da pilha de ases para uma pilha */
+			case 'A': case 'a': case 'S': case 's': case 'D': case 'd': case 'F': case 'f':
+				cmd[1] = tela_le(jogo_tela(solit));
+
+				if(cmd[1]=='1' || cmd[1]=='2' || cmd[1]=='3' || cmd[1]=='4' || cmd[1]=='5' || cmd[1]=='6' || cmd[1]=='7' || cmd[1]=='8' || cmd[1]=='9'){
+					switch(cmd[0]){
+						case 'A': case 'a':
+							passa_ases_pilha(solit, 0, cmd[1]);
+							break;
+						case 'S': case 's':
+							passa_ases_pilha(solit, 1, cmd[1]);
+							break;
+						case 'D': case 'd':
+							passa_ases_pilha(solit, 2, cmd[1]);
+							break;
+						case 'F': case 'f':
+							passa_ases_pilha(solit, 3, cmd[1]);
+							break;
+						default:
+							tela_escreve_centralizado(jogo_tela(solit), "Pilha de origem inexistente!", 72);
+							break;
+					}
+				}else tela_escreve_centralizado(jogo_tela(solit), "Pilha de destino inexistente!", 72);
+				break;
+
+
+			/* Caso não encontre nenhum comando válido, exibe mensagem de ERRO; */
 			default:
 				tela_escreve_centralizado(jogo_tela(solit), "Comando inexistente!", 72);
 				break;
