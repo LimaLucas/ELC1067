@@ -121,7 +121,7 @@ void passa_descarte_ases(jogo solit, int destino){
 			pilha_insere_carta(jogo_ases(solit, destino), c);
 			jogo_desenha(solit);
 
-		}else tela_escreve_centralizado(jogo_tela(solit), "A pilha esta vazia e a carta não é um Ás!", 72);
+		}else tela_escreve_centralizado(jogo_tela(solit), "A pilha esta vazia e a carta não é um As!", 72);
 
 	}else{
 		comp = pilha_acessa_carta(jogo_ases(solit, destino));
@@ -362,27 +362,29 @@ void passa_ases_pilha(jogo solit, int origem, char destinoC){
 		}else{
 			comp = pilha_acessa_carta(jogo_pilha(solit, destino));
 
-			switch(carta_naipe(comp)){
-				case PAUS: case ESPADAS:
-					if(carta_naipe(c) == COPAS || carta_naipe(c) == OUROS){
+			if(carta_valor(c) +1 == carta_valor(comp)){
+				switch(carta_naipe(comp)){
+					case PAUS: case ESPADAS:
+						if(carta_naipe(c) == COPAS || carta_naipe(c) == OUROS){
 
-						c = pilha_remove_carta(jogo_ases(solit, origem));
-						pilha_insere_carta(jogo_pilha(solit, destino), c);
-						jogo_desenha(solit);
+							c = pilha_remove_carta(jogo_ases(solit, origem));
+							pilha_insere_carta(jogo_pilha(solit, destino), c);
+							jogo_desenha(solit);
 
-					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
-					break;
+						}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
+						break;
 
-				case COPAS: case OUROS:
-					if(carta_naipe(c) == PAUS || carta_naipe(c) == ESPADAS){
+					case COPAS: case OUROS:
+						if(carta_naipe(c) == PAUS || carta_naipe(c) == ESPADAS){
 
-						c = pilha_remove_carta(jogo_ases(solit, origem));
-						pilha_insere_carta(jogo_pilha(solit, destino), c);
-						jogo_desenha(solit);
+							c = pilha_remove_carta(jogo_ases(solit, origem));
+							pilha_insere_carta(jogo_pilha(solit, destino), c);
+							jogo_desenha(solit);
 
-					}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
-					break;
-			}
+						}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
+						break;
+				}
+			}else tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui o valor correto para este destino!", 72);
 		}
 	}else tela_escreve_centralizado(jogo_tela(solit), "Esta pilha de ases está vazia!", 72);
 }
@@ -450,6 +452,11 @@ int main(int argc, char **argv){
 			case '1': case '2':	case '3': case '4': case '5': case '6': case '7':
 				cmd[1] = tela_le(jogo_tela(solit));
 
+				if(cmd[0] == cmd[1]){
+					tela_escreve_centralizado(jogo_tela(solit), "O destino desta carta não pode ser igual sua origem!", 72);
+					break;
+				}
+				
 				switch(cmd[1]){
 					case 'A': case 'a':
 						passa_carta_ases(solit, atoi(&cmd[0])-1, 0);
@@ -482,6 +489,7 @@ int main(int argc, char **argv){
 			case 'A': case 'a': case 'S': case 's': case 'D': case 'd': case 'F': case 'f':
 				cmd[1] = tela_le(jogo_tela(solit));
 
+
 				if(cmd[1]=='1' || cmd[1]=='2' || cmd[1]=='3' || cmd[1]=='4' || cmd[1]=='5' || cmd[1]=='6' || cmd[1]=='7' || cmd[1]=='8' || cmd[1]=='9'){
 					switch(cmd[0]){
 						case 'A': case 'a':
@@ -497,12 +505,11 @@ int main(int argc, char **argv){
 							passa_ases_pilha(solit, 3, cmd[1]);
 							break;
 						default:
-							tela_escreve_centralizado(jogo_tela(solit), "Pilha de origem inexistente!", 72);
+							tela_escreve_centralizado(jogo_tela(solit), "Pilha de origem inválida!", 72);
 							break;
 					}
-				}else tela_escreve_centralizado(jogo_tela(solit), "Pilha de destino inexistente!", 72);
+				}else tela_escreve_centralizado(jogo_tela(solit), "Pilha de destino inválida!", 72);
 				break;
-
 
 			/* Caso não encontre nenhum comando válido, exibe mensagem de ERRO; */
 			default:
@@ -510,8 +517,12 @@ int main(int argc, char **argv){
 				break;
 		}
 
-
 	}while(!fim_jogo(solit));
+
+	if(fim_jogo(solit)){
+		tela_escreve_centralizado(jogo_tela(solit), "YOU WIN!", 72);
+		cmd[0] = tela_le(jogo_tela(solit));
+	}
 
 	jogo_destroi(solit);
 
