@@ -231,10 +231,11 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 	carta comp, c = pilha_acessa_carta(jogo_pilha(solit, origem));
 	pilha temp = pilha_cria();
 
-
 	while(!pilha_vazia(jogo_pilha(solit, origem)) && carta_aberta(c) && verif<qtde){
+
 		c = pilha_remove_carta(jogo_pilha(solit, origem));
 		pilha_insere_carta(temp, c);
+		c = pilha_acessa_carta(jogo_pilha(solit, origem));
 		verif++;
 	}
 
@@ -245,6 +246,7 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 			verif--;
 		}
 		tela_escreve_centralizado(jogo_tela(solit), "Não existem cartas suficientes nesta pilha para esta quantidade!", 72);
+
 	}else{
 		c = pilha_acessa_carta(temp);
 
@@ -304,7 +306,7 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 								pilha_insere_carta(jogo_pilha(solit, origem), c);
 								verif--;
 							}
-							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino! ", 72);
+							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino (COPAS ou OUROS)! ", 72);
 						}
 						break;
 
@@ -330,7 +332,7 @@ void passa_carta_pilhas(jogo solit, char origemC, char destinoC, char qtdeC){
 								pilha_insere_carta(jogo_pilha(solit, origem), c);
 								verif--;
 							}
-							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino!", 72);
+							tela_escreve_centralizado(jogo_tela(solit), "Esta carta não possui um naipe correto para este destino (PAUS ou ESPADAS!", 72);
 						}
 						break;
 				}
@@ -406,7 +408,6 @@ int main(int argc, char **argv){
 	jogo solit;
 	solit = jogo_cria();
 	char cmd[3];
-	bool win;
 
 	inicia_jogo(solit);
 	jogo_desenha(solit);
@@ -519,11 +520,7 @@ int main(int argc, char **argv){
 				break;
 		}
 
-		break;
-
 	}while(!fim_jogo(solit));
-
-	if(fim_jogo(solit)) win = true;
 
 	jogo_destroi(solit);
 
