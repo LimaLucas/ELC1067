@@ -38,14 +38,16 @@
 /* estados para o campo texto */
 enum { nada, editando } estado;
 
-texto_t* texto_inicia(void)
+texto_t* texto_inicia(char* arq)
 {
+
 	texto_t* t = (texto_t*)memo_aloca(sizeof(texto_t));
 	tamanho_t tam = { 600, 400 };	/* tamanho da tela */
 	
 	tela_inicializa(&t->tela, tam, "Editor teste");
 	tela_limpa(&t->tela);
 
+	t->nome = arq;
 	t->nlin = 0;
 	t->lincur = 0;
 	t->colcur = 0;
