@@ -15,21 +15,29 @@ typedef struct _line {
 	struct _line* next;
 } line;
 
-typedef struct _begend {
+typedef struct _list {
 	line* first;
 	line* last;
-} begend;
+	int n;
+} list;
 
-/* Inicialization of the list */
-begend* createList(void);
+/* Creation list */
+list* list_create(void);
 
-void destroyList(begend* list);
+/* Line insert in the list */
+list* list_insert(list* lst, int pos);
 
-begend* insertList(begend* list, int pos);
+/* Remove line in the list */
+list* list_remove(list* lst, int pos);
 
-line* serchList(begend* list, int pos);
+/* Destroy list */
+void list_destroy(list* lst);
 
-begend* removeList(begend* list, int pos);
+/* Line return that is search in the list */
+line* list_search(line* first, int pos);
+
+/* Returns size of list */
+int list_size(list* lst);
 
 
 #endif /* _LISTA_H_ */
