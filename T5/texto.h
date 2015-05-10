@@ -24,6 +24,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+
 #ifndef _TEXTO_H_
 #define _TEXTO_H_
 
@@ -44,6 +46,8 @@ typedef struct {
 
 
 texto_t* texto_inicia(char* arq);
+
+/* destroi todo o conteúdo de texto_t */
 void texto_destroi(texto_t* txt);
 
 /* retorna a estrutura tela_t */
@@ -58,7 +62,7 @@ void texto_atualiza_tela(texto_t *txt);
 /* processa os comandos do usuário */
 bool texto_processa_comandos(texto_t* txt);
 
-void texto_le_arquivo(texto_t *txt, char *nome);
+void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq);
 
 void texto_move_esq(texto_t *txt);
 void texto_move_dir(texto_t *txt);

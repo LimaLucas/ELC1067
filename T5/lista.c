@@ -14,7 +14,7 @@ list* list_create(void){
 	
 	line* ln = (line*) memo_aloca(sizeof(line));
 	ln->text = (char*) memo_aloca(sizeof(char));
-	ln->text[0] = '\0';
+	ln->text[0] = -1;
 	ln->next = NULL;
 	ln->prev = NULL;
 
@@ -87,6 +87,8 @@ list* list_remove(list* lst, int pos){
 	}
 	memo_libera(ln->text);
 	memo_libera(ln);
+
+	lst->n--;
 
 	return lst;
 }

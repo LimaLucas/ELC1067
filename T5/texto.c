@@ -44,7 +44,7 @@ texto_t* texto_inicia(char* arq)
 	texto_t* t = (texto_t*)memo_aloca(sizeof(texto_t));
 	tamanho_t tam = { 600, 400 };	/* tamanho da tela */
 	
-	tela_inicializa(&t->tela, tam, "Editor teste");
+	tela_inicializa(&t->tela, tam, "Outro Editor");
 	tela_limpa(&t->tela);
 
 	t->nome = arq;
@@ -63,6 +63,9 @@ void texto_destroi(texto_t* txt)
 {
 	tela_limpa(&txt->tela);
 	tela_finaliza(&txt->tela);
+	while(txt->linhas->n > 0)
+		txt->linhas = list_remove(txt->linhas, txt->linhas->n);
+	list_destroy(txt->linhas);
 	memo_libera(txt);
 }
 
@@ -113,9 +116,9 @@ void texto_desenha_tela(texto_t *txt)
 	tt = tela_tamanho_texto(&txt->tela, texto);
 	for(i = 1; i < 10; i++){
 		/* cores RGB da linha */
-		cor.r = (float)i/10;
-		cor.g = (float)i/10;
-		cor.b = (float)i/10;
+		cor.r = (float)0;
+		cor.g = (float)0;
+		cor.b = (float)0;
 
 		/* calcula posicao da nova linha */
 		pt.x = 1;
@@ -172,6 +175,31 @@ bool texto_processa_comandos(texto_t* txt)
 		texto_move_baixo(txt);
 
 	return true;
+}
+
+void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq)
+{
+
+	char c;
+	int i, j;
+	line* ln;
+
+	i = 1;
+	j = 0;
+
+	while(feof(arq)==0){
+		txt->linhas = list_insert(txt->linhas, i);
+		ln = list_search(txt->linhas->first, i);
+		do{
+			c = fgetc(arq);
+			memo_realoca(ln->text, strlen(ln->text)+sizeof(char));
+			ln->text[j] = c;
+			j++;
+		}while(c!='\n' && feof(arq)==0);
+		ln->text[j] = '\0';
+		j = 0;
+		i++;
+	}
 }
 
 void texto_move_esq(texto_t *txt)
