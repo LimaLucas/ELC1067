@@ -154,7 +154,7 @@ bool texto_processa_comandos(texto_t* txt)
 		estado = nada;
 	}
 	if( tecla == ALLEGRO_KEY_E && (modificador & ALLEGRO_KEYMOD_CTRL) ) {
-		printf("CTRL+S EDITAR\n");
+		printf("CTRL+E EDITAR\n");
 		/* muda estado na variável para editando */
 		estado = editando;
 	}
@@ -184,8 +184,7 @@ void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq)
 	int i, j;
 	line* ln;
 
-	i = 1;
-	j = 0;
+	i = j = 0;
 
 	while(feof(arq)==0){
 		txt->linhas = list_insert(txt->linhas, i);
@@ -200,29 +199,39 @@ void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq)
 		j = 0;
 		i++;
 	}
+	txt->nlin = i-2;
 }
 
 void texto_move_esq(texto_t *txt)
 {
-	/* ATENÇÃO: apenas exemplo. Mudar implementação */
-	txt->colcur--;
+	if(txt->colcur == 0 && txt->lincur > 0){
+		txt->lincur--;
+		txt->colcur = strlen(list_search(txt->linhas->first, txt->lincur)->text)-1;
+	}else if(txt->colcur > 0){
+		txt->colcur--;
+	}
 }
 
 void texto_move_dir(texto_t *txt)
-{
-	/* ATENÇÃO: apenas exemplo. Mudar implementação */
-	txt->colcur++;
+{	
+	int size = strlen(list_search(txt->linhas->first, txt->lincur)->text)-1;
+	if(txt->colcur == size && txt->lincur < txt->nlin){
+		txt->lincur++;
+		txt->colcur = 0;
+	}else if(txt->colcur < size){
+		txt->colcur++;
+	}
 }
 
 void texto_move_baixo(texto_t *txt)
 {
-	/* ATENÇÃO: apenas exemplo. Mudar implementação */
-	txt->lincur++;
+	if(txt->lincur < txt->nlin)
+		txt->lincur++;
 }
 
 void texto_move_cima(texto_t *txt)
 {
-	/* ATENÇÃO: apenas exemplo. Mudar implementação */
-	txt->lincur--;
+	if(txt->lincur > 0)
+		txt->lincur--;
 }
 

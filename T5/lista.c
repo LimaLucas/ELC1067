@@ -32,7 +32,7 @@ list* list_insert(list* lst, int pos){
 	if(pos<0) pos*=-1;
 
 	int size = list_size(lst);
-	if(size+1 < pos || pos == 0){
+	if(size+1 < pos){
 		printf("Não é possível inserir linha nessa posição!\n");
 		return lst;
 	}
@@ -41,7 +41,7 @@ list* list_insert(list* lst, int pos){
 	ln->text = (char*) memo_aloca(sizeof(char));
 	ln->text[0] = '\0';
 
-	if(pos > 1){
+	if(pos > 0){
 		line* aux = list_search(lst->first, pos-1); 
 		ln->prev = aux;
 		ln->next = aux->next;
@@ -50,11 +50,16 @@ list* list_insert(list* lst, int pos){
 		else
 			aux->next->prev = ln;
 		aux->next = ln;
-	}else{
+	}else if(lst->first != NULL){
 		ln->prev = NULL;
 		ln->next = lst->first;
 		lst->first->prev = ln;
 		lst->first = ln;
+	}else{
+		ln->prev = NULL;
+		ln->next = NULL;
+		lst->first = ln;
+		lst->last = ln;
 	}
 	
 	lst->n++;

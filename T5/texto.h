@@ -34,10 +34,10 @@
 
 typedef struct {
 	char *nome;     /* nome do arquivo sendo editado */
-	list* linhas; /* lista de linhas do arquivo */
+	list* linhas;   /* lista de linhas do arquivo */
 	int nlin;       /* numero de linhas no texto (numero de elementos atualmente em linhas) */
 	int lincur;     /* linha onde esta o cursor (comeca em 0) */
-	int colcur;     /* coluna onde esta o cursoe na linha acima */
+	int colcur;     /* coluna onde esta o cursor na linha acima */
 	int lin1;       /* linha do texto mostrada na primeira linha da tela */
 	int col1;       /* coluna do texto mostrada na primeira coluna da tela */
 	
@@ -62,11 +62,19 @@ void texto_atualiza_tela(texto_t *txt);
 /* processa os comandos do usuário */
 bool texto_processa_comandos(texto_t* txt);
 
+/* lê o arquivo passado por parâmetro */
 void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq);
 
+/* movimento o cursor para a esquerda */
 void texto_move_esq(texto_t *txt);
+
+/* movimento o cursor para a direita */
 void texto_move_dir(texto_t *txt);
+
+/* movimento o cursor para baixo */
 void texto_move_baixo(texto_t *txt);
+
+/* movimento o cursor para a cima */
 void texto_move_cima(texto_t *txt);
 
 void texto_insere_char(texto_t *txt, char c);

@@ -23,7 +23,7 @@
 
  	FILE *file = fopen(argv[1], "r+");
  	if(file == NULL){
- 		FILE *file = fopen(argv[1], "w+");
+ 		file = fopen(argv[1], "w+");
  	}
 
  	texto_t* texto;
