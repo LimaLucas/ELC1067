@@ -209,53 +209,59 @@ void tela_processa_eventos(tela_t *tela)
 
     //al_wait_for_event(tela->queue, &event);
     while(al_get_next_event(tela->queue, &event)) {
-      switch (event.type) {
-	  /* tecla foi pressionada */
-	  /*case ALLEGRO_EVENT_KEY_DOWN: */
-	  case ALLEGRO_EVENT_KEY_CHAR:
-	    {
+        switch (event.type) {
+        /* tecla foi pressionada */
+        /*case ALLEGRO_EVENT_KEY_DOWN: */
+            case ALLEGRO_EVENT_KEY_CHAR:
+            {
 #if 0
-	      const char* keyname = al_keycode_to_name(event.keyboard.keycode);
-	      printf("code %x modif %x char '%c' name '%s' (q=%d)\n", event.keyboard.keycode,
-		event.keyboard.modifiers, (char)event.keyboard.keycode, keyname, 'Q');
+                const char* keyname = al_keycode_to_name(event.keyboard.keycode);
+                printf("code %x modif %x char '%c' name '%s' (q=%d)\n", event.keyboard.keycode,
+                event.keyboard.modifiers, (char)event.keyboard.keycode, keyname, 'Q');
 #endif
-		tela->tecla = event.keyboard.keycode;
-		tela->modif = event.keyboard.modifiers;
-		    break;
-	    }
-	   case ALLEGRO_EVENT_MOUSE_AXES:
-	   {
-	      tela->rato.x = XX2U(event.mouse.x);
-	      tela->rato.y = YX2U(event.mouse.y);
-	      break;
-	   }
-	   case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-	   {
-	      if (event.mouse.button == 1)
-		tela->botao = true;
-	      break;
-	   }
-	   case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-	   {
-	      if (event.mouse.button == 1)
-		tela->botao = false;
-	     break;
-	   }
-	   case ALLEGRO_EVENT_TIMER:
-	   {
-	     break;
-	   }
+                tela->tecla = event.keyboard.keycode;
+                tela->modif = event.keyboard.modifiers;
+                break;
+            }
+            case ALLEGRO_EVENT_MOUSE_AXES:
+            {
+                tela->rato.x = XX2U(event.mouse.x);
+                tela->rato.y = YX2U(event.mouse.y);
+                break;
+            }
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+            {
+                if (event.mouse.button == 1)
+                    tela->botao = true;
+                break;
+            }
+            case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+            {
+                if (event.mouse.button == 1)
+                    tela->botao = false;
+                break;
+            }
+            case ALLEGRO_EVENT_TIMER:
+            {
+                break;
+            }
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            {
+                tela->tecla = event.type;
+                break;
+            }
+
 #if 0
-	  /* botao de fechar janela pressionado */
-	  case ALLEGRO_EVENT_DISPLAY_CLOSE:
-		  {
-			  return;
-			  break;
-		  }
+            /* botao de fechar janela pressionado */
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+            {
+                return;
+                break;
+            }
 #endif
-	  default:
-		  break;
-	}
+            default:
+                break;
+    	}  
     }
 }
 
@@ -265,7 +271,6 @@ int tela_tecla(tela_t *tela)
     int tecla;
     tela_processa_eventos(tela);
     tecla = tela->tecla;
-    tela->tecla = 0;
     return tecla;
 }
 

@@ -106,6 +106,8 @@ void texto_desenha_tela(texto_t *txt)
 	ponto_t pt;
 	int i;
 	line* ln;
+
+	cor.r = cor.g = cor.b = (float)0;
 	
 	/* limpa a tela. Comentar se ficar lento */
 	tela_limpa(&txt->tela);
@@ -113,11 +115,6 @@ void texto_desenha_tela(texto_t *txt)
 	for(i = 1; i <= txt->nlin+1; i++){
 		ln = list_search(txt->linhas->first, i-1);
 		tt = tela_tamanho_texto(&txt->tela, ln->text);
-
-		/* cores RGB da linha */
-		cor.r = (float)0;
-		cor.g = (float)0;
-		cor.b = (float)0;
 
 		/* calcula posicao da nova linha */
 		pt.x = 1;
@@ -143,6 +140,11 @@ bool texto_processa_comandos(texto_t* txt)
 	int tecla = tela_tecla(texto_tela(txt));
 	int modificador = tela_tecla_modificador(texto_tela(txt));
 	/* apertou CRTL + Q ? */
+
+	if( tecla == ALLEGRO_EVENT_DISPLAY_CLOSE ){
+		printf("CLOSE\n");
+		return false;
+	}
 	if( tecla == ALLEGRO_KEY_Q && (modificador & ALLEGRO_KEYMOD_CTRL) ) {
 		printf("CTRL+Q SAIR\n");
 		return false;
