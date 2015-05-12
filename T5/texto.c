@@ -81,11 +81,9 @@ void texto_desenha_cursor_tela(texto_t *txt)
 	tamanho_t tt;
 	ponto_t pt1, pt2;
 
-	/* ATENÇÃO: ajustar aqui o tamanho do texto onde o cursor está.
-	 * Isso é necessário pois cada caractere pode ter tamanhos diferentes
-	 * na horizontal.  */
 	{
-		char* texto = "nada, aperte CTRL+q para sair ou direcionais para cursor!";
+		line* ln = list_search(txt->linhas->first, txt->lincur);
+		char* texto =  ln->text;
 		char subtexto[60];
 		strncpy(subtexto, texto, txt->colcur*sizeof(char));
 		subtexto[txt->colcur] = '\0';
@@ -104,17 +102,18 @@ void texto_desenha_cursor_tela(texto_t *txt)
 void texto_desenha_tela(texto_t *txt)
 {
 	cor_t cor;
-	char *texto;
 	tamanho_t tt;
 	ponto_t pt;
 	int i;
+	line* ln;
 	
 	/* limpa a tela. Comentar se ficar lento */
 	tela_limpa(&txt->tela);
+	
+	for(i = 1; i <= txt->nlin+1; i++){
+		ln = list_search(txt->linhas->first, i-1);
+		tt = tela_tamanho_texto(&txt->tela, ln->text);
 
-	texto = "nada, aperte CTRL+q para sair ou direcionais para cursor!";
-	tt = tela_tamanho_texto(&txt->tela, texto);
-	for(i = 1; i < 10; i++){
 		/* cores RGB da linha */
 		cor.r = (float)0;
 		cor.g = (float)0;
@@ -126,7 +125,7 @@ void texto_desenha_tela(texto_t *txt)
 
 		/* muda cor e desenha linha */
 		tela_cor(&txt->tela, cor);
-		tela_texto(&txt->tela, pt, texto);
+		tela_texto(&txt->tela, pt, ln->text);
 	}
 
 	texto_desenha_cursor_tela(txt);
@@ -186,27 +185,31 @@ void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq)
 
 	i = j = 0;
 
+	c = fgetc(arq);
+
 	while(feof(arq)==0){
 		txt->linhas = list_insert(txt->linhas, i);
 		ln = list_search(txt->linhas->first, i);
+
 		do{
-			c = fgetc(arq);
-			memo_realoca(ln->text, strlen(ln->text)+sizeof(char));
+			ln->text = memo_realoca(ln->text, strlen(ln->text)+sizeof(char));
 			ln->text[j] = c;
 			j++;
+			c = fgetc(arq);
 		}while(c!='\n' && feof(arq)==0);
 		ln->text[j] = '\0';
 		j = 0;
 		i++;
+		c = fgetc(arq);
 	}
-	txt->nlin = i-2;
+	txt->nlin = i-1;
 }
 
 void texto_move_esq(texto_t *txt)
 {
 	if(txt->colcur == 0 && txt->lincur > 0){
 		txt->lincur--;
-		txt->colcur = strlen(list_search(txt->linhas->first, txt->lincur)->text)-1;
+		txt->colcur = strlen(list_search(txt->linhas->first, txt->lincur)->text);
 	}else if(txt->colcur > 0){
 		txt->colcur--;
 	}
@@ -214,18 +217,18 @@ void texto_move_esq(texto_t *txt)
 
 void texto_move_dir(texto_t *txt)
 {	
-	int size = strlen(list_search(txt->linhas->first, txt->lincur)->text)-1;
+	int size = strlen(list_search(txt->linhas->first, txt->lincur)->text);
 	if(txt->colcur == size && txt->lincur < txt->nlin){
 		txt->lincur++;
 		txt->colcur = 0;
-	}else if(txt->colcur < size){
+	}else if(txt->colcur < size && txt->lincur <= txt->nlin){
 		txt->colcur++;
 	}
 }
 
 void texto_move_baixo(texto_t *txt)
 {
-	if(txt->lincur < txt->nlin)
+	if(txt->lincur <= txt->nlin-1)
 		txt->lincur++;
 }
 
