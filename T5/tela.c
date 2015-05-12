@@ -271,6 +271,7 @@ int tela_tecla(tela_t *tela)
     int tecla;
     tela_processa_eventos(tela);
     tecla = tela->tecla;
+    tela->tecla = 0;
     return tecla;
 }
 

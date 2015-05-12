@@ -142,23 +142,23 @@ bool texto_processa_comandos(texto_t* txt)
 	/* apertou CRTL + Q ? */
 
 	if( tecla == ALLEGRO_EVENT_DISPLAY_CLOSE ){
-		printf("CLOSE\n");
+		printf("DISPLAY CLOSE\n");
 		return false;
-	}
+	}else
 	if( tecla == ALLEGRO_KEY_Q && (modificador & ALLEGRO_KEYMOD_CTRL) ) {
 		printf("CTRL+Q SAIR\n");
 		return false;
-	}
+	}else
 	if( tecla == ALLEGRO_KEY_S && (modificador & ALLEGRO_KEYMOD_CTRL) ) {
 		printf("CTRL+S SALVAR e PARAR DE EDITAR\n");
 		/* muda estado na variável para não editar */
 		estado = nada;
-	}
+	}else 
 	if( tecla == ALLEGRO_KEY_E && (modificador & ALLEGRO_KEYMOD_CTRL) ) {
 		printf("CTRL+E EDITAR\n");
 		/* muda estado na variável para editando */
 		estado = editando;
-	}
+	}else
 
 	/* teclas direcionais 
 		ALLEGRO_KEY_LEFT
@@ -168,15 +168,26 @@ bool texto_processa_comandos(texto_t* txt)
 	*/
 	if( tecla == ALLEGRO_KEY_LEFT )
 		texto_move_esq(txt);
+	else
 	if( tecla == ALLEGRO_KEY_RIGHT )
 		texto_move_dir(txt);
+	else
 	if( tecla == ALLEGRO_KEY_UP )
 		texto_move_cima(txt);
+	else
 	if( tecla == ALLEGRO_KEY_DOWN )
 		texto_move_baixo(txt);
 
+	/*if(estado == editando){
+
+	}*/	
+
 	return true;
 }
+
+/*void texto_insere_char(texto_t *txt, char c){
+
+}*/
 
 void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq)
 {

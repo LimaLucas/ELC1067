@@ -77,6 +77,7 @@ void texto_move_baixo(texto_t *txt);
 /* movimento o cursor para a cima */
 void texto_move_cima(texto_t *txt);
 
+/* insere caracter que o usuário digitar */
 void texto_insere_char(texto_t *txt, char c);
 
 void texto_remove_char(texto_t *txt);
