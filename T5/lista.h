@@ -33,7 +33,7 @@ list* list_remove(list* lst, int pos);
 /* Destroy list */
 void list_destroy(list* lst);
 
-/* Line return that is search in the list */
+/* Return the line that is searched in the list */
 line* list_search(line* first, int pos);
 
 /* Returns size of list */

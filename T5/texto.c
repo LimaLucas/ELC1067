@@ -38,7 +38,7 @@
 /* estados para o campo texto */
 enum { nada, editando } estado;
 
-texto_t* texto_inicia(char* arq)
+texto_t* texto_inicia(char* file_name)
 {
 
 	texto_t* t = (texto_t*)memo_aloca(sizeof(texto_t));
@@ -47,14 +47,14 @@ texto_t* texto_inicia(char* arq)
 	tela_inicializa(&t->tela, tam, "Outro Editor");
 	tela_limpa(&t->tela);
 
-	t->nome = arq;
+	t->nome = file_name;
 	t->nlin = 0;
 	t->lincur = 0;
 	t->colcur = 0;
 	t->lin1 = 0;
 	t->col1 = 0;
 
-	/* inicialize aqui quaisquer outras estruturas, como a lista de linhas */
+	t->linhas = list_create();
 
 	return t;
 }
@@ -63,9 +63,11 @@ void texto_destroi(texto_t* txt)
 {
 	tela_limpa(&txt->tela);
 	tela_finaliza(&txt->tela);
+
 	while(txt->linhas->n > 0)
 		txt->linhas = list_remove(txt->linhas, txt->linhas->n);
 	list_destroy(txt->linhas);
+	
 	memo_libera(txt);
 }
 
@@ -112,7 +114,7 @@ void texto_desenha_tela(texto_t *txt)
 	/* limpa a tela. Comentar se ficar lento */
 	tela_limpa(&txt->tela);
 	
-	for(i = 1; i <= txt->nlin+1; i++){
+	for(i=1; i<=txt->nlin+1; i++){
 		ln = list_search(txt->linhas->first, i-1);
 		tt = tela_tamanho_texto(&txt->tela, ln->text);
 
@@ -135,59 +137,168 @@ void texto_atualiza_tela(texto_t *txt)
 	tela_espera(30);
 }
 
-bool texto_processa_comandos(texto_t* txt)
+bool texto_processa_comandos(texto_t* txt, FILE* file, char* file_name)
 {
 	int tecla = tela_tecla(texto_tela(txt));
 	int modificador = tela_tecla_modificador(texto_tela(txt));
-	/* apertou CRTL + Q ? */
+	/* Comandos para definir ações:
+		ALLEGRO_EVENT_DISPLAY_CLOSE
+		ALLEGRO_KEYMOD_CTRL && ALLEGRO_KEY_Q
+		ALLEGRO_KEYMOD_CTRL && ALLEGRO_KEY_S 
+		ALLEGRO_KEYMOD_CTRL && ALLEGRO_KEY_E
+	*/
 
 	if( tecla == ALLEGRO_EVENT_DISPLAY_CLOSE ){
 		printf("DISPLAY CLOSE\n");
 		return false;
-	}else
-	if( tecla == ALLEGRO_KEY_Q && (modificador & ALLEGRO_KEYMOD_CTRL) ) {
-		printf("CTRL+Q SAIR\n");
+
+	}else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_Q ) {
+		printf("CTRL+Q = SAIR\n");
 		return false;
-	}else
-	if( tecla == ALLEGRO_KEY_S && (modificador & ALLEGRO_KEYMOD_CTRL) ) {
-		printf("CTRL+S SALVAR e PARAR DE EDITAR\n");
+
+	}else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_S ) {
+		printf("CTRL+S = SALVAR e PARAR DE EDITAR\n");
 		/* muda estado na variável para não editar */
 		estado = nada;
-	}else 
-	if( tecla == ALLEGRO_KEY_E && (modificador & ALLEGRO_KEYMOD_CTRL) ) {
-		printf("CTRL+E EDITAR\n");
+		fclose(file);
+		file = fopen(file_name, "r+");
+
+	}else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_E ) {
+		printf("CTRL+E = EDITAR\n");
 		/* muda estado na variável para editando */
 		estado = editando;
-	}else
+	}
 
-	/* teclas direcionais 
+	/* Teclas direcionais 
 		ALLEGRO_KEY_LEFT
 		ALLEGRO_KEY_RIGHT
 		ALLEGRO_KEY_UP
 		ALLEGRO_KEY_DOWN
+		ALLEGRO_KEYMOD_CTRL && ALLEGRO_KEY_HOME
+		ALLEGRO_KEY_HOME
+		ALLEGRO_KEYMOD_CTRL && ALLEGRO_KEY_END
+		ALLEGRO_KEY_END
 	*/
-	if( tecla == ALLEGRO_KEY_LEFT )
+
+	else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_HOME ){
+		txt->colcur = 0;
+		txt->lincur = 0;
+	
+	}else if( tecla == ALLEGRO_KEY_HOME )
+		txt->colcur = 0;
+
+	else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_END ){
+		txt->lincur = txt->linhas->n-1;
+		txt->colcur = strlen(list_search(txt->linhas->first, txt->lincur)->text);
+	
+	}else if( tecla == ALLEGRO_KEY_END )
+		txt->colcur = strlen(list_search(txt->linhas->first, txt->lincur)->text);
+
+	else if( tecla == ALLEGRO_KEY_LEFT )
 		texto_move_esq(txt);
-	else
-	if( tecla == ALLEGRO_KEY_RIGHT )
+
+	else if( tecla == ALLEGRO_KEY_RIGHT )
 		texto_move_dir(txt);
-	else
-	if( tecla == ALLEGRO_KEY_UP )
+
+	else if( tecla == ALLEGRO_KEY_UP )
 		texto_move_cima(txt);
-	else
-	if( tecla == ALLEGRO_KEY_DOWN )
+
+	else if( tecla == ALLEGRO_KEY_DOWN )
 		texto_move_baixo(txt);
 
-	/*if(estado == editando){
+	/* Teclas para a edição do arquivo: 
+		ALLEGRO_KEY_ENTER
+		ALLEGRO_KEY_BACKSPACE
+		ALLEGRO_KEY_0 .. ALLEGRO_KEY_9
+		ALLEGRO_KEY_A .. ALLEGRO_KEY_Z
+		ALLEGRO_KEY_SPACE
+	*/
 
-	}*/	
+	if(estado == editando){
+		if( tecla == ALLEGRO_KEY_ENTER ){
+			texto_quebra_linha(txt);
+		
+		}else if( tecla == ALLEGRO_KEY_BACKSPACE || tecla == ALLEGRO_KEY_DELETE ){
+			texto_remove_char(txt);
+		
+		}else if(!(modificador & ALLEGRO_KEYMOD_CTRL) && ((tecla == ALLEGRO_KEY_SPACE)
+					|| (tecla >= ALLEGRO_KEY_0 && tecla <= ALLEGRO_KEY_9)
+					|| (tecla >= ALLEGRO_KEY_A && tecla <= ALLEGRO_KEY_Z)) ){
+			texto_insere_char(txt, tecla);
+		}
+	}
 
 	return true;
 }
 
-/*void texto_insere_char(texto_t *txt, char c){
+void texto_insere_char(texto_t *txt, char c){
+	
+	line* ln;
+	ln = list_search(txt->linhas->first, txt->lincur);
 
-}*/
+	int size_text;
+	size_text = strlen(ln->text);
+
+	if(size_text == 0){
+		ln->text = memo_realoca(ln->text, size_text + sizeof(char));
+		ln->text[0] = c;
+		ln->text[1] = '\0';
+		txt->colcur++;
+	
+	}else{
+		int i;
+		ln->text = memo_realoca(ln->text, size_text + sizeof(char));
+
+		for(i = strlen(ln->text); i>txt->colcur; i--){
+			ln->text[i] = ln->text[i-1];
+		}
+
+		ln->text[i] = c;
+		txt->colcur++;
+	}
+}
+
+void texto_remove_char(texto_t *txt){
+	
+	line* ln;
+	ln = list_search(txt->linhas->first, txt->lincur);
+
+	int size_text;
+	size_text = strlen(ln->text);
+
+	if(size_text == 0 && txt->lincur > 0){
+		list_remove(txt->linhas, txt->lincur);
+		txt->nlin--;
+	
+	}else if(txt->lincur > 0 && txt->colcur == 0 && size_text > 0){
+		texto_gruda_linha(txt);
+	
+	}else if(txt->colcur == size_text){
+		ln->text[txt->colcur-1] = '\0';
+		ln->text = memo_realoca(ln->text, size_text - sizeof(char));
+
+	}else{
+		int i;
+
+		for(i=txt->colcur; i<=size_text; i++)
+			ln->text[i] = ln->text[i+1];
+
+		ln->text = memo_realoca(ln->text, size_text - sizeof(char));
+	}
+	
+	txt->colcur--;
+
+}
+
+void texto_gruda_linha(texto_t *txt){
+
+	txt->nlin--;
+}
+
+void texto_quebra_linha(texto_t *txt){
+
+	txt->nlin++;
+}
 
 void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq)
 {
@@ -226,6 +337,7 @@ void texto_move_esq(texto_t *txt)
 	}else if(txt->colcur > 0){
 		txt->colcur--;
 	}
+	//printf("%i\n", txt->colcur);
 }
 
 void texto_move_dir(texto_t *txt)
@@ -249,5 +361,9 @@ void texto_move_cima(texto_t *txt)
 {
 	if(txt->lincur > 0)
 		txt->lincur--;
+}
+
+void texto_ajeita_tela(texto_t *txt){
+
 }
 

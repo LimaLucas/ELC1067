@@ -45,7 +45,7 @@ typedef struct {
 } texto_t;
 
 
-texto_t* texto_inicia(char* arq);
+texto_t* texto_inicia(char* file_name);
 
 /* destroi todo o conteúdo de texto_t */
 void texto_destroi(texto_t* txt);
@@ -60,7 +60,7 @@ void texto_desenha_tela(texto_t *txt);
 void texto_atualiza_tela(texto_t *txt);
 
 /* processa os comandos do usuário */
-bool texto_processa_comandos(texto_t* txt);
+bool texto_processa_comandos(texto_t* txt, FILE* file, char* file_name);
 
 /* lê o arquivo passado por parâmetro */
 void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq);
@@ -80,10 +80,17 @@ void texto_move_cima(texto_t *txt);
 /* insere caracter que o usuário digitar */
 void texto_insere_char(texto_t *txt, char c);
 
+/* apaga caracter da linha */
 void texto_remove_char(texto_t *txt);
-void texto_ajeita_tela(texto_t *txt);
+
+/* junta o inicio de uma linha com o final da linha anterior */
 void texto_gruda_linha(texto_t *txt);
+
+/* realiza a quebra de linha */
 void texto_quebra_linha(texto_t *txt);
+
+/* ajeita a tela conforme o texto ultrapasse o tamanho dela */
+void texto_ajeita_tela(texto_t *txt);
 
 
 #endif /* _TEXTO_H_ */
