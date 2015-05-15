@@ -60,7 +60,7 @@ void texto_desenha_tela(texto_t *txt);
 void texto_atualiza_tela(texto_t *txt);
 
 /* processa os comandos do usuário */
-bool texto_processa_comandos(texto_t* txt, FILE* file, char* file_name);
+bool texto_processa_comandos(texto_t* txt);
 
 /* lê o arquivo passado por parâmetro */
 void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq);

@@ -137,9 +137,10 @@ void texto_atualiza_tela(texto_t *txt)
 	tela_espera(30);
 }
 
-bool texto_processa_comandos(texto_t* txt, FILE* file, char* file_name)
+bool texto_processa_comandos(texto_t* txt)
 {
 	int tecla = tela_tecla(texto_tela(txt));
+	int tecla_a = tela_tecla_a(texto_tela(txt));
 	int modificador = tela_tecla_modificador(texto_tela(txt));
 	/* Comandos para definir ações:
 		ALLEGRO_EVENT_DISPLAY_CLOSE
@@ -148,22 +149,31 @@ bool texto_processa_comandos(texto_t* txt, FILE* file, char* file_name)
 		ALLEGRO_KEYMOD_CTRL && ALLEGRO_KEY_E
 	*/
 
-	if( tecla == ALLEGRO_EVENT_DISPLAY_CLOSE ){
+	if( tecla_a == ALLEGRO_EVENT_DISPLAY_CLOSE ){
 		printf("DISPLAY CLOSE\n");
 		return false;
 
-	}else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_Q ) {
+	}else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla_a == ALLEGRO_KEY_Q ) {
 		printf("CTRL+Q = SAIR\n");
 		return false;
 
-	}else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_S ) {
+	}else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla_a == ALLEGRO_KEY_S ) {
 		printf("CTRL+S = SALVAR e PARAR DE EDITAR\n");
 		/* muda estado na variável para não editar */
 		estado = nada;
-		fclose(file);
-		file = fopen(file_name, "r+");
+		
+		int i;
+		FILE* file;
+		file = fopen(txt->nome, "w+");
+		
+		for(i=0; i<=txt->linhas->n-1; i++){
+			fprintf(file, "%s\n", list_search(txt->linhas->first, i)->text);
 
-	}else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_E ) {
+		}
+
+		fclose(file);
+
+	}else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla_a == ALLEGRO_KEY_E ) {
 		printf("CTRL+E = EDITAR\n");
 		/* muda estado na variável para editando */
 		estado = editando;
@@ -180,30 +190,30 @@ bool texto_processa_comandos(texto_t* txt, FILE* file, char* file_name)
 		ALLEGRO_KEY_END
 	*/
 
-	else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_HOME ){
+	else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla_a == ALLEGRO_KEY_HOME ){
 		txt->colcur = 0;
 		txt->lincur = 0;
 	
-	}else if( tecla == ALLEGRO_KEY_HOME )
+	}else if( tecla_a == ALLEGRO_KEY_HOME )
 		txt->colcur = 0;
 
-	else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla == ALLEGRO_KEY_END ){
+	else if( (modificador & ALLEGRO_KEYMOD_CTRL) && tecla_a == ALLEGRO_KEY_END ){
 		txt->lincur = txt->linhas->n-1;
 		txt->colcur = strlen(list_search(txt->linhas->first, txt->lincur)->text);
 	
-	}else if( tecla == ALLEGRO_KEY_END )
+	}else if( tecla_a == ALLEGRO_KEY_END )
 		txt->colcur = strlen(list_search(txt->linhas->first, txt->lincur)->text);
 
-	else if( tecla == ALLEGRO_KEY_LEFT )
+	else if( tecla_a == ALLEGRO_KEY_LEFT )
 		texto_move_esq(txt);
 
-	else if( tecla == ALLEGRO_KEY_RIGHT )
+	else if( tecla_a == ALLEGRO_KEY_RIGHT )
 		texto_move_dir(txt);
 
-	else if( tecla == ALLEGRO_KEY_UP )
+	else if( tecla_a == ALLEGRO_KEY_UP )
 		texto_move_cima(txt);
 
-	else if( tecla == ALLEGRO_KEY_DOWN )
+	else if( tecla_a == ALLEGRO_KEY_DOWN )
 		texto_move_baixo(txt);
 
 	/* Teclas para a edição do arquivo: 
@@ -214,16 +224,14 @@ bool texto_processa_comandos(texto_t* txt, FILE* file, char* file_name)
 		ALLEGRO_KEY_SPACE
 	*/
 
-	if(estado == editando){
-		if( tecla == ALLEGRO_KEY_ENTER ){
+	else if(estado == editando){
+		if( tecla_a == ALLEGRO_KEY_ENTER ){
 			texto_quebra_linha(txt);
 		
-		}else if( tecla == ALLEGRO_KEY_BACKSPACE || tecla == ALLEGRO_KEY_DELETE ){
+		}else if( tecla_a == ALLEGRO_KEY_BACKSPACE || tecla_a == ALLEGRO_KEY_DELETE ){
 			texto_remove_char(txt);
 		
-		}else if(!(modificador & ALLEGRO_KEYMOD_CTRL) && ((tecla == ALLEGRO_KEY_SPACE)
-					|| (tecla >= ALLEGRO_KEY_0 && tecla <= ALLEGRO_KEY_9)
-					|| (tecla >= ALLEGRO_KEY_A && tecla <= ALLEGRO_KEY_Z)) ){
+		}else if( tecla >= 1 ){
 			texto_insere_char(txt, tecla);
 		}
 	}
@@ -231,8 +239,8 @@ bool texto_processa_comandos(texto_t* txt, FILE* file, char* file_name)
 	return true;
 }
 
-void texto_insere_char(texto_t *txt, char c){
-	
+void texto_insere_char(texto_t *txt, char c)
+{	
 	line* ln;
 	ln = list_search(txt->linhas->first, txt->lincur);
 
@@ -258,8 +266,8 @@ void texto_insere_char(texto_t *txt, char c){
 	}
 }
 
-void texto_remove_char(texto_t *txt){
-	
+void texto_remove_char(texto_t *txt)
+{	
 	line* ln;
 	ln = list_search(txt->linhas->first, txt->lincur);
 
@@ -268,6 +276,8 @@ void texto_remove_char(texto_t *txt){
 
 	if(size_text == 0 && txt->lincur > 0){
 		list_remove(txt->linhas, txt->lincur);
+		txt->lincur--;
+		txt->colcur = strlen(list_search(txt->linhas->first, txt->lincur)->text);
 		txt->nlin--;
 	
 	}else if(txt->lincur > 0 && txt->colcur == 0 && size_text > 0){
@@ -276,6 +286,7 @@ void texto_remove_char(texto_t *txt){
 	}else if(txt->colcur == size_text){
 		ln->text[txt->colcur-1] = '\0';
 		ln->text = memo_realoca(ln->text, size_text - sizeof(char));
+		txt->colcur--;
 
 	}else{
 		int i;
@@ -284,25 +295,40 @@ void texto_remove_char(texto_t *txt){
 			ln->text[i] = ln->text[i+1];
 
 		ln->text = memo_realoca(ln->text, size_text - sizeof(char));
+		txt->colcur--;
 	}
-	
-	txt->colcur--;
 
 }
 
-void texto_gruda_linha(texto_t *txt){
+void texto_gruda_linha(texto_t *txt)
+{
+	int i, j, size;
+	line *ln1, *ln2;
+	ln1 = list_search(txt->linhas->first, txt->lincur-1);
+	ln2 = list_search(txt->linhas->first, txt->lincur);
 
+	size = strlen(ln1->text) + strlen(ln2->text) * sizeof(char);
+	ln1->text = memo_realoca(ln1->text, size);
+
+	for(i=strlen(ln1->text), j=0; i<size; i++, j++)
+		ln1->text[i] = ln2->text[j];
+
+
+	list_remove(txt->linhas, txt->lincur);
+	txt->lincur--;
+	txt->colcur = size;
 	txt->nlin--;
+
 }
 
-void texto_quebra_linha(texto_t *txt){
+void texto_quebra_linha(texto_t *txt)
+{
 
 	txt->nlin++;
 }
 
 void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq)
 {
-
 	char c;
 	int i, j;
 	line* ln;
@@ -326,7 +352,7 @@ void texto_le_arquivo(texto_t *txt, char *nome, FILE *arq)
 		i++;
 		c = fgetc(arq);
 	}
-	txt->nlin = i-1;
+	txt->nlin = txt->linhas->n;
 }
 
 void texto_move_esq(texto_t *txt)
@@ -337,7 +363,6 @@ void texto_move_esq(texto_t *txt)
 	}else if(txt->colcur > 0){
 		txt->colcur--;
 	}
-	//printf("%i\n", txt->colcur);
 }
 
 void texto_move_dir(texto_t *txt)

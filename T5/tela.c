@@ -77,6 +77,8 @@ void tela_inicializa(tela_t* tela, tamanho_t tam, char* nome)
     tela->botao = false;
 
     tela->tecla = 0;
+    tela->tecla_a = 0;
+    tela->tecla = 0;
     tela->modif = 0;
 
     /* inicializa o allegro */
@@ -219,8 +221,8 @@ void tela_processa_eventos(tela_t *tela)
                 printf("code %x modif %x char '%c' name '%s' (q=%d)\n", event.keyboard.keycode,
                 event.keyboard.modifiers, (char)event.keyboard.keycode, keyname, 'Q');
 #endif*/
-                tela->tecla = event.keyboard.keycode;
-                //tela->tecla = event.keyboard.unichar;
+                tela->tecla_a = event.keyboard.keycode;
+                tela->tecla = event.keyboard.unichar;
                 tela->modif = event.keyboard.modifiers;
                 break;
             }
@@ -265,6 +267,16 @@ int tela_tecla(tela_t *tela)
     tecla = tela->tecla;
     tela->tecla = 0;
     return tecla;
+}
+
+int tela_tecla_a(tela_t *tela)
+{
+    /* retorna a ultima tecla pressionada no formato alegro */
+    int tecla_a;
+    tela_processa_eventos(tela);
+    tecla_a = tela->tecla_a;
+    tela->tecla_a = 0;
+    return tecla_a;
 }
 
 int tela_tecla_modificador(tela_t *tela)

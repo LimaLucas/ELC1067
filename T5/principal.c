@@ -31,13 +31,13 @@
  	texto = texto_inicia(argv[1]);
 
  	texto_le_arquivo(texto, argv[1], file);
+ 	fclose(file);
 
- 	while(texto_processa_comandos(texto, file, argv[1])) {
+ 	while(texto_processa_comandos(texto)) {
  		texto_atualiza_tela(texto);
  	}
  	
  	texto_destroi(texto);
- 	fclose(file);
  	memo_relatorio();
 
  	return 0;

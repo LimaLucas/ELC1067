@@ -48,7 +48,8 @@ typedef struct {
     ponto_t rato;     // onde esta o mouse
     bool botao;       // estado do botao do mouse
     int tecla;        // ultima tecla apertada
-    int modif;        /* tecla modificadora da última apertada */
+    int tecla_a;      // teclas de movimento
+    int modif;       /* tecla modificadora da última apertada */
 } tela_t;
 
 
@@ -95,6 +96,9 @@ tamanho_t tela_tamanho_texto(tela_t *t, char *s);
 
 /* retorna o codigo da proxima tecla apertada (ou 0, se nao tiver tecla alguma) */
 int tela_tecla(tela_t *tela);
+
+/* retorna o codigo da proxima tecla apertada no formato do alegro (ou 0, se nao tiver tecla alguma) */
+int tela_tecla_a(tela_t *tela);
 
 /* retorna um conjuto de bits (int) com o codigo das teclas modificadoras (ctrl,alt,etc)
  * apertadas junto com a tecla normal (ou 0, se nao tiver tecla alguma) */
