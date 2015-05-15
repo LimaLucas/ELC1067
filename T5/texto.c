@@ -168,7 +168,6 @@ bool texto_processa_comandos(texto_t* txt)
 		
 		for(i=0; i<=txt->linhas->n-1; i++){
 			fprintf(file, "%s\n", list_search(txt->linhas->first, i)->text);
-
 		}
 
 		fclose(file);
@@ -259,7 +258,6 @@ void texto_insere_char(texto_t *txt, char c)
 
 		for(i = strlen(ln->text); i>txt->colcur; i--){
 			ln->text[i] = ln->text[i-1];
-		}
 
 		ln->text[i] = c;
 		txt->colcur++;
@@ -283,46 +281,54 @@ void texto_remove_char(texto_t *txt)
 	}else if(txt->lincur > 0 && txt->colcur == 0 && size_text > 0){
 		texto_gruda_linha(txt);
 	
-	}else if(txt->colcur == size_text){
+	}else if(txt->colcur == size_text && size_text > 0){
 		ln->text[txt->colcur-1] = '\0';
-		ln->text = memo_realoca(ln->text, size_text - sizeof(char));
+		ln->text = memo_realoca(ln->text, sizeof(char));
 		txt->colcur--;
 
-	}else{
+	}else if(txt->colcur > 0){
 		int i;
 
-		for(i=txt->colcur; i<=size_text; i++)
+		for(i=txt->colcur-1; i<=size_text; i++)
 			ln->text[i] = ln->text[i+1];
 
 		ln->text = memo_realoca(ln->text, size_text - sizeof(char));
 		txt->colcur--;
 	}
-
 }
 
 void texto_gruda_linha(texto_t *txt)
 {
-	int i, j, size;
+	int i, j, size_text;
 	line *ln1, *ln2;
 	ln1 = list_search(txt->linhas->first, txt->lincur-1);
 	ln2 = list_search(txt->linhas->first, txt->lincur);
+	txt->colcur = strlen(ln1->text);
+	
+	size_text = strlen(ln1->text) + strlen(ln2->text) * sizeof(char);
+	ln1->text = memo_realoca(ln1->text, size_text);
 
-	size = strlen(ln1->text) + strlen(ln2->text) * sizeof(char);
-	ln1->text = memo_realoca(ln1->text, size);
-
-	for(i=strlen(ln1->text), j=0; i<size; i++, j++)
+	for(i=strlen(ln1->text), j=0; i<=size_text; i++, j++)
 		ln1->text[i] = ln2->text[j];
 
-
-	list_remove(txt->linhas, txt->lincur);
+	list_remove(txt->linhas, txt->lincur);	
 	txt->lincur--;
-	txt->colcur = size;
 	txt->nlin--;
 
 }
 
 void texto_quebra_linha(texto_t *txt)
 {
+	/*int i, size_text;
+	line* ln;
+	ln = list_search(txt->linhas->first, txt->lincur);
+	size_text = strlen(ln->text);
+
+
+
+	for(i=txt->colcur; i<=size_text; i++){
+
+	}*/
 
 	txt->nlin++;
 }
@@ -367,11 +373,11 @@ void texto_move_esq(texto_t *txt)
 
 void texto_move_dir(texto_t *txt)
 {	
-	int size = strlen(list_search(txt->linhas->first, txt->lincur)->text);
-	if(txt->colcur == size && txt->lincur < txt->nlin){
+	int size_text = strlen(list_search(txt->linhas->first, txt->lincur)->text);
+	if(txt->colcur == size_text && txt->lincur < txt->nlin){
 		txt->lincur++;
 		txt->colcur = 0;
-	}else if(txt->colcur < size && txt->lincur <= txt->nlin){
+	}else if(txt->colcur < size_text && txt->lincur <= txt->nlin){
 		txt->colcur++;
 	}
 }
