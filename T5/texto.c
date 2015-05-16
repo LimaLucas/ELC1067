@@ -148,8 +148,7 @@ bool texto_processa_comandos(texto_t* txt)
 		ALLEGRO_KEYMOD_CTRL && ALLEGRO_KEY_S 
 		ALLEGRO_KEYMOD_CTRL && ALLEGRO_KEY_E
 	*/
-
-	if( tecla_a == ALLEGRO_EVENT_DISPLAY_CLOSE ){
+	if( tecla == ALLEGRO_EVENT_DISPLAY_CLOSE || tecla == 42 ){
 		printf("DISPLAY CLOSE\n");
 		return false;
 
@@ -231,7 +230,13 @@ bool texto_processa_comandos(texto_t* txt)
 			texto_remove_char(txt);
 		
 		}else if( tecla >= 1 ){
-			texto_insere_char(txt, tecla);
+			if(tecla == 9){
+				texto_insere_char(txt, ' ');
+				texto_insere_char(txt, ' ');
+				texto_insere_char(txt, ' ');
+			}else{
+				texto_insere_char(txt, tecla);
+			}
 		}
 	}
 
