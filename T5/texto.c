@@ -256,7 +256,7 @@ void texto_insere_char(texto_t *txt, char c)
 		int i;
 		ln->text = memo_realoca(ln->text, size_text + sizeof(char));
 
-		for(i = strlen(ln->text); i>txt->colcur; i--){
+		for(i = strlen(ln->text); i>txt->colcur; i--)
 			ln->text[i] = ln->text[i-1];
 
 		ln->text[i] = c;
@@ -299,19 +299,21 @@ void texto_remove_char(texto_t *txt)
 
 void texto_gruda_linha(texto_t *txt)
 {
-	int i, j, size_text;
 	line *ln1, *ln2;
 	ln1 = list_search(txt->linhas->first, txt->lincur-1);
 	ln2 = list_search(txt->linhas->first, txt->lincur);
-	txt->colcur = strlen(ln1->text);
 	
+	int i, j, size_text;
 	size_text = strlen(ln1->text) + strlen(ln2->text) * sizeof(char);
+	
+	txt->colcur = strlen(ln1->text);
 	ln1->text = memo_realoca(ln1->text, size_text);
 
 	for(i=strlen(ln1->text), j=0; i<=size_text; i++, j++)
 		ln1->text[i] = ln2->text[j];
 
 	list_remove(txt->linhas, txt->lincur);	
+	
 	txt->lincur--;
 	txt->nlin--;
 
@@ -319,17 +321,27 @@ void texto_gruda_linha(texto_t *txt)
 
 void texto_quebra_linha(texto_t *txt)
 {
-	/*int i, size_text;
-	line* ln;
-	ln = list_search(txt->linhas->first, txt->lincur);
-	size_text = strlen(ln->text);
+	line *ln1, *ln2;
+	ln1 = list_search(txt->linhas->first, txt->lincur);
+	
+	int i, j, size_text;
+	size_text = strlen(ln1->text);
 
+	txt->linhas = list_insert(txt->linhas, txt->lincur+1);
+	ln2 = list_search(txt->linhas->first, txt->lincur+1);
 
+	if(txt->colcur != size_text){
+		for(i=txt->colcur, j=0; i<=size_text; i++, j++){
+			ln2->text = memo_realoca(ln2->text, strlen(ln2->text) + sizeof(char));
+			ln2->text[j] = ln1->text[i];
+		}
 
-	for(i=txt->colcur; i<=size_text; i++){
+		ln1->text[txt->colcur] = '\0';
+		ln1->text = memo_realoca(ln1->text, (txt->colcur+1) * sizeof(char));
+	}
 
-	}*/
-
+	txt->colcur = 0;
+	txt->lincur++;
 	txt->nlin++;
 }
 
