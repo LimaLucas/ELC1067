@@ -35,7 +35,7 @@
 /* definicao do tipo pilha
  * a pilha armazena nós da árvore, sendo um operador ou operando.
  */
-typedef struct {
+typedef struct pilha_{
 	/* descreva aqui a estrutura da pilha */
 } pilha_t;
 
