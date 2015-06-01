@@ -36,7 +36,10 @@
  * a pilha armazena nós da árvore, sendo um operador ou operando.
  */
 typedef struct pilha_{
-	/* descreva aqui a estrutura da pilha */
+	
+	arv_t* arv;
+	struct pilha_ next;
+
 } pilha_t;
 
 /* funções que permitem realizar operações sobre uma pilha */
