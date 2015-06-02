@@ -7,7 +7,13 @@
 /* criar uma árvore com o operador ou operando */
 arv_t* arv_cria(op_t op){
 
-	
+	arv_t A = (arv_t*) memoaloca(sizeof(arv_t));
+
+	A->esq = NULL;
+	A->dir = NULL;
+	A->dado = op;
+
+	return A;
 
 }
 

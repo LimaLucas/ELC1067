@@ -6,10 +6,10 @@
 
 /* retorna uma nova pilha, vazia */
 pilha_t *pilha_cria(void){
-	pilha_t* novo = (pilha_t*) memoaloca(sizeof(pilha_t));
+	pilha_t* P = (pilha_t*) memoaloca(sizeof(pilha_t));
+	P->next = NULL;
 
-
-	return novo;
+	return P;
 }
 
 /* destrói a pilha p, que deverá estar vazia. */
