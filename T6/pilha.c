@@ -6,7 +6,9 @@
 
 /* retorna uma nova pilha, vazia */
 pilha_t *pilha_cria(void){
+	
 	pilha_t* P = (pilha_t*) memoaloca(sizeof(pilha_t));
+	P->arv = 	NULL;
 	P->next = NULL;
 
 	return P;
@@ -14,12 +16,17 @@ pilha_t *pilha_cria(void){
 
 /* destrói a pilha p, que deverá estar vazia. */
 void pilha_destroi(pilha_t* p){
-
+	
+	memolibera(p);
 }
 
 /* retorna true se a pilha p estiver vazia. */
 bool pilha_vazia(pilha_t* p){
-
+	
+	if(p == NULL)
+		return true;
+	else
+		return false;
 }
 
 /* insere o dado arv do tipo arv_t na pilha p */
