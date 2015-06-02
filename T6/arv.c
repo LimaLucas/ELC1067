@@ -44,6 +44,10 @@ void arv_imprime_pos_ordem(arv_t* arv){
 
 /*  destroi toda a árvore */
 void arv_destroi(arv_t* arv){
-
+	if(arv != NULL){
+		arv_destroi(arv->esq);
+		arv_destroi(arv->dir);
+		memo_libera(arv);
+	}
 }
 
