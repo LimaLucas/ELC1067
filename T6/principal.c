@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 
 	pilha = pilha_cria();
 
-	c = getchar();
+	c = getchar(); 
 	while(c != '=' && c != '\n'){
 		if(((c >= '0' && c <= '9') || (c >= 'a' || c <= 'z')) && c != ' '){
 			
@@ -87,6 +87,10 @@ int main(int argc, char **argv)
 
 	printf("\nExpressão pós-ordem: ");
 	arv_imprime_pos_ordem(noh);
+
+	arv_destroi(noh);
+	arv_destroi(elem);
+	pilha_destroi(pilha);
 
 	memo_relatorio();
 	return 0;
