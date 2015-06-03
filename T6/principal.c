@@ -45,7 +45,7 @@ int main(int argc, char **argv)
 	pilha = pilha_cria();
 
 	c = getchar();
-	while(c != '=' || c != '\n'){
+	while(c != '=' && c != '\n'){
 		if(((c >= '0' && c <= '9') || (c >= 'a' || c <= 'z')) && c != ' '){
 			
 			num = atoi(&c);
