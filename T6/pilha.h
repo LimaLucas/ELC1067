@@ -29,6 +29,7 @@
  */
 
 #include <stdbool.h>
+
 #include "arv.h"
 
 /* definicao do tipo pilha

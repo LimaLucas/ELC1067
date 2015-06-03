@@ -36,7 +36,7 @@
 
 int main(int argc, char **argv)
 {
-	arv_t *arvore, *arv;
+	arv_t *noh, *elem;
 	pilha_t *pilha;
 	op_t op;
 	int num;
@@ -53,31 +53,37 @@ int main(int argc, char **argv)
 			op.tipo = OPERANDO;
 			op.u.operando = num;
 			
-			arv = arv_cria(op);
-			pilha = pilha_insere(pilha, arv);
+			elem = arv_cria(op);
+			pilha = pilha_insere(pilha, elem);
 
 		}else if((c == '+' || c == '-' || c == '*' || c == '/') && c != ' '){
 			
 			op.tipo = OPERADOR;
 			op.u.operador = c;
 			
-			arv = arv_cria(op);
-			arvore = pilha->arv;
+			elem = arv_cria(op);
+			
+			noh = pilha->arv;
+			noh = arv_insere_esquerda(noh, elem);
+			pilha = pilha_remove(pilha);
 
+			noh = pilha->arv;
+			noh = arv_insere_direita(noh, elem);
+			pilha = pilha_remove(pilha);
 
-			pilha = pilha_insere(pilha, arv);
+			pilha = pilha_insere(pilha, elem);
 
 		}
 	}
 
 	printf("\nExpressão pré-ordem: ");
-	arv_imprime_pre_ordem(arvore);
+	arv_imprime_pre_ordem(noh);
 
 	printf("\nExpressão em ordem: ");
-	arv_imprime_em_ordem(arvore);
+	arv_imprime_em_ordem(noh);
 
 	printf("\nExpressão pós-ordem: ");
-	arv_imprime_pos_ordem(arvore);
+	arv_imprime_pos_ordem(noh);
 
 	memo_relatorio();
 	return 0;
