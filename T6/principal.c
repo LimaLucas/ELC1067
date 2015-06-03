@@ -74,6 +74,9 @@ int main(int argc, char **argv)
 			pilha = pilha_insere(pilha, elem);
 
 		}
+
+		c = getchar();
+
 	}
 
 	printf("\nExpressão pré-ordem: ");
