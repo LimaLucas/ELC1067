@@ -38,7 +38,7 @@ void arv_imprime_pre_ordem(arv_t* arv){
 	
 	if(arv != NULL){
 		if(arv->dado.tipo == OPERANDO)
-			printf("%g ", arv->dado.u.operando);
+			printf("%i ", arv->dado.u.operando);
 		else
 			printf("%c ", arv->dado.u.operador);
 		
@@ -54,7 +54,7 @@ void arv_imprime_em_ordem(arv_t* arv){
 		arv_imprime_em_ordem(arv->esq);
 		
 		if(arv->dado.tipo == OPERANDO)
-			printf("%g ", arv->dado.u.operando);
+			printf("%i ", arv->dado.u.operando);
 		else
 			printf("%c ", arv->dado.u.operador);
 		
@@ -70,7 +70,7 @@ void arv_imprime_pos_ordem(arv_t* arv){
 		arv_imprime_pos_ordem(arv->dir);
 		
 		if(arv->dado.tipo == OPERANDO)
-			printf("%g ", arv->dado.u.operando);
+			printf("%i ", arv->dado.u.operando);
 		else
 			printf("%c ", arv->dado.u.operador);
 		

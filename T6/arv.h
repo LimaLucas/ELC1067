@@ -38,7 +38,7 @@ typedef struct op_t {
 	/* union de operador/operando: apenas um deles pode ser usado */
 	/* nunca usar ambos ao mesmo tempo */
 	union {
-		double operando;
+		int operando;
 		char operador;
 	} u;
 } op_t;

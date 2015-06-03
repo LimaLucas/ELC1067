@@ -36,10 +36,10 @@
 
 int main(int argc, char **argv)
 {
-	arv_t arvore, arv;
-	pilha_t pilha;
+	arv_t *arvore, *arv;
+	pilha_t *pilha;
 	op_t op;
-	double num;
+	int num;
 	char c;
 
 	pilha = pilha_cria();
@@ -48,23 +48,24 @@ int main(int argc, char **argv)
 	while(c != '=' || c != '\n'){
 		if(((c >= '0' && c <= '9') || (c >= 'a' || c <= 'z')) && c != ' '){
 			
-			num = atof(c);
+			num = atoi(&c);
 			
 			op.tipo = OPERANDO;
 			op.u.operando = num;
 			
 			arv = arv_cria(op);
-			pilha_insere(pilha, op);
+			pilha = pilha_insere(pilha, arv);
 
-		}else if((c == '+' || c == '-' || c == '*' c == '/') && c != ' '){
+		}else if((c == '+' || c == '-' || c == '*' || c == '/') && c != ' '){
 			
 			op.tipo = OPERADOR;
 			op.u.operador = c;
 			
 			arv = arv_cria(op);
-			
-			
-			pilha_insere(pilha, op);
+			arvore = pilha->arv;
+
+
+			pilha = pilha_insere(pilha, arv);
 
 		}
 	}

@@ -31,7 +31,7 @@ pilha_t* pilha_insere(pilha_t* p, arv_t* arv){
 	
 	pilha_t* aux = (pilha_t*) memo_aloca(sizeof(pilha_t));
 
-	aux.arv = arv;
+	aux->arv = arv;
 	aux->next = p;
 
 	p = aux;
