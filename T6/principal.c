@@ -89,7 +89,6 @@ int main(int argc, char **argv)
 	arv_imprime_pos_ordem(noh);
 
 	arv_destroi(noh);
-	arv_destroi(elem);
 	pilha_destroi(pilha);
 
 	memo_relatorio();
