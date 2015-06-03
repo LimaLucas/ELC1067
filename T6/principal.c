@@ -46,7 +46,10 @@ int main(int argc, char **argv)
 	c = getchar();
 	while(c != '=' || c != '\n'){
 		if(((c >= '0' && c <= '9') || (c >= 'a' || c <= 'z')) && c != ' '){
-			
+			num = atof(c);
+			op.tipo = OPERANDO;
+			op.u.operando = num;
+			arv = arv_cria(op);
 
 		}else if((c == '+' || c == '-' || c == '*' c == '/') && c != ' '){
 
@@ -63,6 +66,6 @@ int main(int argc, char **argv)
 	printf("\nExpressão pós-ordem: ");
 	arv_imprime_pos_ordem(arvore);
 
-
+	memo_relatorio();
 	return 0;
 }

@@ -20,27 +20,16 @@ arv_t* arv_cria(op_t op){
 }
 
 /* insere um novo dado na árvore a esquerda */
-arv_t* arv_insere_esquerda(arv_t* arv, op_t op){
-	
-	arv_t* A = (arv_t*) memo_aloca(sizeof(arv_t));
+arv_t* arv_insere_esquerda(arv_t* arv, arv_t* esquerda){
 
-	A->esq = NULL;
-	A->dir = NULL;
-	A->dado = op;
-
-	arv->esq = A;
+	arv->esq = esquerda;
 	return arv;
 }
 
 /* insere um novo dado na árvore a direita */
-arv_t* arv_insere_direita(arv_t* arv, op_t op){
-	arv_t* A = (arv_t*) memo_aloca(sizeof(arv_t));
+arv_t* arv_insere_direita(arv_t* arv, arv_t* direita){
 
-	A->esq = NULL;
-	A->dir = NULL;
-	A->dado = op;
-
-	arv->dir = A;
+	arv->dir = direita;
 	return arv;
 }
 
