@@ -29,6 +29,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "arv.h"
 #include "pilha.h"
@@ -39,16 +40,30 @@ int main(int argc, char **argv)
 	arv_t *noh, *elem;
 	pilha_t *pilha;
 	op_t op;
-	int num;
-	char c;
-
+	
 	pilha = pilha_cria();
 
-	c = getchar(); 
-	while(c != '=' && c != '\n'){
-		if(((c >= '0' && c <= '9') || (c >= 'a' || c <= 'z')) && c != ' '){
+	double num;
+	int tam, i = 0;
+	char c, *str;
+
+	str = (char*) memo_aloca(sizeof(char));
+	str[0] = '\0';
+	
+	do{
+		c = getchar();
+
+		tam = strlen(str);
+		str = (char*) memo_realoca(str, tam+1);
+
+		str[tam] = c;
+		str[tam+1] = '\0';
+	}while(c != '\n');
+
+	while(str[i] != '\0'){
+		if((str[i] >= '0' && str[i] <= '9') && str[i] != ' '){
 			
-			num = atoi(&c);
+			num = atof(&str[i]);
 			
 			op.tipo = OPERANDO;
 			op.u.operando = num;
@@ -56,26 +71,26 @@ int main(int argc, char **argv)
 			elem = arv_cria(op);
 			pilha = pilha_insere(pilha, elem);
 
-		}else if((c == '+' || c == '-' || c == '*' || c == '/') && c != ' '){
+		}else if((str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/') && str[i] != ' '){
 			
 			op.tipo = OPERADOR;
-			op.u.operador = c;
+			op.u.operador = str[i];
 			
-			elem = arv_cria(op);
+			noh = arv_cria(op);
 			
-			noh = pilha->arv;
-			noh = arv_insere_esquerda(noh, elem);
+			elem = pilha->arv;
+			noh = arv_insere_direita(noh, elem);
 			pilha = pilha_remove(pilha);
 
-			noh = pilha->arv;
-			noh = arv_insere_direita(noh, elem);
+			elem = pilha->arv;
+			noh = arv_insere_esquerda(noh, elem);
 			pilha = pilha_remove(pilha);
 
 			pilha = pilha_insere(pilha, elem);
 
 		}
 
-		c = getchar();
+		i++;
 
 	}
 
@@ -88,6 +103,9 @@ int main(int argc, char **argv)
 	printf("\nExpressão pós-ordem: ");
 	arv_imprime_pos_ordem(noh);
 
+	printf("\n");
+
+	memo_libera(str);
 	arv_destroi(noh);
 	pilha_destroi(pilha);
 

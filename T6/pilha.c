@@ -17,7 +17,8 @@ pilha_t* pilha_cria(void){
 /* destrói a pilha p, que deverá estar vazia. */
 void pilha_destroi(pilha_t* p){
 	
-	memo_libera(p);
+	while(p!=NULL)
+		p = pilha_remove(p);
 }
 
 /* retorna true se a pilha p estiver vazia. */
