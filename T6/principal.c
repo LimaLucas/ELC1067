@@ -36,34 +36,33 @@
 
 int main(int argc, char **argv)
 {
-	/* exemplo simples de árvore */
-	arv_t* raiz;
-	op_t soma, n1, n2;
-	pilha_t* pilha;
+	arv_t arvore, arv;
+	pilha_t pilha;
+	op_t op;
+	double num;
 
-	/* inicia expressão */
-	/* operador + */
-	soma.tipo = OPERADOR;
-	soma.u.operador = '+';
-	/* primeiro operando */
-	n1.tipo = OPERANDO;
-	n1.u.operando = 1.0;
-	/* segundo operando */
-	n2.tipo = OPERANDO;
-	n2.u.operando = 2.0;
+	char c;
 
-	/* cria uma árvore */
-	raiz = arv_cria( soma );
-	raiz = arv_insere_esquerda( raiz, n1 );
-	raiz = arv_insere_direita( raiz, n2 );
+	c = getchar();
+	while(c != '=' || c != '\n'){
+		if(((c >= '0' && c <= '9') || (c >= 'a' || c <= 'z')) && c != ' '){
+			
 
-	/* simples uso da pilha */
-	pilha = pilha_cria();
-	pilha_insere( pilha, raiz );
-	pilha_destroi( pilha );
+		}else if((c == '+' || c == '-' || c == '*' c == '/') && c != ' '){
 
-	/* destroi árvore */
-	arv_destroi( raiz );
+
+		}
+	}
+
+	printf("\nExpressão pré-ordem: ");
+	arv_imprime_pre_ordem(arvore);
+
+	printf("\nExpressão em ordem: ");
+	arv_imprime_em_ordem(arvore);
+
+	printf("\nExpressão pós-ordem: ");
+	arv_imprime_pos_ordem(arvore);
+
 
 	return 0;
 }

@@ -1,0 +1,19 @@
+
+CC = gcc
+CFLAGS := $(CFLAGS) -g -Wall 
+LDFLAGS := $(LDFLAGS) -lm
+
+PROG = exprecao
+
+all: exprecao
+
+principal.o: principal.c
+arv.o: arv.c arv.h
+pilha.o: pilha.c. pilha.h
+memo.o: memo.c memo.h
+
+editor: principal.o arv.o pilha.o memo.o
+	$(CC) $(CFLAGS) -o $@  $^ $(LDFLAGS)
+
+clean:
+	rm -f editor *.o

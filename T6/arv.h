@@ -29,6 +29,7 @@
 
 #include <stdbool.h>
 
+
 /* enumerador para operador ou operando */
 typedef enum {OPERADOR, OPERANDO} op_tipo_t;
 

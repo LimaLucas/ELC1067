@@ -29,7 +29,6 @@
  */
 
 #include <stdbool.h>
-
 #include "arv.h"
 
 /* definicao do tipo pilha
@@ -38,13 +37,13 @@
 typedef struct _pilha{
 	
 	arv_t* arv;
-	struct _pilha next;
+	struct _pilha* next;
 
 } pilha_t;
 
 /* funções que permitem realizar operações sobre uma pilha */
 /* retorna uma nova pilha, vazia */
-pilha_t *pilha_cria(void);
+pilha_t* pilha_cria(void);
 
 /* destrói a pilha p, que deverá estar vazia. */
 void pilha_destroi(pilha_t* p);
@@ -53,10 +52,10 @@ void pilha_destroi(pilha_t* p);
 bool pilha_vazia(pilha_t* p);
 
 /* insere o dado arv do tipo arv_t na pilha p */
-void pilha_insere(pilha_t* p, arv_t* arv);
+pilha_t* pilha_insere(pilha_t* p, arv_t* arv);
 
 /* remove e retorna o nó operador/operando no topo da pilha */
-arv_t* pilha_remove(pilha_t p);
+pilha_t* pilha_remove(pilha_t* p);
 
 /* retorna true se p for uma pilha válida */
 bool pilha_valida(pilha_t p);
