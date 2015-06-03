@@ -37,7 +37,7 @@
 
 int main(int argc, char **argv)
 {
-	arv_t *noh, *elem;
+	arv_t *elem;
 	pilha_t *pilha;
 	op_t op;
 	
@@ -50,6 +50,7 @@ int main(int argc, char **argv)
 	str = (char*) memo_aloca(sizeof(char));
 	str[0] = '\0';
 	
+	printf("\nInforme uma expressão no formato pós-fixo: ");
 	do{
 		c = getchar();
 
@@ -76,14 +77,12 @@ int main(int argc, char **argv)
 			op.tipo = OPERADOR;
 			op.u.operador = str[i];
 			
-			noh = arv_cria(op);
+			elem = arv_cria(op);
 			
-			elem = pilha->arv;
-			noh = arv_insere_direita(noh, elem);
+			elem = arv_insere_direita(elem, pilha->arv);
 			pilha = pilha_remove(pilha);
 
-			elem = pilha->arv;
-			noh = arv_insere_esquerda(noh, elem);
+			elem = arv_insere_esquerda(elem, pilha->arv);
 			pilha = pilha_remove(pilha);
 
 			pilha = pilha_insere(pilha, elem);
@@ -94,19 +93,19 @@ int main(int argc, char **argv)
 
 	}
 
-	printf("\nExpressão pré-ordem: ");
-	arv_imprime_pre_ordem(noh);
+	printf("\n 1 - pré-ordem ou pré-fixa: ");
+	arv_imprime_pre_ordem(elem);
 
-	printf("\nExpressão em ordem: ");
-	arv_imprime_em_ordem(noh);
+	printf("\n 2 - em ordem ou in-fixa:   ");
+	arv_imprime_em_ordem(elem, 0);
 
-	printf("\nExpressão pós-ordem: ");
-	arv_imprime_pos_ordem(noh);
+	printf("\n 3 - pós-ordem ou pós-fixa: ");
+	arv_imprime_pos_ordem(elem);
 
 	printf("\n");
 
 	memo_libera(str);
-	arv_destroi(noh);
+	arv_destroi(elem);
 	pilha_destroi(pilha);
 
 	memo_relatorio();

@@ -48,17 +48,23 @@ void arv_imprime_pre_ordem(arv_t* arv){
 }
 
 /* imprime a árvore em ordem: esquerda, raiz, e direita */
-void arv_imprime_em_ordem(arv_t* arv){
+void arv_imprime_em_ordem(arv_t* arv, int i){
 	
 	if(arv != NULL){
-		arv_imprime_em_ordem(arv->esq);
+		arv_imprime_em_ordem(arv->esq, 1);
 		
-		if(arv->dado.tipo == OPERANDO)
-			printf("%g ", arv->dado.u.operando);
-		else
-			printf("%c ", arv->dado.u.operador);
+		if(arv->dado.tipo == OPERANDO){
+			if(i == 1)
+				printf("(");
+			
+			printf("%g", arv->dado.u.operando);
+			
+			if(i == 2)
+				printf(")");
+		}else
+			printf(" %c ", arv->dado.u.operador);
 		
-		arv_imprime_em_ordem(arv->dir);
+		arv_imprime_em_ordem(arv->dir, 2);
 	}
 }
 

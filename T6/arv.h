@@ -64,7 +64,7 @@ arv_t* arv_insere_direita(arv_t* arv, arv_t* direita);
 void arv_imprime_pre_ordem(arv_t* arv);
 
 /* imprime a árvore em ordem: esquerda, raiz, e direita */
-void arv_imprime_em_ordem(arv_t* arv);
+void arv_imprime_em_ordem(arv_t* arv, int i);
 
 /* imprime a árvore em pós-ordem: esquerda, direita, e raiz */
 void arv_imprime_pos_ordem(arv_t* arv);
