@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 
 	while(str[i] != '\0'){
 
-		while(str[i] != ' ' && str[i] != '\0' && str[i] == '+' && str[i] == '-' && str[i] == '*' && str[i] == '/'){
+		while(str[i] != ' ' && str[i] != '\0' && str[i] != '+' && str[i] != '-' && str[i] != '*' && str[i] != '/'){
 		
 			tam = strlen(str2);
 			str2 = (char*) memo_realoca(str2, tam+1);
@@ -77,10 +77,9 @@ int main(int argc, char **argv)
 
 			i++;
 		}
-		//printf("%s\n", str2);
-
+		
 		if((str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/') && str[i] != ' '){
-			
+						
 			op.tipo = OPERADOR;
 			op.u.operador = str[i];
 			
@@ -88,13 +87,13 @@ int main(int argc, char **argv)
 			
 			elem = arv_insere_direita(elem, pilha->arv);
 			pilha = pilha_remove(pilha);
-
+			
 			elem = arv_insere_esquerda(elem, pilha->arv);
 			pilha = pilha_remove(pilha);
 
 			pilha = pilha_insere(pilha, elem);
 
-		}else if(str[i] != ' ' && !(str2[0] >= 'a' && str2[0] <= 'z')){
+		}else if(!(str2[0] >= 'a' && str2[0] <= 'z')){
 
 			num = atof(str2);
 			
@@ -103,6 +102,7 @@ int main(int argc, char **argv)
 			
 			elem = arv_cria(op);
 			pilha = pilha_insere(pilha, elem);
+			
 
 		}
 
