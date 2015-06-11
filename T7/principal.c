@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 	while(c != '\n'){
 		
 		tam = strlen(str);
-		str = (char*) memo_realoca(str, tam+2);
+		str = (char*) memo_realoca(str, tam+1);
 
 		str[tam] = c;
 		str[tam+1] = '\0';
@@ -70,13 +70,14 @@ int main(int argc, char **argv)
 		while(str[i] != ' ' && str[i] != '\0' && str[i] == '+' && str[i] == '-' && str[i] == '*' && str[i] == '/'){
 		
 			tam = strlen(str2);
-			str2 = (char*) memo_realoca(str2, tam+2);
+			str2 = (char*) memo_realoca(str2, tam+1);
 
 			str2[tam] = str[i];
 			str2[tam+1] = '\0';
 
 			i++;
 		}
+		//printf("%s\n", str2);
 
 		if((str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/') && str[i] != ' '){
 			
@@ -94,8 +95,8 @@ int main(int argc, char **argv)
 			pilha = pilha_insere(pilha, elem);
 
 		}else if(str[i] != ' ' && !(str2[0] >= 'a' && str2[0] <= 'z')){
-			
-			num = atof(str2);printf("%s\n", str2);
+
+			num = atof(str2);
 			
 			op.tipo = OPERANDO;
 			op.u.operando = num;
