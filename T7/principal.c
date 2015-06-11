@@ -102,7 +102,6 @@ int main(int argc, char **argv)
 			
 			elem = arv_cria(op);
 			pilha = pilha_insere(pilha, elem);
-			
 
 		}
 
