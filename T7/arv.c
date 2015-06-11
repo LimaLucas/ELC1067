@@ -57,11 +57,9 @@ void arv_imprime_em_ordem(arv_t* arv){
 
 		arv_imprime_em_ordem(arv->esq);
 		
-		if(arv->dado.tipo == OPERANDO){
-			
+		if(arv->dado.tipo == OPERANDO)
 			printf("%g", arv->dado.u.operando);
-			
-		}else
+		else
 			printf(" %c ", arv->dado.u.operador);
 		
 		arv_imprime_em_ordem(arv->dir);

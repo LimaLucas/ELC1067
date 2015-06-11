@@ -111,7 +111,7 @@ int main(int argc, char **argv)
 	}
 
 	printf("\n Expressão em ordem ou in-fixa:  ");
-	arv_imprime_em_ordem(elem, 0);
+	arv_imprime_em_ordem(elem);
 	printf(" = %.2f \n", calcula_arv(elem));
 
 	printf("\n");
