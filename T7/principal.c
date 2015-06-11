@@ -49,36 +49,37 @@ int main(int argc, char **argv)
 	str = (char*) memo_aloca(sizeof(char));
 	str2 = (char*) memo_aloca(sizeof(char));
 	str[0] = '\0';
+	str2[0] = '\0';
 	
 	printf("\nInforme uma expressão no formato pós-fixo: ");
 	
 	c = getchar();
 	while(c != '\n'){
-		
+
 		tam = strlen(str);
-		str = (char*) memo_realoca(str, tam+1);
+		str = (char*) memo_realoca(str, tam+2);
 
 		str[tam] = c;
 		str[tam+1] = '\0';
 
 		c = getchar();
-	};
+	}
 
 	while(str[i] != '\0'){
 
 		while(str[i] != ' ' && str[i] != '\0' && str[i] != '+' && str[i] != '-' && str[i] != '*' && str[i] != '/'){
 		
 			tam = strlen(str2);
-			str2 = (char*) memo_realoca(str2, tam+1);
+			str2 = (char*) memo_realoca(str2, tam+2);
 
 			str2[tam] = str[i];
 			str2[tam+1] = '\0';
 
 			i++;
 		}
-		
+
 		if((str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/') && str[i] != ' '){
-						
+			
 			op.tipo = OPERADOR;
 			op.u.operador = str[i];
 			
@@ -86,16 +87,14 @@ int main(int argc, char **argv)
 			
 			elem = arv_insere_direita(elem, pilha->arv);
 			pilha = pilha_remove(pilha);
-			
+
 			elem = arv_insere_esquerda(elem, pilha->arv);
 			pilha = pilha_remove(pilha);
 
 			pilha = pilha_insere(pilha, elem);
 
-			//printf("esq = %g dir = %g raiz = %c\n",elem->esq->dado.u.operando, elem->dir->dado.u.operando, elem->dado.u.operador);
-
-		}else if(!(str2[0] >= 'a' && str2[0] <= 'z')){
-
+		}else if((str2[0] >= '0' && str2[0] <= '9')){
+			
 			op.tipo = OPERANDO;
 			op.u.operando = atof(str2);
 			
@@ -111,18 +110,9 @@ int main(int argc, char **argv)
 
 	}
 
-	printf("\n 1 - pré-ordem ou pré-fixa: ");
-	arv_imprime_pre_ordem(elem);
-
-	printf("\n 2 - em ordem ou in-fixa:   ");
+	printf("\n Expressão em ordem ou in-fixa:  ");
 	arv_imprime_em_ordem(elem, 0);
-
-	printf("\n 3 - pós-ordem ou pós-fixa: ");
-	arv_imprime_pos_ordem(elem);
-
-	/*printf("\n Expressão em ordem ou in-fixa:  ");
-	arv_imprime_em_ordem(elem, 0);*/
-	printf(" = %g\n", calcula_arv(elem));
+	printf(" = %.2f \n", calcula_arv(elem));
 
 	printf("\n");
 
