@@ -63,11 +63,14 @@ arv_t* arv_insere_direita(arv_t* arv, arv_t* direita);
 /* imprime a árvore em pré-ordem: raiz, esquerda, e direita */
 void arv_imprime_pre_ordem(arv_t* arv);
 
-/* imprime a árvore em ordem: esquerda, raiz, e direita */
+/* imprime a árvore em ordem: esquerda, raiz, e direita (n=1-esq, n=2-dir) */
 void arv_imprime_em_ordem(arv_t* arv, int i);
 
 /* imprime a árvore em pós-ordem: esquerda, direita, e raiz */
 void arv_imprime_pos_ordem(arv_t* arv);
+
+/* Calcula a expressão salva na árvore */
+double calcula_arv(arv_t* arv);
 
 /*  destroi toda a árvore */
 void arv_destroi(arv_t* arv);

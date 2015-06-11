@@ -68,7 +68,7 @@ void arv_imprime_em_ordem(arv_t* arv, int i){
 	}
 }
 
-/* imprime a árvore em pós-ordem: esquerda, direita, e raiz */
+/* imprime a árvore em ordem: esquerda, raiz, e direita (n=1-esq, n=2-dir) */
 void arv_imprime_pos_ordem(arv_t* arv){
 
 	if(arv != NULL){
@@ -81,6 +81,28 @@ void arv_imprime_pos_ordem(arv_t* arv){
 			printf("%c ", arv->dado.u.operador);
 		
 	}
+}
+
+/* Calcula a expressão salva na árvore */
+double calcula_arv(arv_t* arv){
+
+	if(arv->dado.tipo == OPERANDO){
+		return arv->dado.u.operando;
+
+	}else{
+		if(arv->dado.u.operador == '+')
+			return calcula_arv(arv->esq) + calcula_arv(arv->dir);
+		
+		else if(arv->dado.u.operador == '-')
+			return calcula_arv(arv->esq) - calcula_arv(arv->dir);
+		
+		else if(arv->dado.u.operador == '*')
+			return calcula_arv(arv->esq) * calcula_arv(arv->dir);
+		
+		else if(arv->dado.u.operador == '/')
+			return calcula_arv(arv->esq) / calcula_arv(arv->dir);
+	}
+	return 0;
 }
 
 /*  destroi toda a árvore */
