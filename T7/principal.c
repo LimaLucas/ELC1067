@@ -43,7 +43,6 @@ int main(int argc, char **argv)
 	
 	pilha = pilha_cria();
 
-	double num;
 	int tam, i = 0;
 	char c, *str, *str2;
 
@@ -93,12 +92,12 @@ int main(int argc, char **argv)
 
 			pilha = pilha_insere(pilha, elem);
 
+			//printf("esq = %g dir = %g raiz = %c\n",elem->esq->dado.u.operando, elem->dir->dado.u.operando, elem->dado.u.operador);
+
 		}else if(!(str2[0] >= 'a' && str2[0] <= 'z')){
 
-			num = atof(str2);
-			
 			op.tipo = OPERANDO;
-			op.u.operando = num;
+			op.u.operando = atof(str2);
 			
 			elem = arv_cria(op);
 			pilha = pilha_insere(pilha, elem);
