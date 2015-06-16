@@ -1,4 +1,4 @@
-T7 - Resolução de uma árvore de expressões aritméticas.
+#T7 - Resolução de uma árvore de expressões aritméticas.
 ENTREGA: 11/06/2015 pelo GitHub (crie pasta T7 com os fontes)
 
 * DESCRIÇÃO
