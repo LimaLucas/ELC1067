@@ -1,4 +1,4 @@
-T5 - Editor de texto gráfico com lista duplamente encadeada
+#T5 - Editor de texto gráfico com lista duplamente encadeada
 ENTREGA: 14/05/2015 pelo GitHub (crie pasta T5 com os fontes)
 
 * DESCRIÇÃO
