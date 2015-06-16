@@ -1,5 +1,5 @@
 # T1 - ARQUIVOS E ENTRADA/SAÍDA
-<p align=justify>ENTREGA: 16/03/2015 pelo GitHub (crie pasta T1 com os fontes)
+ENTREGA: 16/03/2015 pelo GitHub (crie pasta T1 com os fontes)
 
 DESCRIÇÃO
 O programa fará leitura de dois arquivos texto: alunos.txt e notas.txt.
@@ -10,7 +10,7 @@ O alunos.txt terá o formato:
 201000013 Lady Gaga de Fulano
 
 O outro arquivo notas.txt terá o formato:
-200300000 6.6 9.5  
+200300000 6.6 9.5
 201512345 7.7 5.0
 201554321 10 9.9
 201000013 5.5 1.1
@@ -49,4 +49,4 @@ REGRAS
 - Respeite o formato no repositório Git.
 - Caso o repositório Git não tenha histórico, nota será próxima do zero.
 - Atrasos tem desconto, a critério do professor.
-- Plágio implica em nota zero.</p>
+- Plágio implica em nota zero.
