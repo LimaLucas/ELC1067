@@ -1,0 +1,18 @@
+8 9
+SMA Santa Maria
+POA Porto Alegre
+SC  Santa Cruz
+CH  Cidade Hipotetica
+CH1 Outra Cidade
+PF  Passo Fundo
+CS  Caxias do Sul
+FS Faxinal do Soturno
+SMA POA 
+SMA SC 
+POA SC 
+SC CH1
+SC PF
+CH1 PF
+CH1 CS
+PF FS
+CS FS
