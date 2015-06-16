@@ -1,4 +1,4 @@
-T4 - Solitaire
+#T4 - Solitaire
 ENTREGA: 16/04/2015 pelo GitHub (crie pasta T4 com os fontes)
 
 * DESCRIÇÃO
