@@ -1,4 +1,4 @@
-T3 - TAD 
+#T3 - TAD 
 ENTREGA: 31/03/2015 pelo GitHub (crie pasta T3 com os fontes)
 
 * DESCRIÇÃO
