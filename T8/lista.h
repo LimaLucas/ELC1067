@@ -4,5 +4,8 @@
 
 #include "vertice.h"
 
-/* Coloque aqui suas funções de lista para vértices */
+typedef struct lista {
+	vertice_t* elem;
+	lista_t* next;
+} lista_t;
 

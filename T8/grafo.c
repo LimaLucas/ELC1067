@@ -19,7 +19,7 @@ grafo_t* grafo_cria(void){
 
 /* insere um vértice no grafo */
 bool grafo_insere_vertice(grafo_t* g, vertice_t* v){
-	
+
 }
 
 /* retorna um vértice associado a uma chave (usar strcmp) */
@@ -44,6 +44,8 @@ void grafo_imprime(grafo_t* g){
 
 /* destroi e libera memória de um grafo */
 void grafo_destroi(grafo_t* g){
-
+	free(g->vertices->elem);
+	free(g->vertices);
+	free(g);
 }
 
