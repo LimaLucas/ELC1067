@@ -10,11 +10,16 @@
 /* cria um grafo vazio */
 grafo_t* grafo_cria(void){
 
+	grafo_t* G = (grafo_t*) memo_aloca(sizeof(grafo_t));
+	G->vertices = NULL;
+	G->nvertices = 0;
+
+	return G;
 }
 
 /* insere um vértice no grafo */
 bool grafo_insere_vertice(grafo_t* g, vertice_t* v){
-
+	
 }
 
 /* retorna um vértice associado a uma chave (usar strcmp) */
