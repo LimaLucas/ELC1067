@@ -24,7 +24,7 @@ int main(int argc, char **argv)
  		return 0;
  	}
 
- 	
+ 	grafo_t G;
 
 	memo_relatorio();
 	return 0;
