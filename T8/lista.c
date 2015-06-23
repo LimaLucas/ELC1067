@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "vertice.h"
 #include "lista.h"
@@ -15,7 +16,18 @@ lista_t* lista_remove(){
 
 }
 
-lista_t* lista_busca(){
-	
+vertice_t* lista_busca(lista_t* lst, char* id){
+
+	lista_t* aux;
+	aux = lst;
+
+	while(aux != NULL){
+		if(!strcmp(aux->elem->chave, id)){
+			return aux->elem;
+		}
+		aux = aux->next;
+	}
+
+	return NULL;
 }
 

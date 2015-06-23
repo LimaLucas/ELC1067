@@ -24,8 +24,23 @@ int main(int argc, char **argv)
  		return 0;
  	}
 
+ 	int nVert, nAres, i;
+ 	fscanf(file, "%d %d\n", &nVert, &nAres);
+
  	grafo_t G;
  	G = grafo_cria();
+
+ 	for(i=0; i<nVert; i++){
+
+
+ 	}
+
+ 	for(i=0; i<nAres; i++){
+
+
+ 	}
+
+ 	grafo_destroi(G);
 
 	memo_relatorio();
 	return 0;
