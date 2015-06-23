@@ -29,11 +29,19 @@
 
 #include <stdlib.h>
 
+struct lista;
+
 /* tipo vértice inserido na lista */
 typedef struct vertice {
 	char* chave;         /* chave identificador */
 	char* nome;          /* nome do vértice */
-	lista_t* adjacentes; /* lista com os vértices adjacentes (vizinhos) */
+	struct lista* adjacentes; /* lista com os vértices adjacentes (vizinhos) */
 } vertice_t;
+
+/* insere uma nova aresta em um vértice */
+vertice_t* vertice_insere_aresta();
+
+/* remove uma aresta de um vértice */
+vertice_t* vertice_remove_aresta();
 
 #endif /* _VERTICE_H_ */

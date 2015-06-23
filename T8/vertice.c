@@ -8,4 +8,11 @@
 #include "memo.h"
 #include "grafo.h"
 
+vertice_t* vertice_insere_aresta(){
+
+}
+
+vertice_t* vertice_remove_aresta(){
+	
+}
 

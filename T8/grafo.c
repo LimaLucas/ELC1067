@@ -20,13 +20,15 @@ grafo_t* grafo_cria(void){
 /* insere um vértice no grafo */
 bool grafo_insere_vertice(grafo_t* g, vertice_t* v){
 
-
-
+	// Função para inserir o vertice na lista
+	g->nvertices++;
+	
+	return true;
 }
 
 /* retorna um vértice associado a uma chave (usar strcmp) */
 vertice_t* grafo_busca_vertice(grafo_t* g, char* chave){
-
+	
 }
 
 /*

@@ -7,5 +7,15 @@
 #include "memo.h"
 #include "grafo.h"
 
-/* Coloque aqui suas funções de lista para vértices */
+lista_t* lista_insere(){
+
+}
+
+lista_t* lista_remove(){
+
+}
+
+lista_t* lista_busca(){
+	
+}
 

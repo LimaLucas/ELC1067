@@ -25,6 +25,7 @@ int main(int argc, char **argv)
  	}
 
  	grafo_t G;
+ 	G = grafo_cria();
 
 	memo_relatorio();
 	return 0;

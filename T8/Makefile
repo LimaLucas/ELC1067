@@ -6,7 +6,7 @@ PROG = grafo
 
 all: grafo
 
-principal.o: principal.c
+main.o: main.c
 memo.o: memo.c memo.h
 vertice.o: vertice.c vertice.h
 lista.o: lista.c lista.h
