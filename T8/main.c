@@ -57,12 +57,17 @@ int main(int argc, char **argv)
 
  	for(i=0; i<nAres; i++){
  		fscanf(file, "%s %s\n", sigla, desc);				// VERIFICAR: leitura da string
- 		// F: insere aresta
+ 		if(!grafo_insere_aresta(G, sigla, desc))
+ 			break;
  	}
 
- 	fclose(file);
+ 	if(!feof(file))
+ 		printf("Arquivo com formatação incorreta!\n");
+ 	else
+ 		grafo_imprime(G);
+ 		
 
- 	grafo_imprime(G);
+ 	fclose(file);
  	grafo_destroi(G);
 
 	memo_relatorio();
