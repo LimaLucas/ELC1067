@@ -8,10 +8,6 @@
 #include "memo.h"
 #include "grafo.h"
 
-lista_t* lista_insere(){
-
-}
-
 lista_t* lista_remove(){
 
 }

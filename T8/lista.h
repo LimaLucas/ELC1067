@@ -14,9 +14,6 @@ typedef struct lista {
 	struct lista* next;
 } lista_t;
 
-/* insere um novo elemento vértice na lista */
-lista_t* lista_insere();
-
 /* remove um elemento vértice da lista */
 lista_t* lista_remove();
 

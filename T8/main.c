@@ -30,7 +30,7 @@ int main(int argc, char **argv)
  	int nVert, nAres, i;
  	fscanf(file, "%d %d\n", &nVert, &nAres);
 
- 	char sigla[TAM1]; desc[TAM2];
+ 	char sigla[TAM1], aresta[TAM1], desc[TAM2];
 
  	grafo_t G;
  	G = grafo_cria();
@@ -56,8 +56,8 @@ int main(int argc, char **argv)
  	}
 
  	for(i=0; i<nAres; i++){
- 		fscanf(file, "%s %s\n", sigla, desc);				// VERIFICAR: leitura da string
- 		if(!grafo_insere_aresta(G, sigla, desc))
+ 		fscanf(file, "%s %s\n", sigla, aresta);				// VERIFICAR: leitura da string
+ 		if(!grafo_insere_aresta(G, sigla, aresta))
  			break;
  	}
 

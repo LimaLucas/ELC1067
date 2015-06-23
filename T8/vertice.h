@@ -35,7 +35,7 @@ struct lista;
 typedef struct vertice {
 	char* chave;         /* chave identificador */
 	char* nome;          /* nome do vértice */
-	struct lista* adjacentes; /* lista com os vértices adjacentes (vizinhos) */
+	struct lista* adjacentes; /* lista com os vértices adjacentes (vizinhos/arestas) */
 } vertice_t;
 
 /* insere uma nova aresta em um vértice */
