@@ -16,13 +16,13 @@ lista_t* lista_remove(){
 
 }
 
-vertice_t* lista_busca(lista_t* lst, char* id){
+vertice_t* lista_busca(lista_t* lst, char* sigla){
 
 	lista_t* aux;
 	aux = lst;
 
 	while(aux != NULL){
-		if(!strcmp(aux->elem->chave, id)){
+		if(!strcmp(aux->elem->chave, sigla)){
 			return aux->elem;
 		}
 		aux = aux->next;

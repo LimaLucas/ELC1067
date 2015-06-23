@@ -7,6 +7,9 @@
 #include "memo.h"
 #include "grafo.h"
 
+#define TAM1 3	// Tamanho da chave/sigla do vértice
+#define TAM2 60	// Tamanho do nome do vértice
+
 int main(int argc, char **argv)
 {
 
@@ -27,19 +30,39 @@ int main(int argc, char **argv)
  	int nVert, nAres, i;
  	fscanf(file, "%d %d\n", &nVert, &nAres);
 
+ 	char sigla[TAM1]; desc[TAM2];
+
  	grafo_t G;
  	G = grafo_cria();
 
+ 	vertice_t* V;
+
  	for(i=0; i<nVert; i++){
+		if(fscanf(file, "%s %s\n", sigla, desc) != 2)		// VERIFICAR: leitura da string
+			break;
 
+		else{
+ 			V = (vertice_t*) memo_aloca(sizeof(vertice_t));
+ 			
+ 			V->chave = (char*) memo_aloca(sizeof(char)*TAM1);
+ 			V->nome = (char*) memo_aloca(sizeof(char)*TAM2);
+ 			V->adjacentes = NULL;
 
+ 			V->chave = sigla;
+ 			V->nome = desc;
+
+ 			// F: insere vertice
+		}
  	}
 
  	for(i=0; i<nAres; i++){
-
-
+ 		fscanf(file, "%s %s\n", sigla, desc);				// VERIFICAR: leitura da string
+ 		// F: insere aresta
  	}
 
+ 	fclose(file);
+
+ 	grafo_imprime(G);
  	grafo_destroi(G);
 
 	memo_relatorio();

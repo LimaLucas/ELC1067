@@ -21,7 +21,7 @@ lista_t* lista_insere();
 lista_t* lista_remove();
 
 /* busca um elemento vértice na lista */
-vertice_t* lista_busca(lista_t* lst, char* id);
+vertice_t* lista_busca(lista_t* lst, char* sigla);
 
 
 #endif /* _LISTA_H_ */
