@@ -45,22 +45,12 @@ int main(int argc, char **argv)
  			V->chave = sigla;
  			V->nome = desc;
 
- 			printf("%s %s\n", V->chave, V->nome);
-
  			if(!grafo_insere_vertice(G, V))
  				break;
 		}
  	}
 
- 	lista_t* aux = G->vertices;
-	lista_t* auxi = aux->next;
-	
-	while(aux != NULL){
-		printf("%s -> %s \n", aux->elem->chave, aux->elem->nome);		
-		aux = auxi;
-		if(aux != NULL)
-			auxi = aux->next;
-	}
+ 	grafo_imprime_vertices(G);
 
  	for(i=0; i<nAres; i++){
  		

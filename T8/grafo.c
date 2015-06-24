@@ -83,6 +83,7 @@ void grafo_imprime(grafo_t* g){
 
 			aux->elem->adjacentes = aux->elem->adjacentes->next;
 		}
+		printf("\n");
 		
 		aux = auxi;
 		if(aux != NULL)
@@ -91,7 +92,7 @@ void grafo_imprime(grafo_t* g){
 
 }
 
-void grafo_imprime_vertice(grafo_t* g){
+void grafo_imprime_vertices(grafo_t* g){
 
 	lista_t* aux = g->vertices;
 	lista_t* auxi = aux->next;
