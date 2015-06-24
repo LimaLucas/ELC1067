@@ -66,8 +66,10 @@ int main(int argc, char **argv)
 
  	if(!feof(file))
  		printf("Arquivo com formatação incorreta!\n");
- 	else
+ 	else{
+ 		printf("\nGrafo com vértices e arestas: \n\n");
  		grafo_imprime(G);
+ 	}
  		
 
  	fclose(file);

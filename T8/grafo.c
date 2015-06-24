@@ -53,7 +53,7 @@ bool grafo_insere_aresta(grafo_t* g, char* v1, char* v2){
 		novo->next = vt1->adjacentes;
 
 		/* coloca o vt1 como aresta de vt2 */
-		//novo = memo_aloca(sizeof(lista_t));
+		novo = memo_aloca(sizeof(lista_t));
 
 		novo->elem = vt1;
 		novo->next = vt2->adjacentes;		
