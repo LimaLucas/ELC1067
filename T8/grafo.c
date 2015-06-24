@@ -20,7 +20,7 @@ grafo_t* grafo_cria(void){
 
 bool grafo_insere_vertice(grafo_t* g, vertice_t* v){
 
-	lista_t* novo = (lista_t*) malloc(sizeof(lista_t));
+	lista_t* novo = (lista_t*) memo_aloca(sizeof(lista_t));
 
 	novo->elem = v;
 	novo->next = g->vertices;
@@ -52,11 +52,15 @@ bool grafo_insere_aresta(grafo_t* g, char* v1, char* v2){
 		novo->elem = vt2;
 		novo->next = vt1->adjacentes;
 
+		vt1->adjacentes = novo;
+
 		/* coloca o vt1 como aresta de vt2 */
 		novo = memo_aloca(sizeof(lista_t));
 
 		novo->elem = vt1;
-		novo->next = vt2->adjacentes;		
+		novo->next = vt2->adjacentes;
+
+		vt2->adjacentes = novo;
 
 	}
 	
@@ -71,9 +75,9 @@ void grafo_imprime(grafo_t* g){
 	
 	while(aux != NULL){
 		if(aux->elem->adjacentes == NULL)
-			printf("%s -> sem arestas ", aux->elem->chave);
+			printf(" %s -> --- ", aux->elem->chave);
 		else
-			printf("%s -> ", aux->elem->nome);
+			printf(" %s -> ", aux->elem->chave);
 
 		while(aux->elem->adjacentes != NULL){
 			printf("%s", aux->elem->adjacentes->elem->chave);
@@ -120,12 +124,14 @@ void grafo_destroi(grafo_t* g){
 		memo_libera(aux->elem->chave);
 		memo_libera(aux->elem->nome);
 		memo_libera(aux->elem);
+		memo_libera(aux);
 		
 		aux = auxi;
 		if(aux != NULL)
 			auxi = aux->next;
 	}
 
+	memo_libera(g->vertices);
 	memo_libera(g);
 }
 
