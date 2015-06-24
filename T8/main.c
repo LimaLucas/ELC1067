@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "vertice.h"
 #include "lista.h"
@@ -42,15 +43,13 @@ int main(int argc, char **argv)
 		else{
  			
  			vertice_t* V = vertice_cria(TAM1, TAM2);
- 			V->chave = sigla;
- 			V->nome = desc;
+ 			strcpy(V->chave, sigla);
+ 			strcpy(V->nome, desc);
 
  			if(!grafo_insere_vertice(G, V))
  				break;
 		}
  	}
-
- 	grafo_imprime_vertices(G);
 
  	for(i=0; i<nAres; i++){
  		
