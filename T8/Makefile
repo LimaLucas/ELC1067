@@ -12,7 +12,7 @@ vertice.o: vertice.c vertice.h
 lista.o: lista.c lista.h
 grafo.o: grafo.c grafo.h
 
-grafo: principal.o memo.o vertice.o lista.o grafo.o
+grafo: main.o memo.o vertice.o lista.o grafo.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 	
 clean:

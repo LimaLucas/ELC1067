@@ -14,11 +14,8 @@ typedef struct lista {
 	struct lista* next;
 } lista_t;
 
-/* remove um elemento vértice da lista */
-lista_t* lista_remove();
-
 /* busca um elemento vértice na lista */
-vertice_t* lista_busca(lista_t* lst, char* sigla);
+vertice_t* lista_busca(lista_t* lst, char* chave);
 
 
 #endif /* _LISTA_H_ */

@@ -38,10 +38,10 @@ typedef struct vertice {
 	struct lista* adjacentes; /* lista com os vértices adjacentes (vizinhos/arestas) */
 } vertice_t;
 
-/* insere uma nova aresta em um vértice */
-vertice_t* vertice_insere_aresta();
-
 /* remove uma aresta de um vértice */
-vertice_t* vertice_remove_aresta();
+struct lista* vertice_remove_aresta(vertice_t* v);
+
+/* retorna um vértice associado a uma chave (usar strcmp) */
+vertice_t* vertice_busca_aresta(vertice_t* v, char* chave);
 
 #endif /* _VERTICE_H_ */

@@ -14,16 +14,16 @@ int main(int argc, char **argv)
 {
 
 	if(argc == 1){
- 		printf("Insira o nome do arquivo!\n");
+ 		printf("Insira o nome do arquivo!\n\a");
  		return 0;
  	}else if(argc > 2){
- 		printf("Insira apenas o nome de um arquivo!\n");
+ 		printf("Insira apenas o nome de um arquivo!\n\a");
  		return 0;
  	}
 
  	FILE *file = fopen(argv[1], "r");
  	if(file == NULL){
- 		printf("Erro ao abrir o arquivo! Tente novamente.\n");
+ 		printf("Erro ao abrir o arquivo! Tente novamente.\n\a");
  		return 0;
  	}
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 
  	char sigla[TAM1], aresta[TAM1], desc[TAM2];
 
- 	grafo_t G;
+ 	grafo_t* G;
  	G = grafo_cria();
 
  	vertice_t* V;
@@ -51,18 +51,24 @@ int main(int argc, char **argv)
  			V->chave = sigla;
  			V->nome = desc;
 
- 			// F: insere vertice
+ 			if(!grafo_insere_vertice(G, V))
+ 				break;
 		}
  	}
 
  	for(i=0; i<nAres; i++){
  		fscanf(file, "%s %s\n", sigla, aresta);				// VERIFICAR: leitura da string
+ 		if(grafo_busca_vertice(G, sigla) == NULL){
+ 			printf("Vertice %s não encontrado!\n", sigla);
+ 			continue;
+ 		}
+
  		if(!grafo_insere_aresta(G, sigla, aresta))
  			break;
  	}
 
  	if(!feof(file))
- 		printf("Arquivo com formatação incorreta!\n");
+ 		printf("Arquivo com formatação incorreta!\n\a");
  	else
  		grafo_imprime(G);
  		

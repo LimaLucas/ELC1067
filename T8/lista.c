@@ -3,22 +3,16 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "vertice.h"
 #include "lista.h"
 #include "memo.h"
-#include "grafo.h"
 
-lista_t* lista_remove(){
-
-}
-
-vertice_t* lista_busca(lista_t* lst, char* sigla){
+vertice_t* lista_busca(lista_t* lst, char* chave){
 
 	lista_t* aux;
 	aux = lst;
 
 	while(aux != NULL){
-		if(!strcmp(aux->elem->chave, sigla)){
+		if(!strcmp(aux->elem->chave, chave)){
 			return aux->elem;
 		}
 		aux = aux->next;

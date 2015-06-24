@@ -7,7 +7,7 @@
 #include "memo.h"
 #include "grafo.h"
 
-/* cria um grafo vazio */
+
 grafo_t* grafo_cria(void){
 
 	grafo_t* g = (grafo_t*) memo_aloca(sizeof(grafo_t));
@@ -17,7 +17,7 @@ grafo_t* grafo_cria(void){
 	return g;
 }
 
-/* insere um vértice no grafo */
+
 bool grafo_insere_vertice(grafo_t* g, vertice_t* v){
 
 	lista_t* novo = (lista_t*) malloc(sizeof(lista_t));
@@ -32,32 +32,69 @@ bool grafo_insere_vertice(grafo_t* g, vertice_t* v){
 	return true;
 }
 
-/* retorna um vértice associado a uma chave (usar strcmp) */
+
 vertice_t* grafo_busca_vertice(grafo_t* g, char* chave){
 
 	return lista_busca(g->vertices, chave);
 }
 
-/*
- * Insere uma aresta entre os vértices v1 e v2. Como o grafo
- * é não-direcionado, a função deve procurar os dois vértices
- * (função anterior) e inserir um ao outro em sua lista de
- * adjacência (v1 na lista de v2, e v2 na lista de v1).
- */
+
 bool grafo_insere_aresta(grafo_t* g, char* v1, char* v2){
+
+	
 
 	return true;
 }
 
-/* função que imprime vértices e arestas conforme formato */
+
 void grafo_imprime(grafo_t* g){
+
+	lista_t* aux = g->vertices;
+	lista_t* auxi = aux->next;
+	
+	while(aux != NULL){
+		if(aux->elem->adjacentes == NULL)
+			printf("%s -> sem arestas \a", aux->elem->nome);
+		else
+			printf("%s -> ", aux->elem->nome);
+
+		while(aux->elem->adjacentes != NULL){
+			printf("%s", aux->elem->adjacentes->elem->chave);
+			
+			if(aux->elem->adjacentes->next != NULL)
+				printf(", ");
+
+			aux->elem->adjacentes = aux->elem->adjacentes->next;
+		}
+		
+		aux = auxi;
+		if(aux != NULL)
+			auxi = aux->next;
+	}
 
 }
 
-/* destroi e libera memória de um grafo */
+
 void grafo_destroi(grafo_t* g){
-	free(g->vertices->elem);
-	free(g->vertices);
-	free(g);
+	
+	lista_t* aux = g->vertices;
+	lista_t* auxi = aux->next;
+	
+	while(aux != NULL){
+
+		while(aux->elem->adjacentes != NULL){
+			aux->elem->adjacentes = vertice_remove_aresta(aux->elem);
+		}
+
+		memo_libera(aux->elem->chave);
+		memo_libera(aux->elem->nome);
+		memo_libera(aux->elem);
+		
+		aux = auxi;
+		if(aux != NULL)
+			auxi = aux->next;
+	}
+
+	memo_libera(g);
 }
 
