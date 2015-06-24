@@ -131,7 +131,12 @@ void grafo_destroi(grafo_t* g){
 			auxi = aux->next;
 	}
 
-	memo_libera(g->vertices);
+	while(g->vertices != NULL){
+		aux = g->vertices->next;
+		memo_libera(g->vertices);
+		g->vertices = aux;
+	}
+
 	memo_libera(g);
 }
 
