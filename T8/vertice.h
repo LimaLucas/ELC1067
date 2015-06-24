@@ -38,6 +38,9 @@ typedef struct vertice {
 	struct lista* adjacentes; /* lista com os vértices adjacentes (vizinhos/arestas) */
 } vertice_t;
 
+/* cria um vértice */
+vertice_t* vertice_cria(int tam_chave, int tam_nome);
+
 /* remove uma aresta de um vértice */
 struct lista* vertice_remove_aresta(vertice_t* v);
 

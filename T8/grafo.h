@@ -61,6 +61,9 @@ bool grafo_insere_aresta(grafo_t* g, char* v1, char* v2);
 /* função que imprime vértices e arestas conforme formato */
 void grafo_imprime(grafo_t* g);
 
+/* imprime apenas os vértices do grafo */
+void grafo_imprime_vertices(grafo_t * g);
+
 /* destroi e libera memória de um grafo */
 void grafo_destroi(grafo_t* g);
 

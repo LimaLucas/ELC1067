@@ -7,7 +7,7 @@
 #include "memo.h"
 #include "grafo.h"
 
-#define TAM1 3	// Tamanho da chave/sigla do vértice
+#define TAM1 4	// Tamanho da chave/sigla do vértice
 #define TAM2 60	// Tamanho do nome do vértice
 
 int main(int argc, char **argv)
@@ -17,48 +17,56 @@ int main(int argc, char **argv)
  		printf("Insira o nome do arquivo!\n\a");
  		return 0;
  	}else if(argc > 2){
- 		printf("Insira apenas o nome de um arquivo!\n\a");
+ 		printf("Insira apenas o nome de um arquivo!\n");
  		return 0;
  	}
 
  	FILE *file = fopen(argv[1], "r");
  	if(file == NULL){
- 		printf("Erro ao abrir o arquivo! Tente novamente.\n\a");
+ 		printf("Erro ao abrir o arquivo! Tente novamente.\n");
  		return 0;
  	}
 
  	int nVert, nAres, i;
  	fscanf(file, "%d %d\n", &nVert, &nAres);
 
- 	char sigla[TAM1], aresta[TAM1], desc[TAM2];
+ 	char sigla[TAM1], desc[TAM2], aresta[TAM1];
 
  	grafo_t* G;
  	G = grafo_cria();
 
- 	vertice_t* V;
-
  	for(i=0; i<nVert; i++){
-		if(fscanf(file, "%s %s\n", sigla, desc) != 2)		// VERIFICAR: leitura da string
+		if(fscanf(file, "%s %[^\n]s\n", sigla, desc) != 2)
 			break;
 
 		else{
- 			V = (vertice_t*) memo_aloca(sizeof(vertice_t));
  			
- 			V->chave = (char*) memo_aloca(sizeof(char)*TAM1);
- 			V->nome = (char*) memo_aloca(sizeof(char)*TAM2);
- 			V->adjacentes = NULL;
-
+ 			vertice_t* V = vertice_cria(TAM1, TAM2);
  			V->chave = sigla;
  			V->nome = desc;
+
+ 			printf("%s %s\n", V->chave, V->nome);
 
  			if(!grafo_insere_vertice(G, V))
  				break;
 		}
  	}
 
+ 	lista_t* aux = G->vertices;
+	lista_t* auxi = aux->next;
+	
+	while(aux != NULL){
+		printf("%s -> %s \n", aux->elem->chave, aux->elem->nome);		
+		aux = auxi;
+		if(aux != NULL)
+			auxi = aux->next;
+	}
+
  	for(i=0; i<nAres; i++){
- 		fscanf(file, "%s %s\n", sigla, aresta);				// VERIFICAR: leitura da string
- 		if(grafo_busca_vertice(G, sigla) == NULL){
+ 		
+ 		fscanf(file, "%s %s\n", sigla, aresta);
+ 		
+ 		if(grafo_busca_vertice(G, sigla) == NULL || grafo_busca_vertice(G, aresta) == NULL){
  			printf("Vertice %s não encontrado!\n", sigla);
  			continue;
  		}
@@ -68,7 +76,7 @@ int main(int argc, char **argv)
  	}
 
  	if(!feof(file))
- 		printf("Arquivo com formatação incorreta!\n\a");
+ 		printf("Arquivo com formatação incorreta!\n");
  	else
  		grafo_imprime(G);
  		
