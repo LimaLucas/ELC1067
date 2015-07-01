@@ -29,6 +29,8 @@
 
 #include <stdlib.h>
 
+struct lista;
+
 typedef enum {
     BRANCO,
     CINZA,
@@ -39,10 +41,22 @@ typedef enum {
 typedef struct vertice {
 	char* chave;         /* chave identificador */
 	char* nome;          /* nome do vértice */
-	lista_t* adjacentes; /* lista com os vértices adjacentes (vizinhos) */
-	cor_t cor;           /* cor do vértice (usado na busca em largura) */
-	int   distancia;     /* distância do antecessor para este vértice */
-	struct vertice* ant; /* antecessor deste vértice (usado na busca em largura) */
+	struct lista* adjacentes; /* lista com os vértices adjacentes (vizinhos) */
+	//cor_t cor;           /* cor do vértice (usado na busca em largura) */
+	//int   distancia;     /* distância do antecessor para este vértice */
+	//struct vertice* ant; /* antecessor deste vértice (usado na busca em largura) */
 } vertice_t;
+
+/* cria um vértice */
+vertice_t* vertice_cria(int tam_chave, int tam_nome);
+
+/* insere uma aresta, ligando dois vértices por ela */
+vertice_t* vertice_insere_aresta(vertice_t* v1, vertice_t* v2);
+
+/* remove uma aresta de um vértice */
+struct lista* vertice_remove_aresta(struct lista* lst);
+
+/* retorna um vértice associado a uma chave (usar strcmp) */
+vertice_t* vertice_busca_aresta(vertice_t* v, char* chave);
 
 #endif /* _VERTICE_H_ */
