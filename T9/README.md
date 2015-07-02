@@ -47,24 +47,25 @@ git clone https://github.com/joao-lima/elc1067-2015-1.git<br>
 Um esboço do algoritmo de busca em largura (breadth-first search ou BFS) é
 mostrado abaixo:<br>
 // recebe o grafo G e o vertice de fonte s<br>
-<p>grafo_busca_largura(grafo_t* G, vertice_t* s){<br>
-  fila_t* Q;<br>
-  inicializa todos vertices do grafo G com cor BRANCO;<br>
-  Q = fila_cria();<br>
-  Q = fila_insere(Q, s);   // insere a fonte no final da fila<br>
-  while(fila_vazia(Q) == false){<br>
-      u = fila_remove(Q);  // remove o primeiro da fila<br>
-      for( cada vertice adjacente v de u ) {<br>
-	  if(v->cor == BRANCO){<br>
-	      v->cor = CINZA;  // marca como descoberto<br>
-	      v->d = u->d + 1; // distancia do antecessor para este vertice<br>
-	      v->ant = u;      // antecessor do vertice v<br>
-	      Q = fila_insere(Q, v);<br>
-	  }<br>
-      }<br>
-      u->cor = PRETO; // visitou vertices adjacentes<br>
-  }<br>
-}<br>
+<p>
+.grafo_busca_largura(grafo_t* G, vertice_t* s){<br>
+.  fila_t* Q;<br>
+.  inicializa todos vertices do grafo G com cor BRANCO;<br>
+.  Q = fila_cria();<br>
+.  Q = fila_insere(Q, s);   // insere a fonte no final da fila<br>
+.  while(fila_vazia(Q) == false){<br>
+.      u = fila_remove(Q);  // remove o primeiro da fila<br>
+.      for( cada vertice adjacente v de u ) {<br>
+.	  if(v->cor == BRANCO){<br>
+.	      v->cor = CINZA;  // marca como descoberto<br>
+.	      v->d = u->d + 1; // distancia do antecessor para este vertice<br>
+.	      v->ant = u;      // antecessor do vertice v<br>
+.	      Q = fila_insere(Q, v);<br>
+.	  }<br>
+.      }<br>
+.      u->cor = PRETO; // visitou vertices adjacentes<br>
+.  }<br>
+.}<br>
 <br></p>
 Nesse algoritmo, é necessário também um tipo fila_t que implementa uma
 estrutura de fila FIFO (First-in First-out), ou seja, insere no final da fila
