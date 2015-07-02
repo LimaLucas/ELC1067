@@ -6,6 +6,7 @@
 #include "lista.h"
 #include "memo.h"
 #include "grafo.h"
+#include "fila.h"
 
 
 grafo_t* grafo_cria(void){
@@ -78,12 +79,39 @@ void grafo_imprime_vertices(grafo_t* g){
 }
 
 void grafo_busca_largura(grafo_t* g, vertice_t* v){
+	/*lista_t *Q, *aux, v;
+	vertice_t* u;
 
+	aux = g->vertices;
+	while(aux != NULL){
+		aux->noh->cor = BRANCO;
+		aux = aux->next;
+	}
+
+
+	
+	Q = fila_cria();
+	Q = fila_insere(Q, s); // insere a fonte no final da fila
+	
+	while(fila_vazia(Q) == false){
+		
+		u = fila_remove(Q); // remove o primeiro da fila
+		for( cada vertice adjacente v de u ) {
+			if(v->cor == BRANCO){
+				v->cor = CINZA; // marca como descoberto
+				v->d = u->d + 1; // distancia do antecessor para este vertice
+				v->ant = u; // antecessor do vertice v
+				Q = fila_insere(Q, v);
+			}
+		}
+
+		u->cor = PRETO; // visitou vertices adjacentes
+	}*/
 }
 
 
 void grafo_caminho_curto(grafo_t* G, char* origem, char* destino){
-	
+
 }
 
 void grafo_destroi(grafo_t* g){
