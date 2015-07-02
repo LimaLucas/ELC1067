@@ -55,7 +55,7 @@ mostrado abaixo:<br>
 ...Q = fila_insere(Q, s);   // insere a fonte no final da fila<br>
 ...while(fila_vazia(Q) == false){<br>
 .......u = fila_remove(Q);  // remove o primeiro da fila<br>
-.......for( cada vertice adjacente v de u ) {<br>
+.......for( cada vertice adjacente de u ) {<br>
 ..........if(v->cor == BRANCO){<br>
 ..............v->cor = CINZA;  // marca como descoberto<br>
 ..............v->d = u->d + 1; // distancia do antecessor para este vertice<br>

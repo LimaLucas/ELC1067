@@ -14,11 +14,11 @@
 int main(int argc, char **argv)
 {
 
-	if(argc == 1){
- 		printf("Insira o nome do arquivo!\n\a");
+	if(argc < 4){
+ 		printf("Faltam argumentos!\n\a");
  		return 0;
- 	}else if(argc > 2){
- 		printf("Insira apenas o nome de um arquivo!\n");
+ 	}else if(argc > 4){
+ 		printf("Muitos argumentos!\n");
  		return 0;
  	}
 
@@ -69,8 +69,15 @@ int main(int argc, char **argv)
  	else{
  		printf("\nGrafo com vértices e arestas: \n\n");
  		grafo_imprime(G);
+
+ 		vertice_t* origem = grafo_busca_vertice(G, argv[2]);
+ 		grafo_busca_largura(G, origem);
+ 		
+ 		printf("\nCaminho minimo de %s até %s:\n ", argv[2], argv[3]);
+ 		grafo_caminho_curto(G, argv[2], argv[3]);
  	}
  		
+ 	printf("\n");
 
  	fclose(file);
  	grafo_destroi(G);

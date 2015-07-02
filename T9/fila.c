@@ -40,12 +40,8 @@
 
 #include "memo.h"
 #include "fila.h"
-#include "vetor.h"
-
-struct _fila {
-	vetor_t* vet;
-	int topo;
-};
+#include "lista.h"
+#include "vertice.h"
 
 /* retorna uma nova fila, vazia */
 fila_t* fila_cria(void){
@@ -75,7 +71,7 @@ fila_t* fila_insere_vertice(fila_t* f, vertice_t* v){
 	lista_t* novo = (lista_t*) memo_aloca(sizeof(lista_t));
 
 	novo->noh = v;
-	novo->ext = NULL;
+	novo->next = NULL;
 
 	if(f->last == NULL)
 		f->first = novo;

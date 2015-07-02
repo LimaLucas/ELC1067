@@ -78,40 +78,51 @@ void grafo_imprime_vertices(grafo_t* g){
 	}
 }
 
-void grafo_busca_largura(grafo_t* g, vertice_t* v){
-	/*lista_t *Q, *aux, v;
-	vertice_t* u;
+void grafo_busca_largura(grafo_t* g, vertice_t* origem){
+	lista_t *aux;
+	vertice_t *u;
 
 	aux = g->vertices;
 	while(aux != NULL){
 		aux->noh->cor = BRANCO;
 		aux = aux->next;
 	}
-
-
 	
-	Q = fila_cria();
-	Q = fila_insere(Q, s); // insere a fonte no final da fila
+	fila_t* F = fila_cria();
+	F = fila_insere_vertice(F, origem); // insere a origem no final da fila
 	
-	while(fila_vazia(Q) == false){
+	while(fila_vazia(F) == false){
 		
-		u = fila_remove(Q); // remove o primeiro da fila
-		for( cada vertice adjacente v de u ) {
-			if(v->cor == BRANCO){
-				v->cor = CINZA; // marca como descoberto
-				v->d = u->d + 1; // distancia do antecessor para este vertice
-				v->ant = u; // antecessor do vertice v
-				Q = fila_insere(Q, v);
+		u = fila_remove_vertice(F); // remove o primeiro da fila
+		for(aux = u->adjacentes; aux != NULL; aux = aux->next) {
+			if(aux->noh->cor == BRANCO){
+				aux->noh->cor = CINZA; // marca como descoberto
+				aux->noh->distancia = u->distancia + 1; // distancia do antecessor para este vertice
+				aux->noh->ant = u; // antecessor do vertice v
+				F = fila_insere_vertice(F, aux->noh);
 			}
 		}
 
 		u->cor = PRETO; // visitou vertices adjacentes
-	}*/
+	}
 }
 
 
-void grafo_caminho_curto(grafo_t* G, char* origem, char* destino){
-
+void grafo_caminho_curto(grafo_t* g, char* origem, char* destino){
+	vertice_t* o = grafo_busca_vertice(g, origem);
+	vertice_t* d = grafo_busca_vertice(g, destino);
+	
+	if(o == d){
+		printf("%s ", o->nome);
+		return;
+	}
+	
+	if(d->ant == NULL)
+		printf("Nao existe caminho de %s até %s\n", o->nome, d->nome);
+	else{
+		grafo_caminho_curto(g, origem, d->ant->chave);
+		printf("-> %s ", d->nome);
+	}
 }
 
 void grafo_destroi(grafo_t* g){
