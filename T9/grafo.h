@@ -68,7 +68,7 @@ void grafo_imprime_vertices(grafo_t * g);
 void grafo_busca_largura(grafo_t* g, vertice_t* v);
 
 /* Imprime o caminho mais curto da origem até o destino */
-void grafo_caminho_curto(grafo_t* G, char* fonte, char* destino);
+void grafo_caminho_curto(grafo_t* G, char* origem, char* destino);
 
 /* destroi e libera memória de um grafo */
 void grafo_destroi(grafo_t* g);

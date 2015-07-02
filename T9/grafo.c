@@ -77,6 +77,15 @@ void grafo_imprime_vertices(grafo_t* g){
 	}
 }
 
+void grafo_busca_largura(grafo_t* g, vertice_t* v){
+
+}
+
+
+void grafo_caminho_curto(grafo_t* G, char* origem, char* destino){
+	
+}
+
 void grafo_destroi(grafo_t* g){
 	
 	while(g->vertices != NULL)

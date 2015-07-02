@@ -42,9 +42,9 @@ typedef struct vertice {
 	char* chave;         /* chave identificador */
 	char* nome;          /* nome do vértice */
 	struct lista* adjacentes; /* lista com os vértices adjacentes (vizinhos) */
-	//cor_t cor;           /* cor do vértice (usado na busca em largura) */
-	//int   distancia;     /* distância do antecessor para este vértice */
-	//struct vertice* ant; /* antecessor deste vértice (usado na busca em largura) */
+	cor_t cor;           /* cor do vértice (usado na busca em largura) */
+	int   distancia;     /* distância do antecessor para este vértice */
+	struct vertice* ant; /* antecessor deste vértice (usado na busca em largura) */
 } vertice_t;
 
 /* cria um vértice */

@@ -18,13 +18,22 @@ vertice_t* vertice_cria(int tam_chave, int tam_nome){
 
 vertice_t* vertice_insere_aresta(vertice_t* v1, vertice_t* v2){
 	
-	lista_t* novo;	
+	lista_t *novo, *aux;	
 
 	/* coloca o vt2 como aresta de vt1 */
 	novo = memo_aloca(sizeof(lista_t));
 
 	novo->noh = v2;
-	novo->next = v1->adjacentes;
+	novo->next = NULL;
+
+	if(v1->adjacentes == NULL)
+		v1->adjacentes = novo;
+	else{
+		aux = v1->adjacentes;
+		while(aux->next != NULL)
+			aux = aux->next;
+		aux->next = novo;
+	}
 
 	v1->adjacentes = novo;
 
@@ -32,9 +41,16 @@ vertice_t* vertice_insere_aresta(vertice_t* v1, vertice_t* v2){
 	novo = memo_aloca(sizeof(lista_t));
 
 	novo->noh = v1;
-	novo->next = v2->adjacentes;
+	novo->next = NULL;
 
-	v2->adjacentes = novo;
+	if(v2->adjacentes == NULL)
+		v2->adjacentes = novo;
+	else{
+		aux = v2->adjacentes;
+		while(aux->next != NULL)
+			aux = aux->next;
+		aux->next = novo;
+	}
 
 	return v1;
 }
