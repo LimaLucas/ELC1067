@@ -47,7 +47,7 @@ git clone https://github.com/joao-lima/elc1067-2015-1.git<br>
 Um esboço do algoritmo de busca em largura (breadth-first search ou BFS) é
 mostrado abaixo:<br>
 // recebe o grafo G e o vertice de fonte s<br>
-grafo_busca_largura(grafo_t* G, vertice_t* s){<br>
+<p>grafo_busca_largura(grafo_t* G, vertice_t* s){<br>
   fila_t* Q;<br>
   inicializa todos vertices do grafo G com cor BRANCO;<br>
   Q = fila_cria();<br>
@@ -65,7 +65,7 @@ grafo_busca_largura(grafo_t* G, vertice_t* s){<br>
       u->cor = PRETO; // visitou vertices adjacentes<br>
   }<br>
 }<br>
-<br>
+<br></p>
 Nesse algoritmo, é necessário também um tipo fila_t que implementa uma
 estrutura de fila FIFO (First-in First-out), ou seja, insere no final da fila
 e remove do começo (ou vice-versa).<br>
@@ -74,7 +74,7 @@ exemplo da nova estrutura está disponível no GitHub pasta "T9".<br>
 <br>
 Para imprimir o caminho mais curto use o algoritmo abaixo:<br>
 // recebe o grafo, o vertice de fonte 's' e destino 'v'<br>
-grafo_caminho_curto(grafo_t* G, char* fonte, char* destino){<br>
+<p>grafo_caminho_curto(grafo_t* G, char* fonte, char* destino){<br>
   vertice_t* s = grafo_busca_vertice(G, fonte);<br>
   vertice_t* v = grafo_busca_vertice(G, destino);<br>
   if(s == v){<br>
@@ -87,7 +87,7 @@ grafo_caminho_curto(grafo_t* G, char* fonte, char* destino){<br>
     grafo_caminho_curto( G, fonte, v->ant->chave );<br>
     printf("%s ", v->nome);<br>
   }<br>
-}<br>
+}<br></p>
 <br>
 * MATERIAL DE APOIO SOBRE GRAFOS<br>
 http://www2.dcc.ufmg.br/livros/algoritmos/cap7/slides/c/completo1/cap7.pdf
