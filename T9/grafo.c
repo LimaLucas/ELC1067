@@ -105,6 +105,8 @@ void grafo_busca_largura(grafo_t* g, vertice_t* origem){
 
 		u->cor = PRETO; // visitou vertices adjacentes
 	}
+
+	fila_destroi(F);
 }
 
 
