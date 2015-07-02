@@ -49,22 +49,22 @@ mostrado abaixo:<br>
 // recebe o grafo G e o vertice de fonte s<br>
 <p>
 .grafo_busca_largura(grafo_t* G, vertice_t* s){<br>
-.  fila_t* Q;<br>
-.  inicializa todos vertices do grafo G com cor BRANCO;<br>
-.  Q = fila_cria();<br>
-.  Q = fila_insere(Q, s);   // insere a fonte no final da fila<br>
-.  while(fila_vazia(Q) == false){<br>
-.      u = fila_remove(Q);  // remove o primeiro da fila<br>
-.      for( cada vertice adjacente v de u ) {<br>
-.	  if(v->cor == BRANCO){<br>
-.	      v->cor = CINZA;  // marca como descoberto<br>
-.	      v->d = u->d + 1; // distancia do antecessor para este vertice<br>
-.	      v->ant = u;      // antecessor do vertice v<br>
-.	      Q = fila_insere(Q, v);<br>
-.	  }<br>
-.      }<br>
-.      u->cor = PRETO; // visitou vertices adjacentes<br>
-.  }<br>
+...fila_t* Q;<br>
+...inicializa todos vertices do grafo G com cor BRANCO;<br>
+...Q = fila_cria();<br>
+...Q = fila_insere(Q, s);   // insere a fonte no final da fila<br>
+...while(fila_vazia(Q) == false){<br>
+.......u = fila_remove(Q);  // remove o primeiro da fila<br>
+.......for( cada vertice adjacente v de u ) {<br>
+..........if(v->cor == BRANCO){<br>
+..............v->cor = CINZA;  // marca como descoberto<br>
+..............v->d = u->d + 1; // distancia do antecessor para este vertice<br>
+..............v->ant = u;      // antecessor do vertice v<br>
+..............Q = fila_insere(Q, v);<br>
+..........}<br>
+.......}<br>
+.......u->cor = PRETO; // visitou vertices adjacentes<br>
+...}<br>
 .}<br>
 <br></p>
 Nesse algoritmo, é necessário também um tipo fila_t que implementa uma
@@ -75,20 +75,21 @@ exemplo da nova estrutura está disponível no GitHub pasta "T9".<br>
 <br>
 Para imprimir o caminho mais curto use o algoritmo abaixo:<br>
 // recebe o grafo, o vertice de fonte 's' e destino 'v'<br>
-<p>grafo_caminho_curto(grafo_t* G, char* fonte, char* destino){<br>
-  vertice_t* s = grafo_busca_vertice(G, fonte);<br>
-  vertice_t* v = grafo_busca_vertice(G, destino);<br>
-  if(s == v){<br>
-    printf("%s ", s->nome);<br>
-    return;<br>
-  }<br>
-  if(v->ant == NULL){<br>
-    printf("Nao existe caminho de %s a %s\n", s->nome, v->nome);<br>
-  } else {<br>
-    grafo_caminho_curto( G, fonte, v->ant->chave );<br>
-    printf("%s ", v->nome);<br>
-  }<br>
-}<br></p>
+<p>
+.grafo_caminho_curto(grafo_t* G, char* fonte, char* destino){<br>
+...vertice_t* s = grafo_busca_vertice(G, fonte);<br>
+...vertice_t* v = grafo_busca_vertice(G, destino);<br>
+...if(s == v){<br>
+......printf("%s ", s->nome);<br>
+......return;<br>
+...}<br>
+...if(v->ant == NULL){<br>
+......printf("Nao existe caminho de %s a %s\n", s->nome, v->nome);<br>
+...} else {<br>
+......grafo_caminho_curto( G, fonte, v->ant->chave );<br>
+......printf("%s ", v->nome);<br>
+...}<br>
+.}<br></p>
 <br>
 * MATERIAL DE APOIO SOBRE GRAFOS<br>
 http://www2.dcc.ufmg.br/livros/algoritmos/cap7/slides/c/completo1/cap7.pdf
