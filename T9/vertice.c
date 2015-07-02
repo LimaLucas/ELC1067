@@ -45,13 +45,15 @@ vertice_t* vertice_insere_aresta(vertice_t* v1, vertice_t* v2){
 
 	if(v2->adjacentes == NULL)
 		v2->adjacentes = novo;
+	
 	else{
 		aux = v2->adjacentes;
 		while(aux->next != NULL)
 			aux = aux->next;
+		
 		aux->next = novo;
 	}
-
+	
 	return v1;
 }
 

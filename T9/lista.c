@@ -9,12 +9,22 @@
 
 lista_t* lista_insere_vertice(lista_t* lst, struct vertice* noh){
 	
-	lista_t* novo = (lista_t*) memo_aloca(sizeof(lista_t));
+	lista_t *novo *aux;
+	novo = (lista_t*) memo_aloca(sizeof(lista_t));
 
 	novo->noh = noh;
-	novo->next = lst;
+	novo->next = NULL;
 
-	return novo;
+	if(lst == NULL)
+		return novo;
+	
+	else{
+		aux = lst;
+		while(aux->next != NULL)
+			aux = aux->next;
+		
+		return aux;
+	}
 }
 
 lista_t* lista_remove_vertice(lista_t* lst){
