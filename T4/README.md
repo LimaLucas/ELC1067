@@ -9,7 +9,7 @@ Inicialmente, o jogo deve conter 1 carta aberta na primeira pilha, uma fechada
 e uma aberta na segunda, duas fechadas e uma aberta na terceira, etc. O
 restante das cartas, fechadas, devem estar no monte. As demais pilhas
 (descartes e ases) devem estar vazias.
-<br>
+<br><br>
 A cada jogada, o jogador pode:
 - abrir uma carta do monte sobre o descarte
 - virar todas as cartas do descarte no monte vazio
