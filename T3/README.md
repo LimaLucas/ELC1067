@@ -17,6 +17,7 @@ Todos os arquivos do trabalho estão no GitHub pasta "T3". Para clonar:
 git clone https://github.com/joao-lima/elc1067-2015-1.git
 
 As funções são:
+```C
 vetor_t* vetor_cria(void);
 void vetor_destroi(vetor_t* vet);
 int vetor_numelem(vetor_t *vet);
@@ -24,43 +25,44 @@ void vetor_insere_carta(vetor_t *vet, int indice, carta c);
 carta vetor_remove_carta(vetor_t *vet, int indice);
 carta vetor_acessa_carta(vetor_t *vet, int indice);
 bool vetor_valido(vetor_t *vet);
-
+```
 A descrição de cada uma das funções está em vetor.h.
 Todos os arquivos .h descrevem os protótipos de funções, enquanto que 
 a implementação dessas funções está nos arquivos .c.
-
+<br><br>
 A compilação do trabalho envolve diversos arquivos. Quem utiliza Codeblocks,
 adicione ao projeto todos os arquivos. Quem utilizar um sistema Linux pode
 compilar com o programa make digitando:
 make
-
+<br><br>
 Ou na linha de comando manualmente com:
 gcc -Wall -g -o principal memo.c carta.c vetor.c principal.c -lm
-
+<br><br>
 IMPORTANTE:
 O vetor deverá utilizar alocação dinâmica por meio das funções fornecidas em
 memo.h que são:
+```C
 void* memo_aloca( size_t tam );
 void* memo_realoca( void* ptr, size_t tam );
 void memo_libera( void* ptr );
-
+```
 Utilize as funções da mesma forma como com malloc e free. Ao final do programa
 utilize a função:
 void memo_relatorio( void );
-
+<br><br>
 Como no arquivo principal.c, para imprimir o número de alocações e liberações
 efetuadas pelo programa.
-
+<br><br>
 * AVALIAÇÃO
 A avaliação será conforme:
 - bom funcionamento do programa.
 - sem acessos ilegais de memória (segmentation fault ou falha de segmentação).
 - toda memória alocada deve ser liberada.
-
+<br><br>
 O programa valgrind será utilizado na avaliação. Ele fornece um relatório de
 uso de memória.  Para ver o relatório, execute seu trabalho com:
 $ valgrind ./t3
-
+<br><br>
 Link sobre valgrind: http://valgrind.org/docs/manual/quick-start.html
 
 * ENTREGA
