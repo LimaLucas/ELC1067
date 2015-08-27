@@ -1,57 +1,57 @@
-#T2 - ALOCA«√O DIN¬MICA
+#T2 - ALOCA√á√ÉO DIN√ÇMICA
 ENTREGA: 24/03/2015 pelo GitHub (crie pasta T2 com os fontes)
 
-* DESCRI«√O
-A lÛgica deste trabalho È igual ao T1. O programa far· leitura de dois
+* DESCRI√á√ÉO
+A l√≥gica deste trabalho √© igual ao T1. O programa far√° leitura de dois
 arquivos texto: alunos.txt e notas.txt. Ele busca alunos pelo nome e imprime a
-mÈdia e o nome completo dos encontrados.
-IMPORTANTE: a ordem das matriculas pode n„o ser a mesma.
-
-PorÈm, neste T2, os vetores est·ticos de T1 ser„o din‚micos.  Ou seja, ao invÈs
+m√©dia e o nome completo dos encontrados.
+IMPORTANTE: a ordem das matriculas pode n√£o ser a mesma.
+<br><br>
+Por√©m, neste T2, os vetores est√°ticos de T1 ser√£o din√¢micos.  Ou seja, ao inv√©s
 de um vetor de matriculas de tamanho 50 como abaixo:
 int matriculas[50];
-
-O vetor deve ser alocado din‚micamente. Um exemplo que inicia com 50 posiÁıes:
+<br><br>
+O vetor deve ser alocado din√¢micamente. Um exemplo que inicia com 50 posi√ß√µes:
 int *matriculas;
 matriculas = (int*) malloc( 50 * sizeof(int) );
-
+<br><br>
 Ao final do programa o vetor deve ser liberado com:
 free(matriculas);
-
-IMPORTANTE: testar se o n˙mero de linhas foi maior que o alocado anteriormente.
-Caso mais de 50 linhas (por exemplo) forem lidas, precisamos de mais espaÁo.
-Isso È possÌvel por meio da funÁ„o realloc:
+<br><br>
+IMPORTANTE: testar se o n√∫mero de linhas foi maior que o alocado anteriormente.
+Caso mais de 50 linhas (por exemplo) forem lidas, precisamos de mais espa√ßo.
+Isso √© poss√≠vel por meio da fun√ß√£o realloc:
 matriculas = (int*) realloc( matriculas, 100 * sizeof(int) );
-
-O exemplo aumenta o vetor de 50 para 100 posiÁıes. A funÁ„o realloc recebe o
-vetor antigo e retorna um novo vetor maior. O conte˙do antigo È copiado para o
+<br><br>
+O exemplo aumenta o vetor de 50 para 100 posi√ß√µes. A fun√ß√£o realloc recebe o
+vetor antigo e retorna um novo vetor maior. O conte√∫do antigo √© copiado para o
 novo vetor.
-
-* AVALIA«√O
-A avaliaÁ„o ser· conforme:
+<br><br>
+* AVALIA√á√ÉO
+A avalia√ß√£o ser√° conforme:
 - bom funcionamento do programa.
-- sem acessos ilegais de memÛria (segmentation fault ou falha de segmentaÁ„o).
-- toda memÛria alocada deve ser liberada.
-
-O programa valgrind ser· utilizado na avaliaÁ„o. Ele fornece um relatÛrio de
-uso de memÛria.  Para ver o relatÛrio, execute seu trabalho com:
+- sem acessos ilegais de mem√≥ria (segmentation fault ou falha de segmenta√ß√£o).
+- toda mem√≥ria alocada deve ser liberada.
+<br><br>
+O programa valgrind ser√° utilizado na avalia√ß√£o. Ele fornece um relat√≥rio de
+uso de mem√≥ria.  Para ver o relat√≥rio, execute seu trabalho com:
 $ valgrind ./t2
-
+<br><br>
 Link sobre valgrind: http://valgrind.org/docs/manual/quick-start.html
 
 * ENTREGA
-Na data da entrega, a pasta T2 dever· estar presente no GitHub.
+Na data da entrega, a pasta T2 dever√° estar presente no GitHub.
 
 * DICAS
 - teste seu programa!
 - cuide para abrir e fechar os arquivos utilizados.
-- use vetores din‚micos.
+- use vetores din√¢micos.
 - use o valgrind para evitar erros.
-- n„o dever· existir limite de linhas.
+- n√£o dever√° existir limite de linhas.
 
 * REGRAS
-- AvaliaÁ„o: nota de 0 atÈ 10.
-- Respeite o formato no repositÛrio Git.
-- Caso o repositÛrio Git n„o tenha histÛrico, nota ser· prÛxima do zero.
-- Atrasos tem desconto, a critÈrio do professor.
-- Pl·gio implica em nota zero.
+- Avalia√ß√£o: nota de 0 at√© 10.
+- Respeite o formato no reposit√≥rio Git.
+- Caso o reposit√≥rio Git n√£o tenha hist√≥rico, nota ser√° pr√≥xima do zero.
+- Atrasos tem desconto, a crit√©rio do professor.
+- Pl√°gio implica em nota zero.
