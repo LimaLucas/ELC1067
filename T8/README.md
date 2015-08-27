@@ -10,6 +10,7 @@ A entrada inicia com o número de vértices e arestas na primeira linha, seguido
 dos vértices (identificador e nome em cada linha) e das arestas (um par de
 identificador de vértices por linha).
 Um exemplo de entrada segue abaixo:
+```
 8 9
 SMA Santa Maria
 POA Porto Alegre
@@ -28,9 +29,10 @@ CH1 PF
 CH1 CS
 PF FS
 CS FS
-
+```
 A saída do programa deverá ter em cada linha um vértice e suas arestas no
 formato abaixo (a ordem não é importante):
+```
 SMA -> POA CH
 POA -> SMA SC
 SC -> POA CH1 PF
@@ -39,7 +41,7 @@ CH1 -> SC PF CS
 PF -> SC CH1 FS
 CS -> CH1 FS
 FS -> PF CS 
-
+```
 As funções que devem ser implementadas estão no GitHub pasta "T8". Para clonar:
 git clone https://github.com/joao-lima/elc1067-2015-1.git
 
