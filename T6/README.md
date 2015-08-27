@@ -1,4 +1,4 @@
-#T6 - Árvore de expressões aritméticas.
+T6 - Árvore de expressões aritméticas.
 ENTREGA: 02/06/2015 pelo GitHub (crie pasta T6 com os fontes)
 
 * DESCRIÇÃO
@@ -22,6 +22,7 @@ x x * 2 + x 1 + /
 A construção da árvore deve fazer uso de uma pilha para empilhar operandos das
 expressões aritméticas. Para facilitar a implementação, a pilha deve armazenar
 nós da árvore. O algoritmo de construção da árvore funciona da seguinte forma:
+```C
 Lê próximo operador ou operando.
 Se operando
 	cria um nó operando e empilha.
@@ -29,7 +30,7 @@ Se operador
 	desempilha os 2 operandos da pilha.
 	cria um nó operador e insere na esquerda e direita os operandos.
 	empilha o nó operador.
-
+```
 Nessa etapa, será necessário apenas imprimir nas ordens requisitadas. Não é
 necessário resolver a expressão. 
 
@@ -52,4 +53,3 @@ Na data da entrega, a pasta T6 deverá estar presente no GitHub.
 - Caso o repositório Git não tenha histórico, nota será próxima do zero.
 - Atrasos tem desconto, a critério do professor.
 - Plágio implica em nota zero.
-
