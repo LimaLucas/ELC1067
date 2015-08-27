@@ -17,13 +17,13 @@ Para calcular o resultado da expressão aritmética, basta percorrer a árvore
 pós-ordem (esquerda, direita, raiz) sempre que o nó atual for um operador.<br>
 O algoritmo recursivo é o seguinte:<br>
 <code>
-double calcula(arv_t* arv)
-    se arv é operando
-      retorna o valor de arv que é um double
-    senão (arv é um operador)
-      valor1 = chama calcula(arv->esq) para o valor da esquerda
-      valor2 = chama calcula(arv->dir) para o valor da direita
-      retorna o valor do operador de arv (+-/*) com operandos valor1 e valor2
+double calcula(arv_t* arv)</br>
+	se arv é operando</br>
+		retorna o valor de arv que é um double</br>
+	senão (arv é um operador)</br>
+		valor1 = chama calcula(arv->esq) para o valor da esquerda</br>
+		valor2 = chama calcula(arv->dir) para o valor da direita</br>
+		retorna o valor do operador de arv (+-/*) com operandos valor1 e valor2</br>
 </code>
 <br>
 Esta descrição está no GitHub pasta "T7". Para clonar:<br>
