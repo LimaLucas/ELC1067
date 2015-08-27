@@ -54,8 +54,8 @@ void grafo_imprime(grafo_t* g);
 void grafo_destroi(grafo_t* g);
 ```
 * MATERIAL DE APOIO SOBRE GRAFOS
-http://www2.dcc.ufmg.br/livros/algoritmos/cap7/slides/c/completo1/cap7.pdf
-http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/lecture-16-greedy-algorithms-minimum-spanning-trees/lec16.pdf
+- http://www2.dcc.ufmg.br/livros/algoritmos/cap7/slides/c/completo1/cap7.pdf
+-http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/lecture-16-greedy-algorithms-minimum-spanning-trees/lec16.pdf
 
 * ENTREGA
 Na data da entrega, a pasta T8 deverá estar presente no GitHub.
