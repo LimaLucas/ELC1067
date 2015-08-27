@@ -18,6 +18,7 @@ Onde:
 - FS é o vértice de destino (argv[3]) 
  
 O formato do arquivo de entrada é o mesmo do T8.  No exemplo abaixo: 
+```
 8 9 
 SMA Santa Maria 
 POA Porto Alegre 
@@ -36,7 +37,7 @@ CH1 PF
 CH1 CS 
 PF FS 
 CS FS 
- 
+```
 A saída será: 
 Porto Alegre -> Santa Cruz -> Passo Fundo -> Faxinal do Soturno 
  
