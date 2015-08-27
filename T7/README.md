@@ -24,7 +24,7 @@ double calcula(arv_t* arv)
 	senão (arv é um operador)
 		valor1 = chama calcula(arv->esq) para o valor da esquerda
 		valor2 = chama calcula(arv->dir) para o valor da direita
-		retorna o valor do operador de arv (+-/*) com operandos valor1 e valor2
+		retorna o valor do operador de arv (+-*/) com operandos valor1 e valor2
 ```
 
 Esta descrição está no GitHub pasta "T7". Para clonar:
