@@ -9,6 +9,7 @@ Inicialmente, o jogo deve conter 1 carta aberta na primeira pilha, uma fechada
 e uma aberta na segunda, duas fechadas e uma aberta na terceira, etc. O
 restante das cartas, fechadas, devem estar no monte. As demais pilhas
 (descartes e ases) devem estar vazias.
+<br>
 A cada jogada, o jogador pode:
 - abrir uma carta do monte sobre o descarte
 - virar todas as cartas do descarte no monte vazio
@@ -22,30 +23,30 @@ A cada jogada, o jogador pode:
 
 Uma carta só pode ser movida sobre outra em uma das pilhas se for de naipe
 diferente e valor imediatamente inferior.
-
+<br><br>
 IMPORTANTE: Deve existir pelo menos uma função para cada jogada possível.
 Algumas jogadas precisam de argumentos, outras não.
 O programa deve ter um ciclo principal onde:
 1) lê comando (um comando pode ser 1, 2 ou 3 caracteres).
 2) interpreta e executa comando, chamando a função correspondente.
 3) redesenha a tela.
-
+<br><br>
 Todos os arquivos do trabalho estão no GitHub pasta "T4". Para clonar:
 git clone https://github.com/joao-lima/elc1067-2015-1.git
-
+<br><br>
 Você deve copiar os arquivos que faltam (vetor.h e vetor.c) do T3 para o T4. 
-
+<br><br>
 A compilação do trabalho envolve diversos arquivos. É necessário instalar a biblioteca
 ncurses para gráficos em terminal. Em um sistema Ubuntu digite:
 sudo apt-get install libncurses5-dev
 No Windows, procure nos seguintes sites:
 Link para ncurses no Windows: http://pdcurses.sourceforge.net/
 Link para ncurses com Codeblocks: http://www.cplusplus.com/forum/windows/16002/
-
+<br><br>
 Quem utiliza Codeblocks, adicione ao projeto todos os arquivos. Quem utilizar
 um sistema Linux pode compilar com o programa make digitando:
 make
-
+<br><br>
 Ou na linha de comando manualmente com:
 
 gcc -o solitaire -Wall -g principal.c vetor.c carta.c memo.c fila.c pilha.c jogo.c jogo_desenha.c tela.c -lcurses
