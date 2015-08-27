@@ -12,6 +12,7 @@ Os comandos básicos são:
 Outros comandos podem ser adicionados.
 
 O texto é representado em memória por uma estrutura declarada como segue (texto.h):
+```C
 typedef struct {
 	char *nome;     /* nome do arquivo sendo editado */
 	lista_t* linhas; /* lista de linhas do arquivo */
@@ -23,7 +24,7 @@ typedef struct {
 	
 	tela_t tela;    /* tela do editor */
 } texto_t;
-
+```
 A estrutura lista_t deverá ser uma lista duplamente encadeada com funções
 definidas pelo aluno.
 
