@@ -19,9 +19,9 @@ O algoritmo recursivo é o seguinte:>
 
 ```C
 double calcula(arv_t* arv)
-	if arv é operando
+	se arv é operando
 		retorna o valor de arv que é um double
-	else (arv é um operador)
+	senao (arv é um operador)
 		valor1 = chama calcula(arv->esq) para o valor da esquerda
 		valor2 = chama calcula(arv->dir) para o valor da direita
 		retorna o valor do operador de arv (+ - / *) com operandos valor1 e valor2
