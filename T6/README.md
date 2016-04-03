@@ -1,4 +1,4 @@
-T6 - Árvore de expressões aritméticas.
+#T6 - Árvore de expressões aritméticas.
 ENTREGA: 02/06/2015 pelo GitHub (crie pasta T6 com os fontes)
 
 * DESCRIÇÃO
