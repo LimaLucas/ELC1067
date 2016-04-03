@@ -1,4 +1,4 @@
-T8 - Grafo com listas de adjacência
+#T8 - Grafo com listas de adjacência
 ENTREGA: 23/06/2015 pelo GitHub (crie pasta T8 com os fontes)
 
 * DESCRIÇÃO
